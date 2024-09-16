@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct KanjiQuizListView: View {
+    @EnvironmentObject private var router: Router
     @State private var index = 0
     @State private var sliderValue = 1.0
     let quizList: [KanjiQuiz]
@@ -27,7 +28,18 @@ struct KanjiQuizListView: View {
         .onChange(of: index) {
             sliderValue = Double(index + 1)
         }
-        .background(Color(.systemGray6))
+        .background(Color("background"))
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color("primary"))
+                }
+            }
+        }
+        .navigationBarBackButtonHidden()
         
         slider
     }

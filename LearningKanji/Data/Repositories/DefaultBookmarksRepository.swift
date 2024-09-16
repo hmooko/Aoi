@@ -76,7 +76,7 @@ final class DefaultBookmarksRepository: BookmarksRepository {
             print("\nsqlite3_prepare failure while creating table: \(errorMessage)")
         }
         
-        sqlite3_finalize(statement) // 메모리에서 sqlite3 할당 해제.
+        sqlite3_finalize(statement) 
     }
     
     private func getBookmarks() -> [BookmarksDTO] {
@@ -160,25 +160,23 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         }
     }
     
-    func bookmark(_ kanjiIdList: [Int], bookmarksId: Int) {
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) {
         let insertQuery = "insert into \(Table.bookmarkedKanji) (bookmarks_id, kanji_id) values (?, ?);"
         var statement: OpaquePointer? = nil
         
-        for id in kanjiIdList {
-            if sqlite3_prepare_v2(self.db, insertQuery, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_int(statement, 1, Int32(bookmarksId))
-                sqlite3_bind_int(statement, 2, Int32(id))
-            }
-            else {
-                print("sqlite binding failure")
-            }
-            
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("sqlite insertion success")
-            }
-            else {
-                print("sqlite step failure")
-            }
+        if sqlite3_prepare_v2(self.db, insertQuery, -1, &statement, nil) == SQLITE_OK {
+            sqlite3_bind_int(statement, 1, Int32(bookmarksId))
+            sqlite3_bind_int(statement, 2, Int32(kanjiId))
+        }
+        else {
+            print("sqlite binding failure")
+        }
+        
+        if sqlite3_step(statement) == SQLITE_DONE {
+            print("sqlite insertion success")
+        }
+        else {
+            print("sqlite step failure")
         }
     }
     
@@ -201,24 +199,22 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         sqlite3_finalize(stmt)
     }
     
-    func removeBookmark(_ kanjiIdList: [Int], bookmarksId: Int) {
-        for id in kanjiIdList {
-            let DELETE_QUERY = "DELETE FROM \(Table.bookmarkedKanji) WHERE bookmarks_id = \(bookmarksId) AND kanji_id = \(id)"
-            var stmt:OpaquePointer?
-            
-            print(DELETE_QUERY)
-            if sqlite3_prepare_v2(db, DELETE_QUERY, -1, &stmt, nil) != SQLITE_OK{
-                let errMsg = String(cString: sqlite3_errmsg(db)!)
-                print("error preparing delete: v1\(errMsg)")
-                return
-            }
-            
-            if sqlite3_step(stmt) != SQLITE_DONE {
-                let errMsg = String(cString : sqlite3_errmsg(db)!)
-                print("delete fail :: \(errMsg)")
-                return
-            }
-            sqlite3_finalize(stmt)
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) {
+        let DELETE_QUERY = "DELETE FROM \(Table.bookmarkedKanji) WHERE bookmarks_id = \(bookmarksId) AND kanji_id = \(kanjiId)"
+        var stmt:OpaquePointer?
+        
+        print(DELETE_QUERY)
+        if sqlite3_prepare_v2(db, DELETE_QUERY, -1, &stmt, nil) != SQLITE_OK{
+            let errMsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing delete: v1\(errMsg)")
+            return
         }
+        
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errMsg = String(cString : sqlite3_errmsg(db)!)
+            print("delete fail :: \(errMsg)")
+            return
+        }
+        sqlite3_finalize(stmt)
     }
 }

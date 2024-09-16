@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol LearningByGradeUseCase {
+    func fetchKanjiListByGrade(grade: Grade, _ completion: @escaping (Result<[Kanji], Error>) -> Void)
+}

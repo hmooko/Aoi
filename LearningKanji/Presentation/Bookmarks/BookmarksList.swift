@@ -7,51 +7,70 @@
 
 import SwiftUI
 
-private enum SelectedBookmarks {
-    case notSelected
-    case select(Bookmarks)
-}
-
-
 struct BookmarksList: View {
     @State private var selectedBookmarks: Bookmarks? = nil
+    @State private var pressedBookmarks: Bookmarks? = nil
     @EnvironmentObject var viewModel: BookmarksListViewModel
     @EnvironmentObject var router: Router
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                ForEach(viewModel.bookmarksList) { bookmarks in
-                    HStack {
-                        NavigationLink(value: AppScene.learningScene(bookmarks.contents)) {
+            GeometryReader { proxy in
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
+                    ForEach(viewModel.bookmarksList) { bookmarks in
+                        VStack {
+                            Text(bookmarks.title)
+                                .pretendardBold(size: 18)
+                            
+                            Spacer()
+                            
                             HStack {
-                                Text(bookmarks.title)
-                                    .lineLimit(1)
-                                    .font(.title3)
-                                Spacer()
-                            }.contentShape(Rectangle())
+                                Button {
+                                    viewModel.fetchBookmarksList()
+                                    router.push(.learningBookmarks(bookmarks))
+                                } label: {
+                                    Text("학습")
+                                        .pretendardBold(size: 15)
+                                        .foregroundStyle(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(5)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .fill(Color("primary"))
+                                        }
+                                }.buttonStyle(.plain)
+                                
+                                Button {
+                                    viewModel.fetchBookmarksList()
+                                    router.push(.quizScene(bookmarks.contents))
+                                } label: {
+                                    Text("퀴즈")
+                                        .pretendardMedium(size: 15)
+                                        .foregroundStyle(Color("primary"))
+                                        .frame(maxWidth: .infinity)
+                                        .padding(5)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .fill(Color("tertiary"))
+                                        }
+                                }.buttonStyle(.plain)
+                            }
                         }
-                        
-                        Button {
-                            selectedBookmarks = bookmarks
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .rotationEffect(.degrees(90))
+                        .padding(30)
+                        .frame(width: proxy.size.width / 2.3, height: proxy.size.width / 2.3, alignment: .topLeading)
+                        .background {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color(.white))
+                                .stroke(Color("secondary"))
+                                .shadow(color: Color("shadow"), radius: 13.9, y: 4)
                         }
+                        .scaleEffect(pressedBookmarks == bookmarks ? 0.9 : 1)
+                        .animation(.easeIn, value: pressedBookmarks == bookmarks)
+                        .padding()
                     }
-                    .buttonStyle(.plain)
-                    .padding()
-                    
-                    Divider().padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                        .opacity(bookmarks == viewModel.bookmarksList.last ? 0 : 1.0)
                 }
-                .modifier(BookmarksMenu(selectedBookmarks: $selectedBookmarks))
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color(.white))
-            .clipShape(.rect(cornerRadius: 15))
+            }.padding()
         }
-        .padding()
         .onChange(of: router.path) {
             viewModel.fetchBookmarksList()
         }

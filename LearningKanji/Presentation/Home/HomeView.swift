@@ -7,49 +7,27 @@
 
 import SwiftUI
 
-struct HomeView: View, AppView {
-    func scene() -> AppScene { .homeScene }
-    
-    @StateObject private var viewModel: HomeViewModel
-    
-    init(viewModel: HomeViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
-    }
-    
-    var body: some View {
-        GeometryReader { proxy in
-            ScrollView {
-                VStack(alignment: .leading) {
-                    Text("투데이")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    TodaysKanjiView(proxy: proxy, viewModel: TodaysKanjiViewModel(container: viewModel.container))
-                    
-                    Spacer(minLength: 30)
-                    
-                    TodaysQuizCard()
-                        .shadow(radius: 5)
-                    
-                    Spacer(minLength: 30)
-                    LearningByGradeListView(container: viewModel.container)
-                        .shadow(radius: 5)
-                }
-            }
-            .background(Color(.systemGray6))
-            .scrollIndicators(.hidden)
-        }
-    }
-}
-
-class HomeViewModel: ObservableObject {
+struct HomeView: View {
+    @EnvironmentObject private var router: Router
     let container: DIContainer
     
-    init(_ container: DIContainer) {
-        self.container = container
+    var body: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    TodaysKanjiView(viewModel: .init(container: container))
+                    
+                    LearningByGradeListView(container: container)
+                }.padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+            }.scrollIndicators(.hidden)
+            
+            Divider()
+        }
+        .background(Color("background"))
     }
 }
 
 #Preview {
-    HomeView(viewModel: HomeViewModel(DIContainer()))
+    HomeView(container: DIContainer())
+        .environmentObject(Router())
 }

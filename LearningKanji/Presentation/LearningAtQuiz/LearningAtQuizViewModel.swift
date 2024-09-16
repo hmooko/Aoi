@@ -15,7 +15,7 @@ class LearningAtQuizViewViewModel: ObservableObject {
     
     init(_ container: DIContainer, quizList: [Kanji]) {
         self.container = container
-        self.learningAtQuizUseCase = container.makeLearningAtQuizUseCase()
+        self.learningAtQuizUseCase = container.learningAtQuizUseCase()
         fetchQuizList(quizList: quizList)
     }
     

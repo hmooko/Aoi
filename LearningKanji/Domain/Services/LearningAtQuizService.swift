@@ -8,6 +8,7 @@
 import Foundation
 
 final class LearningAtQuizService: LearningAtQuizUseCase {
+    
     private let userDefaultsRepository: UserDefaultsRepository
     private let commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
     
@@ -17,7 +18,7 @@ final class LearningAtQuizService: LearningAtQuizUseCase {
     }
     
     func fetchKanjiListAtQuiz(quizList: [Kanji], _ completion: @escaping (Result<[KanjiQuiz], Error>) -> Void) {
-        let todaysKanjiCount = userDefaultsRepository.quizCount
+        let todaysKanjiCount = userDefaultsRepository.getQuizCount()
         var quizList = quizList.shuffled()
         if quizList.count > todaysKanjiCount {
             quizList = Array(quizList[..<todaysKanjiCount])
@@ -40,5 +41,13 @@ final class LearningAtQuizService: LearningAtQuizUseCase {
                 completion(.success(result))
             }
         }
+    }
+    
+    func getQuizCount() -> Int {
+        userDefaultsRepository.getQuizCount()
+    }
+    
+    func setQuizCount(_ newValue: Int) {
+        userDefaultsRepository.setQuizCount(newValue)
     }
 }

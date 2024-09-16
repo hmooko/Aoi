@@ -33,16 +33,17 @@ struct BookmarksListView: View {
                 viewModel.isFloatMakingBookmarksView = true
             }
         } label: {
-            Image(systemName: "doc.badge.plus")
+            Image(systemName: "plus")
         }
         .foregroundStyle(.white)
         .padding()
-        .background(Color(.blue))
-        .clipShape(.circle)
+        .background(Color("primary"))
+        .clipShape(.rect(cornerRadius: 15))
         .padding(30)
     }
 }
 
 #Preview {
     BookmarksListView(viewModel: BookmarksListViewModel(container: DIContainer()))
+        .environmentObject(Router())
 }

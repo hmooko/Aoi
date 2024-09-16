@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+protocol LearningAtQuizUseCase {
+    func fetchKanjiListAtQuiz(quizList: [Kanji], _ completion: @escaping (Result<[KanjiQuiz], Error>) -> Void)
+    
+    func getQuizCount() -> Int
+    func setQuizCount(_ newValue: Int)
+}

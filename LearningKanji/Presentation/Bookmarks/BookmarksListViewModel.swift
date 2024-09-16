@@ -16,7 +16,7 @@ final class BookmarksListViewModel: ObservableObject {
     
     init(container: DIContainer) {
         self.container = container
-        self.bookmarksUseCase = container.makeBookmarksUseCase()
+        self.bookmarksUseCase = container.bookmarksUseCase()
         fetchBookmarksList()
     }
     

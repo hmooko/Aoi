@@ -14,6 +14,8 @@ protocol LearningKanji {
 }
 
 struct LearningKanjiView: View {
+    @EnvironmentObject private var router: Router
+    
     @State private var learningMode: LearningMode = .list
     @State private var isCovered = false
     @State private var kanjiList: [Kanji]
@@ -21,6 +23,7 @@ struct LearningKanjiView: View {
     
     init(kanjiList: [Kanji]) {
         self._kanjiList = State(initialValue: kanjiList)
+        UISegmentedControl.appearance().backgroundColor = UIColor(named: "secondary")
     }
     
     var body: some View {
@@ -40,38 +43,42 @@ struct LearningKanjiView: View {
         }
         .environmentObject(coveredKanjiList)
         .toolbar {
-            Picker("select viewMode", selection: $learningMode) {
-                Image(systemName: "list.bullet").tag(LearningMode.list)
-                Image(systemName: "list.bullet.rectangle.portrait").tag(LearningMode.card)
-            }.pickerStyle(.segmented)
-            
-            Menu {
-                Button {
-                    withAnimation {
-                        isCovered.toggle()
+            ToolbarItem(placement: .topBarTrailing) {
+                Picker("select viewMode", selection: $learningMode) {
+                    Image(systemName: "list.bullet").tag(LearningMode.list)
+                    Image(systemName: "list.bullet.rectangle.portrait").tag(LearningMode.card)
+                }
+                .pickerStyle(.segmented)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        withAnimation {
+                            isCovered.toggle()
+                        }
+                    } label: {
+                        if isCovered == true {
+                            Image(systemName: "checkmark")
+                        }
+                        Text("한자만 보이기")
+                    }
+                    
+                    Button("한자 섞기") {
+                        withAnimation {
+                            kanjiList = kanjiList.shuffled()
+                        }
                     }
                 } label: {
-                    if isCovered == true {
-                        Image(systemName: "checkmark")
-                    }
-                    Text("한자만 보이기")
+                    Image(systemName: "ellipsis.circle")
+                        .foregroundStyle(.white)
                 }
-                
-                Button("카드 섞기") {
-                    withAnimation {
-                        print(kanjiList.map {$0.korean})
-                        print(kanjiList.shuffled().map {$0.korean})
-                        kanjiList = kanjiList.shuffled()
-                        print(kanjiList.map {$0.korean})
-                    }
-                }
-            } label: {
-                Image(systemName: "ellipsis.circle")
             }
         }
+        .aoiDefaultNavigationBar(router: router)
     }
 }
 
 #Preview {
     LearningKanjiView(kanjiList: Kanji.sampleKanjiList)
+        .environmentObject(Router())
 }

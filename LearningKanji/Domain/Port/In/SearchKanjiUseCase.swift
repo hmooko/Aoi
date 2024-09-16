@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol SearchKanjiUseCase {
+    func execute(_ requestText: String, completion: @escaping (Result<[Kanji], Error>) -> Void)
+}

@@ -8,6 +8,12 @@
 import Foundation
 
 protocol UserDefaultsRepository {
-    var todaysKanjiCount: Int { get set }
-    var quizCount: Int { get set }
+    func getTodaysKanjiCount() -> Int
+    func setTodaysKanjiCount(_ newValue: Int)
+    
+    func getQuizCount() -> Int
+    func setQuizCount(_ newValue: Int)
+    
+    func getTodaysKanjiGrade() -> [Grade]
+    func setTodaysKanjiGrade(_ newValue: [Grade])
 }

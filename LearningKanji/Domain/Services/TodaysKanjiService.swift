@@ -8,6 +8,7 @@
 import Foundation
 
 final class TodaysKanjiService: TodaysKanjiUseCase {
+    
     private let commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
     private let userDefaultsRepository: UserDefaultsRepository
     
@@ -22,12 +23,30 @@ final class TodaysKanjiService: TodaysKanjiUseCase {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let commonlyUsedKanji):
-                print(self.userDefaultsRepository.todaysKanjiGrade)
-                let kanjiList = commonlyUsedKanji.getByGrade(grade: self.userDefaultsRepository.todaysKanjiGrade)
-                let todaysKanjiList = self.todaysKanji(kanjiList: kanjiList, length: self.userDefaultsRepository.todaysKanjiCount)
+                if self.getTodaysKanjiGrade().count == 0 {
+                    self.setTodaysKanjiGrade([.first])
+                }
+                let kanjiList = commonlyUsedKanji.getByGrade(grade: self.userDefaultsRepository.getTodaysKanjiGrade())
+                let todaysKanjiList = self.todaysKanji(kanjiList: kanjiList, length: self.userDefaultsRepository.getTodaysKanjiCount())
                 completion(.success(todaysKanjiList))
             }
         }
+    }
+    
+    func getTodaysKanjiCount() -> Int {
+        userDefaultsRepository.getTodaysKanjiCount()
+    }
+    
+    func setTodaysKanjiCount(_ newValue: Int) {
+        userDefaultsRepository.setTodaysKanjiCount(newValue)
+    }
+    
+    func getTodaysKanjiGrade() -> Set<Grade> {
+        Set(userDefaultsRepository.getTodaysKanjiGrade())
+    }
+    
+    func setTodaysKanjiGrade(_ newValue: Set<Grade>) {
+        userDefaultsRepository.setTodaysKanjiGrade(Array(newValue))
     }
 }
 

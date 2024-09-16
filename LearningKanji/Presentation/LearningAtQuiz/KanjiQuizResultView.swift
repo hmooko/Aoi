@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct KanjiQuizResultView: View {
+    @EnvironmentObject private var container: DIContainer
+    @State private var selectedKanji: Kanji? = nil
     private let rightAnswer: [Kanji]
     private let wrongAnswer: [Kanji]
     
@@ -28,22 +30,38 @@ struct KanjiQuizResultView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            ScrollView {
+        List {
+            VStack(alignment: .center, spacing: 20) {
                 Text("정답률")
-                    .font(.title)
+                    .pretendardMedium(size: 25)
+                    
                 Text("\(rightAnswer.count) / \(rightAnswer.count + wrongAnswer.count)")
-                    .font(.system(size: 80))
+                    .pretendardMedium(size: 80)
                 
-                ForEach(wrongAnswer) { kanji in
-                    KanjiRow(kanji: kanji)
-                        .padding()
-                    Divider().padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                }
-                Spacer()
+                Text("스와이프하여 틀린 한자를 북마크할 수 있습니다.")
+                    .pretendardMedium(size: 15)
+                    .foregroundStyle(.gray)
+                    
             }
-            .scrollIndicators(.hidden)
+            .frame(maxWidth: .infinity)
+            .listRowSeparator(.hidden)
+            
+            ForEach(wrongAnswer) { kanji in
+                KanjiRow(kanji: kanji)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                         Button {
+                             selectedKanji = kanji
+                         } label: {
+                             Image(systemName: "bookmark")
+                         }.tint(Color("primary"))
+                     }
+            }
+            .listRowSeparator(.hidden)
         }
+        .listStyle(.plain)
+        .sheet(item: $selectedKanji, content: { kanji in
+            BookmarkKanjiView(kanji, container: container)
+        })
     }
 }
 

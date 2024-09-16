@@ -13,7 +13,7 @@ struct KanjiQuizCard: View {
     var body: some View {
         VStack {
             Text(kanjiQuiz.answer.kanji)
-                .font(.system(size: 120))
+                .pretendardMedium(size: 110)
             
             VStack(spacing: 20) {
                 ForEach(kanjiQuiz.selections, id: \.self) { kanji in
@@ -21,35 +21,14 @@ struct KanjiQuizCard: View {
                         kanjiQuiz.select(kanji)
                     } label: {
                         VStack(alignment: .leading) {
-                            if kanji.meaning != "無し" {
-                                HStack {
-                                    Text("훈")
-                                        .foregroundStyle(.white)
-                                        .background(Color.gray)
-                                        .clipShape(.rect(cornerRadius: 5))
-                                        .font(.title2)
-                                    Text(kanji.meaning)
-                                        .font(.title2)
-                                }
-                            }
-                            
-                            if kanji.sound != "無し" {
-                                HStack {
-                                    Text("음")
-                                        .foregroundStyle(.white)
-                                        .background(Color.black)
-                                        .clipShape(.rect(cornerRadius: 5))
-                                        .font(.title2)
-                                    Text(kanji.sound)
-                                        .font(.title2)
-                                }
-                            }
+                            MeaningAndSound(kanji: kanji, size: 15)
                         }
                         .padding()
-                        .frame(maxWidth: .infinity, maxHeight: 100)
-                        .background(kanjiQuiz.selection == kanji ? Color.yellow : Color(.white))
+                        .frame(maxWidth: .infinity)
+                        .background(kanjiQuiz.selection == kanji ? Color("primary") : Color(.white))
                         .clipShape(.rect(cornerRadius: 15))
                     }
+                    .buttonStyle(.plain)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                 }
             }

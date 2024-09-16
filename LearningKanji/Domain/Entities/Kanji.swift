@@ -35,6 +35,16 @@ struct Kanji: Identifiable, Equatable, Decodable, Hashable {
             korean: "집 가"
         )
     
+    static var sampleKanji1 =
+        Kanji(
+            id: 0,
+            kanji: "家",
+            grade: "초등학교2학년",
+            sound: "か、け",
+            meaning: "無し",
+            korean: "집 가"
+        )
+    
     static var sampleKanjiList = [
         Kanji(
             id: 1,

@@ -9,41 +9,61 @@ import Foundation
 import SwiftUI
 
 final class DIContainer: ObservableObject {
+    // MARK: - Services
+    private let todaysKanjiService: TodaysKanjiUseCase? = nil
+    private let learningByGradeService: LearningByGradeUseCase? = nil
+    private let learningAtQuizService: LearningAtQuizUseCase? = nil
+    private let bookmarksService: BookmarksUseCase? = nil
+    private let searchKanjiService: SearchKanjiUseCase? = nil
     
     // MARK: - singleton
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage()
-    private let userDefaultsRepository = DefaultUserDefaultsRepository()
-    private var bookmarksRepository: BookmarksRepository? = nil
 
     // MARK: - Use Cases
-    func makeTodaysKanjiUseCase() -> TodaysKanjiUseCase {
-        DefaultTodaysKanjiUseCase(
-            commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
-            userDefaultsRepository: makeUserDefaultsRepository()
-        )
+    func todaysKanjiUseCase() -> TodaysKanjiUseCase {
+        guard let todaysKanjiService = self.todaysKanjiService else {
+            return TodaysKanjiService(
+                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
+                userDefaultsRepository: makeUserDefaultsRepository()
+            )
+        }
+        
+        return todaysKanjiService
     }
     
-    func makeLearningByGradeUseCase() -> LearningByGradeUseCase {
-        DefaultLearningByGradeUseCase(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+    func learningByGradeUseCase() -> LearningByGradeUseCase {
+        guard let learningByGradeService = self.learningByGradeService else {
+            return LearningByGradeService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        }
+        
+        return learningByGradeService
     }
     
-    func makeLearningAtQuizUseCase() -> LearningAtQuizUseCase {
-        DefaultLearningAtQuizUseCase(
-            userDefaultsRepository: makeUserDefaultsRepository(),
-            commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
-        )
+    func learningAtQuizUseCase() -> LearningAtQuizUseCase {
+        guard let learningAtQuizService = self.learningAtQuizService else {
+            return LearningAtQuizService(
+                userDefaultsRepository: makeUserDefaultsRepository(),
+                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
+            )
+        }
+        
+        return learningAtQuizService
     }
     
-    func makeSeetingsUseCase() -> SettingsUseCase {
-        DefaultSettingsUseCase(userDefaultsRepository: makeUserDefaultsRepository())
+    func bookmarksUseCase() -> BookmarksUseCase {
+        guard let bookmarksService = self.bookmarksService else {
+            return BookmarksService(bookmarksRepository: makeBoookmarksRepository())
+        }
+        
+        return bookmarksService
     }
     
-    func makeBookmarksUseCase() -> BookmarksUseCase {
-        DefaultBookmarksUseCase(bookmarksRepository: makeBoookmarksRepository())
-    }
-    
-    func makeSearchKanjiUseCase() -> SearchKanjiUseCase {
-        DefaultSearchKanjiUseCase(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+    func searchKanjiUseCase() -> SearchKanjiUseCase {
+        guard let searchKanjiService = self.searchKanjiService else {
+            return SearchKanjiService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        }
+        
+        return searchKanjiService
     }
     
     // MARK: - Repository
@@ -52,15 +72,10 @@ final class DIContainer: ObservableObject {
     }
     
     private func makeUserDefaultsRepository() -> UserDefaultsRepository {
-        userDefaultsRepository
+        DefaultUserDefaultsRepository()
     }
     
     private func makeBoookmarksRepository() -> BookmarksRepository {
-        guard let bookmarksRepository = self.bookmarksRepository else {
-            self.bookmarksRepository = DefaultBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
-            return self.bookmarksRepository!
-        }
-        
-        return bookmarksRepository
+        DefaultBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
     }
 }

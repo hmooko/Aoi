@@ -21,7 +21,8 @@ struct MakingBookmarksView: View {
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {
-                TextField("BookmarksName", text: self.$title)
+                TextField("제목", text: self.$title)
+                    .pretendardBold(size: 18)
                     .focused($isFocused)
                     .foregroundStyle(.black)
                     .background(Color(.systemGray6))
@@ -35,6 +36,7 @@ struct MakingBookmarksView: View {
                     isFocused = false
                     title = ""
                 }
+                .pretendardMedium(size: 18)
                 .padding(10)
                 .background(Color.white)
                 .foregroundStyle(Color.black)
@@ -45,8 +47,9 @@ struct MakingBookmarksView: View {
                     createAction(title)
                     isFocused = false
                 }
+                .pretendardMedium(size: 18)
                 .padding(10)
-                .background(Color.blue)
+                .background(Color("primary"))
                 .foregroundStyle(Color.white)
                 .clipShape(.rect(cornerRadius: 10))
             }

@@ -7,58 +7,62 @@
 
 import SwiftUI
 
-struct KanjiCardListView: View, LearningKanji {
+struct KanjiCardListView: View {
     @Binding var kanjiList: [Kanji]
     @Binding var coveredSoundAndMeaning: Bool
     @EnvironmentObject var coveredKanjiList: CoveredKanjiList
+    @EnvironmentObject var container: DIContainer
+    
     @State var index = 0
     @State var sliderValue = 1.0
+    @State var isBookmark = false
     
     var body: some View {
-        GeometryReader { g in
-            VStack {
-                kanjiCardList(geometry: g)
-                
-                slider
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Button {
-                        withAnimation {
-                            index -= 1
-                        }
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                    }.disabled(index == 0)
-                    
-                    Button {
-                        withAnimation {
-                            index += 1
-                        }
-                    } label: {
-                        Image(systemName: "chevron.forward")
-                    }.disabled(index == kanjiList.count - 1)
-                    Spacer()
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "bookmark")
+        VStack {
+            kanjiCardList()
+            
+            slider
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button {
+                    withAnimation {
+                        sliderValue -= 1
                     }
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }.disabled(index == 0)
+                
+                Button {
+                    withAnimation {
+                        sliderValue += 1
+                    }
+                } label: {
+                    Image(systemName: "chevron.forward")
+                }.disabled(index == kanjiList.count - 1)
+                Spacer()
+                Button {
+                    isBookmark = true
+                } label: {
+                    Image(systemName: "bookmark")
                 }
             }
         }
+        .sheet(isPresented: $isBookmark, content: {
+            BookmarkKanjiView(kanjiList[index], container: container)
+        })
     }
     
     @ViewBuilder
-    private func kanjiCardList(geometry g: GeometryProxy) -> some View {
+    private func kanjiCardList() -> some View {
         VStack {
             TabView(selection: $index) {
                 ForEach(kanjiList.indices, id: \.self) { index in
                     ZStack {
-                        FlipableKanjiCard(kanji: kanjiList[index], geometry: g)
+                        FlipableKanjiCard(kanji: kanjiList[index])
                             .opacity(coveredSoundAndMeaning ? 1.0 : 0)
                         
-                        KanjiCard(kanji: kanjiList[index], geometry: g)
+                        KanjiCard(kanji: kanjiList[index])
                             .opacity(coveredSoundAndMeaning ? 0 : 1.0)
                     }
                 }
@@ -68,7 +72,7 @@ struct KanjiCardListView: View, LearningKanji {
                 sliderValue = Double(index + 1)
             }
         }
-        .background(Color(.systemGray6))
+        .background(Color("background"))
     }
     
     @ViewBuilder
@@ -98,4 +102,5 @@ struct KanjiCardListView: View, LearningKanji {
 #Preview {
     KanjiCardListView(kanjiList: .constant(Kanji.sampleKanjiList), coveredSoundAndMeaning: .constant(false))
         .environmentObject(CoveredKanjiList())
+        .environmentObject(DIContainer())
 }

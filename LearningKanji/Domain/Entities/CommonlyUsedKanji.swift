@@ -14,6 +14,14 @@ struct CommonlyUsedKanji {
         return kanjiList.filter { $0.meaning.contains(text) || $0.sound.contains(text) || $0.korean.contains(text) || $0.grade.contains(text) }
     }
     
+    func getByGrade(grade: [Grade]) -> [Kanji] {
+        var result: [Kanji] = []
+        for grade in grade {
+            result += kanjiList.filter { $0.grade == grade.rawValue }
+        }
+        return result
+    }
+    
     func getByRandom(length: Int) -> [Kanji] {
         if length < 1 { return [] }
         

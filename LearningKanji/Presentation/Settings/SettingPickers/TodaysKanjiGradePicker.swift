@@ -25,7 +25,11 @@ struct TodaysKanjiGradePicker: View {
                 settingsList("중학교", grade: middle)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
-    
+            
+            Spacer()
+            Text("학년을 선택하지 않을 시 초등학교 1학년으로 설정됩니다.")
+                .pretendardMedium(size: 15)
+                .foregroundStyle(.gray)
         }
         .safeAreaInset(edge: .top) {
             VStack { }
@@ -93,12 +97,12 @@ struct TodaysKanjiGradePicker: View {
 
 extension TodaysKanjiGradePicker {
     func insertGrade(grade: Grade) {
-        container.makeTodaysKanjiUseCase().setTodaysKanjiGrade(container.makeTodaysKanjiUseCase().getTodaysKanjiGrade().union([grade]))
+        container.todaysKanjiUseCase().setTodaysKanjiGrade(container.todaysKanjiUseCase().getTodaysKanjiGrade().union([grade]))
         loadState()
     }
     
     func removeGrade(grade: Grade) {
-        container.makeTodaysKanjiUseCase().setTodaysKanjiGrade(container.makeTodaysKanjiUseCase().getTodaysKanjiGrade().subtracting([grade]))
+        container.todaysKanjiUseCase().setTodaysKanjiGrade(container.todaysKanjiUseCase().getTodaysKanjiGrade().subtracting([grade]))
         loadState()
     }
     
@@ -107,10 +111,12 @@ extension TodaysKanjiGradePicker {
     }
     
     func loadState() {
-        self.todaysKanjiGrade = container.makeTodaysKanjiUseCase().getTodaysKanjiGrade()
+        self.todaysKanjiGrade = container.todaysKanjiUseCase().getTodaysKanjiGrade()
     }
 }
 
 #Preview {
     TodaysKanjiGradePicker()
+        .environmentObject(Router())
+        .environmentObject(DIContainer())
 }

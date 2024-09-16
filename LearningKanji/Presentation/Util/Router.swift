@@ -8,18 +8,13 @@
 import Foundation
 import SwiftUI
 
-protocol AppView {
-    func scene() -> AppScene
-}
-
 enum AppScene: Hashable {
-    case homeScene
     case settingScene
-    case searchScene
-    case bookmarksScene
     case quizScene(_ kanjiList: [Kanji])
     case learningScene(_ kanjiList: [Kanji])
+    case learningBookmarks(_ bookmarks: Bookmarks)
     case modifyBookmarksScene(_ bookmarks: Bookmarks)
+    case todaysKanjiGradePickerScene
 }
 
 class Router: ObservableObject {
