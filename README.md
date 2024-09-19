@@ -13,10 +13,10 @@
 - 학습이 잘 안되거나 모아서 공부하고 싶은 한자들을 북마크할 수 있습니다.
 - 북마크된 한자들을 퀴즈로 공부할 수 있습니다.
 
-## Screenshot
+## 📌 Screenshot
 ![스크린샷 2024-09-18 오후 11 49 34](https://github.com/user-attachments/assets/b44a1f99-09ef-48ab-90a1-0dded525cd8b)
 
-## 프로젝트 구조
+## 📁 프로젝트 구조
 ```
 .
 ├── Application
