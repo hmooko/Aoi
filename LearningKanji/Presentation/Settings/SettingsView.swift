@@ -31,36 +31,6 @@ struct SettingsView: View {
         ZStack {
             ScrollView {
                 
-                /*
-                HStack {
-                    Text("계정")
-                        .pretendardMedium(size: 16)
-                        .foregroundStyle(.gray)
-                        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                .background(Color("tertiary"))
-                
-                HStack {
-                    Text("계정")
-                    Spacer()
-                    Button {
-                        if Auth.auth().currentUser != nil {
-                            print(Auth.auth().currentUser)
-                            router.push(.userScene)
-                        } else {
-                            router.push(.signInScene)
-                        }
-                    } label: {
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(Color("primary"))
-                    }
-                }
-                .pretendardMedium(size: 18)
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                */
-                
                 settingDivider(text: "오늘의 퀴즈") {
                     todaysKanjiCountPicker
                     Divider()
@@ -71,19 +41,6 @@ struct SettingsView: View {
                     quizCountPicker
                     Divider()
                 }
-                
-                /*
-                Spacer()
-                Button {
-                    do {
-                        try Auth.auth().signOut()
-                    } catch {
-                        
-                    }
-                } label: {
-                    Text("로그아웃")
-                }
-                 */
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
