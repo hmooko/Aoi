@@ -91,20 +91,22 @@ struct SettingsView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func settingDivider(text: String, _ content: @escaping () -> some View) -> some View {
-        HStack {
-            Text(text)
-                .pretendardMedium(size: 16)
-                .foregroundStyle(.gray)
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-            Spacer()
+        VStack {
+            HStack {
+                Text(text)
+                    .pretendardMedium(size: 16)
+                    .foregroundStyle(.gray)
+                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color("tertiary"))
+            
+            content()
         }
-        .frame(maxWidth: .infinity)
-        .background(Color("tertiary"))
-        
-        content()
     }
 }
 
