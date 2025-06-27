@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ICloudBookmarksUseCase {
-    func backup()
+    func backup(completion: @escaping (Error?) -> Void)
     func load()
 }
 
@@ -21,11 +21,12 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
         self.cloudKitBookmarksRepository = cloudKitBookmarksRepository
     }
     
-    func backup() {
+    func backup(completion: @escaping (Error?) -> Void) {
+        sleep(5)
         cloudKitBookmarksRepository.fetchBookmarks { result in
             switch result {
             case .failure(let error):
-                print(error)
+                completion(error)
             case .success(let cloudBookmarksList):
                 for bookmarks in cloudBookmarksList {
                     self.cloudKitBookmarksRepository.removeBookmarks(id: bookmarks.id)
@@ -36,7 +37,7 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
         bookmarksRepository.fetchBookmarks { result in
             switch result {
             case .failure(let error):
-                print(error)
+                completion(error)
             case .success(let localBookmarksList):
                 for bookmarks in localBookmarksList {
                     self.cloudKitBookmarksRepository.createBookmarksRecord(id: bookmarks.id, title: bookmarks.title)
@@ -46,6 +47,7 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
                 }
             }
         }
+        print("Backup complete.")
     }
         
     func load() {

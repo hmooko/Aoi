@@ -9,11 +9,11 @@ import SwiftUI
 import Combine
 import FirebaseAuth
 
-enum SettingPicker: Identifiable {
+enum SettingsPickerStyle: Identifiable {
     var id: Self {
         return self
     }
-    case quizCount, todaysKanjiCount, todaysKanjiGrade
+    case quizCount, todaysKanjiCount, todaysKanjiGrade, backup
 }
 
 struct SettingsView: View {
@@ -25,7 +25,7 @@ struct SettingsView: View {
     @State var quizCount: Int = 5
     @State var todaysKanjiCount: Int = 3
     
-    @State var pickerSheet: SettingPicker?
+    @State var pickerSheetStyle: SettingsPickerStyle?
     
     var body: some View {
         ZStack {
@@ -39,7 +39,10 @@ struct SettingsView: View {
                 
                 settingDivider(text: "퀴즈") {
                     quizCountPicker
-                    Divider()
+                }
+                
+                settingDivider(text: "백업") {
+                    backupPicker
                 }
             }
             .toolbar {
@@ -66,23 +69,11 @@ struct SettingsView: View {
             }
             .background(Color("background"))
             .navigationBarBackButtonHidden()
+            .settingsPickerSheet(style: $pickerSheetStyle)
             .onAppear {
                 loadSettings()
             }
-            .sheet(item: $pickerSheet) { picker in
-                switch picker {
-                case .quizCount:
-                    QuizCountPicker()
-                        .presentationDetents([.medium])
-                case .todaysKanjiCount:
-                    TodaysKanjiCountPicker()
-                        .presentationDetents([.medium])
-                case .todaysKanjiGrade:
-                    TodaysKanjiGradePicker()
-                        .presentationDetents([.large, .medium])
-                }
-            }
-            .onChange(of: pickerSheet) {
+            .onChange(of: pickerSheetStyle) {
                 loadSettings()
             }
             

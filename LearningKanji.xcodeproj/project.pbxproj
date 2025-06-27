@@ -93,7 +93,7 @@
 		F49EE1412CF48C47002AD484 /* TodaysKanjiQuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EE1402CF48C47002AD484 /* TodaysKanjiQuizService.swift */; };
 		F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C762E0CEF50005B1299 /* BackupPicker.swift */; };
 		F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */; };
-		F4DFD0C12C8D7E1000B2E450 /* SettingPickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0C02C8D7E1000B2E450 /* SettingPickers.swift */; };
+		F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0C02C8D7E1000B2E450 /* SettingsPickers.swift */; };
 		F4F60C2E2DD4EA13004010B4 /* User.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C2C2DD4EA13004010B4 /* User.xcdatamodeld */; };
 		F4F60C302DD4F291004010B4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4F60C2F2DD4F291004010B4 /* GoogleService-Info.plist */; };
 		F4F60C362DD5B37A004010B4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C352DD5B37A004010B4 /* UserView.swift */; };
@@ -211,7 +211,7 @@
 		F49EE1402CF48C47002AD484 /* TodaysKanjiQuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiQuizService.swift; sourceTree = "<group>"; };
 		F4A13C762E0CEF50005B1299 /* BackupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPicker.swift; sourceTree = "<group>"; };
 		F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiGradePicker.swift; sourceTree = "<group>"; };
-		F4DFD0C02C8D7E1000B2E450 /* SettingPickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPickers.swift; sourceTree = "<group>"; };
+		F4DFD0C02C8D7E1000B2E450 /* SettingsPickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPickers.swift; sourceTree = "<group>"; };
 		F4F60C2D2DD4EA13004010B4 /* User.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = User.xcdatamodel; sourceTree = "<group>"; };
 		F4F60C2F2DD4F291004010B4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4F60C352DD5B37A004010B4 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -568,7 +568,7 @@
 		F45EC2BF2C907C2C0051CAB6 /* SettingButtons */ = {
 			isa = PBXGroup;
 			children = (
-				F4DFD0C02C8D7E1000B2E450 /* SettingPickers.swift */,
+				F4DFD0C02C8D7E1000B2E450 /* SettingsPickers.swift */,
 				F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */,
 				F45EC2C02C907C4E0051CAB6 /* QuizCountPicker.swift */,
 				F45EC2C22C9082C80051CAB6 /* TodaysKanjiCountPicker.swift */,
@@ -783,7 +783,7 @@
 				F4F60C442DE00F73004010B4 /* LearningAtSentenceService.swift in Sources */,
 				F4F60C362DD5B37A004010B4 /* UserView.swift in Sources */,
 				F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */,
-				F4DFD0C12C8D7E1000B2E450 /* SettingPickers.swift in Sources */,
+				F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */,
 				F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */,
 				F409694A2C50C98E00AB221C /* BookmarksService.swift in Sources */,
 				F40969972C50C99600AB221C /* SettingsView.swift in Sources */,

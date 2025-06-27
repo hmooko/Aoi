@@ -12,17 +12,6 @@ struct UserView: View {
     
     var body: some View {
         VStack {
-            Button {
-                container.iCloudBookmarksUseCase().backup()
-            } label: {
-                Text("backup")
-            }
-            Button {
-                print("실행")
-                container.iCloudBookmarksUseCase().load()
-            } label: {
-                Text("synchronize")
-            }
         }
     }
 }
