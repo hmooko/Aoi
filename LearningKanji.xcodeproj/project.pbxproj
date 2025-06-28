@@ -21,7 +21,6 @@
 		F40969242C50C95400AB221C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969202C50C95400AB221C /* Router.swift */; };
 		F409692E2C50C95D00AB221C /* BookmarksDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969252C50C95D00AB221C /* BookmarksDTO+Mapping.swift */; };
 		F409692F2C50C95D00AB221C /* DefaultBookmarksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */; };
-		F40969302C50C95D00AB221C /* DefaultCommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969282C50C95D00AB221C /* DefaultCommonlyUsedKanjiRepository.swift */; };
 		F40969312C50C95D00AB221C /* DefaultUserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */; };
 		F40969322C50C95D00AB221C /* CommonlyUsedKanjiStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F409692B2C50C95D00AB221C /* CommonlyUsedKanjiStorage.swift */; };
 		F40969442C50C98E00AB221C /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969332C50C98E00AB221C /* Bookmarks.swift */; };
@@ -29,7 +28,6 @@
 		F40969462C50C98E00AB221C /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969352C50C98E00AB221C /* Grade.swift */; };
 		F40969472C50C98E00AB221C /* Kanji.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969362C50C98E00AB221C /* Kanji.swift */; };
 		F40969482C50C98E00AB221C /* BookmarksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969382C50C98E00AB221C /* BookmarksRepository.swift */; };
-		F40969492C50C98E00AB221C /* CommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969392C50C98E00AB221C /* CommonlyUsedKanjiRepository.swift */; };
 		F409694A2C50C98E00AB221C /* BookmarksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F409693B2C50C98E00AB221C /* BookmarksService.swift */; };
 		F409694B2C50C98E00AB221C /* LearningAtQuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F409693C2C50C98E00AB221C /* LearningAtQuizService.swift */; };
 		F409694C2C50C98E00AB221C /* LearningByGradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F409693D2C50C98E00AB221C /* LearningByGradeService.swift */; };
@@ -103,8 +101,6 @@
 		F4F60C422DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C412DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift */; };
 		F4F60C442DE00F73004010B4 /* LearningAtSentenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C432DE00F73004010B4 /* LearningAtSentenceService.swift */; };
 		F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C452DE01012004010B4 /* LearningSentence.swift */; };
-		F4F60C482DE0112D004010B4 /* OpenAISentenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C472DE0112D004010B4 /* OpenAISentenceRepository.swift */; };
-		F4F60C4A2DE01239004010B4 /* OpenAISentenceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C492DE01239004010B4 /* OpenAISentenceRepositoryImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +138,6 @@
 		F40969202C50C95400AB221C /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		F40969252C50C95D00AB221C /* BookmarksDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BookmarksDTO+Mapping.swift"; sourceTree = "<group>"; };
 		F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultBookmarksRepository.swift; sourceTree = "<group>"; };
-		F40969282C50C95D00AB221C /* DefaultCommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUserDefaultsRepository.swift; sourceTree = "<group>"; };
 		F409692B2C50C95D00AB221C /* CommonlyUsedKanjiStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonlyUsedKanjiStorage.swift; sourceTree = "<group>"; };
 		F40969332C50C98E00AB221C /* Bookmarks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
@@ -150,7 +145,6 @@
 		F40969352C50C98E00AB221C /* Grade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		F40969362C50C98E00AB221C /* Kanji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kanji.swift; sourceTree = "<group>"; };
 		F40969382C50C98E00AB221C /* BookmarksRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksRepository.swift; sourceTree = "<group>"; };
-		F40969392C50C98E00AB221C /* CommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F409693B2C50C98E00AB221C /* BookmarksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksService.swift; sourceTree = "<group>"; };
 		F409693C2C50C98E00AB221C /* LearningAtQuizService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningAtQuizService.swift; sourceTree = "<group>"; };
 		F409693D2C50C98E00AB221C /* LearningByGradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningByGradeService.swift; sourceTree = "<group>"; };
@@ -221,8 +215,6 @@
 		F4F60C412DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarksDTO+MappingTests.swift"; sourceTree = "<group>"; };
 		F4F60C432DE00F73004010B4 /* LearningAtSentenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningAtSentenceService.swift; sourceTree = "<group>"; };
 		F4F60C452DE01012004010B4 /* LearningSentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSentence.swift; sourceTree = "<group>"; };
-		F4F60C472DE0112D004010B4 /* OpenAISentenceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAISentenceRepository.swift; sourceTree = "<group>"; };
-		F4F60C492DE01239004010B4 /* OpenAISentenceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAISentenceRepositoryImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,10 +341,8 @@
 			isa = PBXGroup;
 			children = (
 				F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */,
-				F40969282C50C95D00AB221C /* DefaultCommonlyUsedKanjiRepository.swift */,
 				F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */,
 				F4F60C392DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift */,
-				F4F60C492DE01239004010B4 /* OpenAISentenceRepositoryImpl.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -590,11 +580,9 @@
 			isa = PBXGroup;
 			children = (
 				F40969382C50C98E00AB221C /* BookmarksRepository.swift */,
-				F40969392C50C98E00AB221C /* CommonlyUsedKanjiRepository.swift */,
 				F40969412C50C98E00AB221C /* UserDefaultsRepository.swift */,
 				F47272FE2DD332320087168D /* AppleAuthRepository.swift */,
 				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
-				F4F60C472DE0112D004010B4 /* OpenAISentenceRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -775,7 +763,6 @@
 				F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */,
 				F46DAD082C972BA7009E83E0 /* SwipeAction.swift in Sources */,
 				F409698B2C50C99600AB221C /* KanjiRow.swift in Sources */,
-				F4F60C482DE0112D004010B4 /* OpenAISentenceRepository.swift in Sources */,
 				F40969322C50C95D00AB221C /* CommonlyUsedKanjiStorage.swift in Sources */,
 				F40969482C50C98E00AB221C /* BookmarksRepository.swift in Sources */,
 				F409697F2C50C99600AB221C /* BookmarksListView.swift in Sources */,
@@ -814,14 +801,11 @@
 				F409698A2C50C99600AB221C /* KanjiListView.swift in Sources */,
 				F41682D82C6489BC00671E47 /* LearningBookmarks.swift in Sources */,
 				F40969852C50C99600AB221C /* FlipableKanjiCard.swift in Sources */,
-				F4F60C4A2DE01239004010B4 /* OpenAISentenceRepositoryImpl.swift in Sources */,
-				F40969302C50C95D00AB221C /* DefaultCommonlyUsedKanjiRepository.swift in Sources */,
 				F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */,
 				F40969242C50C95400AB221C /* Router.swift in Sources */,
 				F40969842C50C99600AB221C /* HomeView.swift in Sources */,
 				F40969912C50C99600AB221C /* LearningAtQuizViewModel.swift in Sources */,
 				F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */,
-				F40969492C50C98E00AB221C /* CommonlyUsedKanjiRepository.swift in Sources */,
 				F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */,
 				F40969872C50C99600AB221C /* KanjiCardListView.swift in Sources */,
 				F409698C2C50C99600AB221C /* KanjiQuiz.swift in Sources */,

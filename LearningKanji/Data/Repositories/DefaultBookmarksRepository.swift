@@ -123,7 +123,7 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         return result
     }
     
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void) {
+    func fetchBookmarks() async throws -> [Bookmarks] {
         guard let kanjiList = commonlyUsedKanjiStorage.kanjiList else {
             completion(.failure(CommonlyUsedKanjiRepositoryError.notLoadCommonlyUsedKanji))
             return
