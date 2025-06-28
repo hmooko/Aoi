@@ -22,7 +22,9 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
     }
     
     func backup(completion: @escaping (Error?) -> Void) {
-        sleep(5)
+        let group = DispatchGroup()
+        
+        group.enter()
         cloudKitBookmarksRepository.fetchBookmarks { result in
             switch result {
             case .failure(let error):
@@ -31,9 +33,12 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
                 for bookmarks in cloudBookmarksList {
                     self.cloudKitBookmarksRepository.removeBookmarks(id: bookmarks.id)
                 }
+                group.leave()
+                print("cloud에 있는 데이터 모두 삭제 완료")
             }
         }
         
+        group.enter()
         bookmarksRepository.fetchBookmarks { result in
             switch result {
             case .failure(let error):
@@ -45,9 +50,14 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
                         self.cloudKitBookmarksRepository.createBookmarkedKanjiRecord(bookmarksId: bookmarks.id, kanjiId: kanji.id)
                     }
                 }
+                group.leave()
+                print("backup complete")
             }
         }
-        print("Backup complete.")
+        
+        group.notify(queue: .main) {
+            completion(nil)
+        }
     }
         
     func load() {
