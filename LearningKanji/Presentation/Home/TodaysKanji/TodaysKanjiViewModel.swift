@@ -28,7 +28,9 @@ extension TodaysKanjiView {
                         self.todaysKanjiList = todaysKanjiList
                     }
                 } catch {
-                    self.todaysKanjiList = []
+                    await MainActor.run {
+                        self.todaysKanjiList = []
+                    }
                     print(error)
                 }
             }
