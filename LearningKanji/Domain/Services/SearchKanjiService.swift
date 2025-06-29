@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchKanjiUseCase {
-    func execute(_ requestText: String, completion: @escaping (Result<[Kanji], Error>) -> Void)
+    func execute(_ requestText: String) async throws -> [Kanji]
 }
 
 final class SearchKanjiService: SearchKanjiUseCase {
@@ -18,14 +18,8 @@ final class SearchKanjiService: SearchKanjiUseCase {
         self.commonlyUsedKanjiRepository = commonlyUsedKanjiRepository
     }
     
-    func execute(_ requestText: String, completion: @escaping (Result<[Kanji], Error>) -> Void) {
-        commonlyUsedKanjiRepository.fetchCommonlyUsedKanji { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let commonlyUsedKanji):
-                completion(.success(commonlyUsedKanji.getByText(requestText)))
-            }
-        }
+    func execute(_ requestText: String) async throws -> [Kanji] {
+        let commonlyUsedKanji = try await commonlyUsedKanjiRepository.fetchCommonlyUsedKanji()
+        return commonlyUsedKanji.getByText(requestText)
     }
 }

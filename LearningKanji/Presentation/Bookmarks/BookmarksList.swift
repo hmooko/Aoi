@@ -72,7 +72,6 @@ struct BookmarksList: View {
             }.padding()
         }
         .onChange(of: router.path) {
-            print("jfiej")
             viewModel.fetchBookmarksList()
         }
     }

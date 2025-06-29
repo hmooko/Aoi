@@ -21,12 +21,15 @@ extension TodaysKanjiView {
         }
         
         func fetchTodaysKanjiList() {
-            container.todaysKanjiUseCase().fetchTodaysKanjiList { result in
-                switch result {
-                case .failure(_):
+            Task {
+                do {
+                    let todaysKanjiList = try await container.todaysKanjiUseCase().fetchTodaysKanjiList()
+                    await MainActor.run {
+                        self.todaysKanjiList = todaysKanjiList
+                    }
+                } catch {
                     self.todaysKanjiList = []
-                case .success(let kanjiList):
-                    self.todaysKanjiList = kanjiList
+                    print(error)
                 }
             }
         }

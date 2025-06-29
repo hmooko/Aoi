@@ -79,17 +79,16 @@
 		F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FFDAA2C6D9B4400C847AC /* LearningByGradeRow.swift */; };
 		F46FFDB02C6DC61000C847AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F46FFDAE2C6DC61000C847AC /* InfoPlist.strings */; };
 		F46FFDBC2C6F54E900C847AC /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FFDBB2C6F54E900C847AC /* Fonts.swift */; };
-		F47272F92DD2F47E0087168D /* AppleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272F82DD2F47E0087168D /* AppleAuthService.swift */; };
 		F47272FD2DD331940087168D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FC2DD331940087168D /* User.swift */; };
-		F47272FF2DD332320087168D /* AppleAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FE2DD332320087168D /* AppleAuthRepository.swift */; };
 		F47273032DD417900087168D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47273022DD417900087168D /* FirebaseAuth */; };
 		F47273052DD417900087168D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F47273042DD417900087168D /* FirebaseFirestore */; };
 		F472730A2DD429040087168D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47273092DD429040087168D /* LoginView.swift */; };
 		F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472730B2DD472A60087168D /* LoginViewModel.swift */; };
 		F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */; };
 		F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */; };
-		F49EE1412CF48C47002AD484 /* TodaysKanjiQuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EE1402CF48C47002AD484 /* TodaysKanjiQuizService.swift */; };
 		F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C762E0CEF50005B1299 /* BackupPicker.swift */; };
+		F4A13C792E0FCFB7005B1299 /* CommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */; };
+		F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */; };
 		F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */; };
 		F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0C02C8D7E1000B2E450 /* SettingsPickers.swift */; };
 		F4F60C2E2DD4EA13004010B4 /* User.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C2C2DD4EA13004010B4 /* User.xcdatamodeld */; };
@@ -99,7 +98,6 @@
 		F4F60C3C2DD64B48004010B4 /* CloudKitBookmarksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */; };
 		F4F60C3E2DD64BAD004010B4 /* ICloudBookmarksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C3D2DD64BAD004010B4 /* ICloudBookmarksService.swift */; };
 		F4F60C422DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C412DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift */; };
-		F4F60C442DE00F73004010B4 /* LearningAtSentenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C432DE00F73004010B4 /* LearningAtSentenceService.swift */; };
 		F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C452DE01012004010B4 /* LearningSentence.swift */; };
 /* End PBXBuildFile section */
 
@@ -195,15 +193,14 @@
 		F46FFDB22C6DC65100C847AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F46FFDBA2C6F517A00C847AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F46FFDBB2C6F54E900C847AC /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		F47272F82DD2F47E0087168D /* AppleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthService.swift; sourceTree = "<group>"; };
 		F47272FC2DD331940087168D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		F47272FE2DD332320087168D /* AppleAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthRepository.swift; sourceTree = "<group>"; };
 		F47273092DD429040087168D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F472730B2DD472A60087168D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningAndSound.swift; sourceTree = "<group>"; };
 		F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSwipe.swift; sourceTree = "<group>"; };
-		F49EE1402CF48C47002AD484 /* TodaysKanjiQuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiQuizService.swift; sourceTree = "<group>"; };
 		F4A13C762E0CEF50005B1299 /* BackupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPicker.swift; sourceTree = "<group>"; };
+		F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
+		F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiGradePicker.swift; sourceTree = "<group>"; };
 		F4DFD0C02C8D7E1000B2E450 /* SettingsPickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPickers.swift; sourceTree = "<group>"; };
 		F4F60C2D2DD4EA13004010B4 /* User.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = User.xcdatamodel; sourceTree = "<group>"; };
@@ -213,7 +210,6 @@
 		F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitBookmarksRepository.swift; sourceTree = "<group>"; };
 		F4F60C3D2DD64BAD004010B4 /* ICloudBookmarksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudBookmarksService.swift; sourceTree = "<group>"; };
 		F4F60C412DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarksDTO+MappingTests.swift"; sourceTree = "<group>"; };
-		F4F60C432DE00F73004010B4 /* LearningAtSentenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningAtSentenceService.swift; sourceTree = "<group>"; };
 		F4F60C452DE01012004010B4 /* LearningSentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSentence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -340,6 +336,7 @@
 		F409692A2C50C95D00AB221C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */,
 				F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */,
 				F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */,
 				F4F60C392DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift */,
@@ -387,10 +384,7 @@
 				F409693D2C50C98E00AB221C /* LearningByGradeService.swift */,
 				F409693E2C50C98E00AB221C /* SearchKanjiService.swift */,
 				F40969402C50C98E00AB221C /* TodaysKanjiService.swift */,
-				F49EE1402CF48C47002AD484 /* TodaysKanjiQuizService.swift */,
-				F47272F82DD2F47E0087168D /* AppleAuthService.swift */,
 				F4F60C3D2DD64BAD004010B4 /* ICloudBookmarksService.swift */,
-				F4F60C432DE00F73004010B4 /* LearningAtSentenceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -579,9 +573,9 @@
 		F49EE13B2CF48B63002AD484 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */,
 				F40969382C50C98E00AB221C /* BookmarksRepository.swift */,
 				F40969412C50C98E00AB221C /* UserDefaultsRepository.swift */,
-				F47272FE2DD332320087168D /* AppleAuthRepository.swift */,
 				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
 			);
 			path = Repositories;
@@ -753,6 +747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */,
 				F40969832C50C99600AB221C /* ModifyBookmarksView.swift in Sources */,
 				F40969982C50C99600AB221C /* TodaysKanjiCell.swift in Sources */,
 				F40969902C50C99600AB221C /* LearningAtQuizView.swift in Sources */,
@@ -767,22 +762,20 @@
 				F40969482C50C98E00AB221C /* BookmarksRepository.swift in Sources */,
 				F409697F2C50C99600AB221C /* BookmarksListView.swift in Sources */,
 				F40969442C50C98E00AB221C /* Bookmarks.swift in Sources */,
-				F4F60C442DE00F73004010B4 /* LearningAtSentenceService.swift in Sources */,
 				F4F60C362DD5B37A004010B4 /* UserView.swift in Sources */,
 				F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */,
 				F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */,
 				F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */,
 				F409694A2C50C98E00AB221C /* BookmarksService.swift in Sources */,
 				F40969972C50C99600AB221C /* SettingsView.swift in Sources */,
+				F4A13C792E0FCFB7005B1299 /* CommonlyUsedKanjiRepository.swift in Sources */,
 				F409694B2C50C98E00AB221C /* LearningAtQuizService.swift in Sources */,
-				F49EE1412CF48C47002AD484 /* TodaysKanjiQuizService.swift in Sources */,
 				F40969952C50C99600AB221C /* LearningMode.swift in Sources */,
 				F40969882C50C99600AB221C /* CoveredKanjiList.swift in Sources */,
 				F40969942C50C99600AB221C /* LearningKanjiView.swift in Sources */,
 				F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */,
 				F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */,
 				F40969922C50C99600AB221C /* LearningByGradeListView.swift in Sources */,
-				F47272FF2DD332320087168D /* AppleAuthRepository.swift in Sources */,
 				F472730A2DD429040087168D /* LoginView.swift in Sources */,
 				F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */,
 				F40969962C50C99600AB221C /* SearchKanjiView.swift in Sources */,
@@ -821,7 +814,6 @@
 				F409692F2C50C95D00AB221C /* DefaultBookmarksRepository.swift in Sources */,
 				F409694D2C50C98E00AB221C /* SearchKanjiService.swift in Sources */,
 				F409694C2C50C98E00AB221C /* LearningByGradeService.swift in Sources */,
-				F47272F92DD2F47E0087168D /* AppleAuthService.swift in Sources */,
 				F409694F2C50C98E00AB221C /* TodaysKanjiService.swift in Sources */,
 				F409698F2C50C99600AB221C /* KanjiQuizResultView.swift in Sources */,
 				F409697E2C50C99600AB221C /* BookmarksList.swift in Sources */,

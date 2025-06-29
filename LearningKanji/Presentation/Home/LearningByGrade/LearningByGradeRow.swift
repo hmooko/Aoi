@@ -93,19 +93,22 @@ extension LearningByGradeRow {
             self.container = container
             self.learningByGradeUseCase = container.learningByGradeUseCase()
             
-            self.learningByGradeUseCase.fetchKanjiListByGrade(grade: grade) { result in
-                switch result {
-                case .success(let kanjiList):
-                    if grade != .middle {
-                        self.kanjiList = kanjiList
-                    } else {
-                        if index == 6 {
-                            self.kanjiList = Array(kanjiList[((index - 1) * 190)...])
+            Task {
+                do {
+                    let kanjiList = try await learningByGradeUseCase.fetchKanjiListByGrade(grade: grade)
+                    
+                    await MainActor.run {
+                        if grade != .middle {
+                            self.kanjiList = kanjiList
                         } else {
-                            self.kanjiList = Array(kanjiList[(index - 1) * 190..<index * 190])
+                            if index == 6 {
+                                self.kanjiList = Array(kanjiList[((index - 1) * 190)...])
+                            } else {
+                                self.kanjiList = Array(kanjiList[(index - 1) * 190..<index * 190])
+                            }
                         }
                     }
-                case .failure(let error):
+                } catch {
                     print(error)
                 }
             }

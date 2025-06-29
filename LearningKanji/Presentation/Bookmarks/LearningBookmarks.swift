@@ -129,16 +129,27 @@ extension LearningBookmarks {
         }
         
         func fetchBookmarks() {
-            container.bookmarksUseCase().fetchBookmarks { result in
-                if case.success(let success) = result {
-                    self.bookmarks = success.filter { $0.id == self.bookmarks.id }[0]
-                    self.kanjiList = self.bookmarks.contents
+            Task {
+                do {
+                    let success = try await container.bookmarksUseCase().fetchBookmarks()
+                    await MainActor.run {
+                        self.bookmarks = success.filter { $0.id == self.bookmarks.id }[0]
+                        self.kanjiList = self.bookmarks.contents
+                    }
+                } catch {
+                    print(error)
                 }
             }
         }
         
         func deleteBookmarks(_ bookmarksId: Int) {
-            container.bookmarksUseCase().removeBookmarks(bookmarksId)
+            Task {
+                do {
+                    try await container.bookmarksUseCase().removeBookmarks(bookmarksId)
+                } catch {
+                    print(error)
+                }
+            }
         }
     }
 }

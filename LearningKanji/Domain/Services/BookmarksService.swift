@@ -8,74 +8,63 @@
 import Foundation
 
 protocol BookmarksUseCase {
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void)
-    func createBookmarks(_ title: String)
-    func bookmark(_ kanjiId: Int, bookmarksId: Int) -> Bool
-    func removeBookmarks(_ id: Int)
-    func removeBookmark(_ kanjiId: Int, bookmarksId: Int)
+    func fetchBookmarks() async throws -> [Bookmarks]
+    func createBookmarks(_ title: String) async throws
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws
+    func removeBookmarks(_ id: Int) async throws
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws
 }
 
-enum BookmarksError: Error {
+enum BookmarksError: Error, LocalizedError {
     case bookmarkedKanjiDuplicationError
+    
+    var errorDescription: String? {
+        switch self {
+        case .bookmarkedKanjiDuplicationError:
+            return "북마크에 이미 같은 한자가 존재합니다."
+        }
+    }
 }
 
 final class BookmarksService: BookmarksUseCase {
+    
     private let bookmarksRepository: BookmarksRepository
     
     init(bookmarksRepository: BookmarksRepository) {
         self.bookmarksRepository = bookmarksRepository
     }
     
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void) {
-        bookmarksRepository.fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let bookmarks):
-                completion(.success(bookmarks))
-            }
-        }
-    }
-    
-    func createBookmarks(_ title: String) {
-        bookmarksRepository.createBookmarks(title: title)
-    }
-    
-    func bookmark(_ kanjiId: Int, bookmarksId: Int) -> Bool {
-        var isSuccess = true
+    func fetchBookmarks() async throws -> [Bookmarks] {
+        let bookmarksList: [Bookmarks] = try await bookmarksRepository.fetchBookmarks()
         
-        fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
-                isSuccess = true
-            case.success(let bookmarksList):
-                let bookmarks = bookmarksList.filter { $0.id == bookmarksId }
-                if bookmarks[0].contents.contains(where: { kanji -> Bool in
-                    if kanji.id == kanjiId {
-                        return true
-                    } else {
-                        return false
-                    }
-                }) {
-                    isSuccess = false
-                }
-                
+        return bookmarksList
+    }
+    
+    func createBookmarks(_ title: String) async throws {
+        try await bookmarksRepository.createBookmarks(title: title)
+    }
+    
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
+        let bookmarksList = try await fetchBookmarks()
+        let bookmarks = bookmarksList.filter { $0.id == bookmarksId }
+        if bookmarks[0].contents.contains(where: { kanji -> Bool in
+            if kanji.id == kanjiId {
+                return true
+            } else {
+                return false
             }
+        }) {
+            throw BookmarksError.bookmarkedKanjiDuplicationError
+        } else {
+            try await bookmarksRepository.bookmark(kanjiId, bookmarksId: bookmarksId)
         }
-        
-        if isSuccess {
-            bookmarksRepository.bookmark(kanjiId, bookmarksId: bookmarksId)
-        }
-        return isSuccess
     }
     
-    func removeBookmarks(_ id: Int) {
-        bookmarksRepository.removeBookmarks(id)
+    func removeBookmarks(_ id: Int) async throws {
+        try await bookmarksRepository.removeBookmarks(id)
     }
     
-    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) {
-        bookmarksRepository.removeBookmark(kanjiId, bookmarksId: bookmarksId)
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
+        try await bookmarksRepository.removeBookmark(kanjiId, bookmarksId: bookmarksId)
     }
-    
-    
 }

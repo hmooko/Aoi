@@ -9,11 +9,11 @@ import Foundation
 
 protocol BookmarksRepository {
     func fetchBookmarks() async throws -> [Bookmarks]
-    func createBookmarks(title: String) async
-    func createBookmarks(title: String, id: Int) async
-    func modifyBookmarks(id: Int, title: String) async
-    func bookmark(_ kanjiId: Int, bookmarksId: Int) async
-    func removeBookmarks(_ id: Int) async
-    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async
-    func removeAllBookmarks() async
+    func createBookmarks(title: String) async throws
+    func createBookmarks(title: String, id: Int) async throws
+    func modifyBookmarks(id: Int, title: String) async throws
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws
+    func removeBookmarks(_ id: Int) async throws
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws
+    func removeAllBookmarks() async throws
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 protocol CloudKitBookmarksRepository {
-    func createBookmarksRecord(id: Int, title: String)
-    func createBookmarkedKanjiRecord(bookmarksId: Int, kanjiId: Int)
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void)
-    func removeBookmarks(id: Int)
-    func removeBookmarkedKanji(bookmarksId: Int, kanjiId: Int)
+    func createBookmarksRecord(id: Int, title: String) async throws
+    func createBookmarkedKanjiRecord(bookmarksId: Int, kanjiId: Int) async throws
+    func fetchBookmarks() async throws -> [Bookmarks]
+    func removeBookmarks(id: Int) async throws
+    func removeBookmarkedKanji(bookmarksId: Int, kanjiId: Int) async
 }

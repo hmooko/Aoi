@@ -61,12 +61,14 @@ final class SearchKanjiViewModel: ObservableObject {
     }
     
     func searchKanji() {
-        container.searchKanjiUseCase().execute(text) { result in
-            switch result {
-            case .failure(let error):
+        Task {
+            do {
+                let response = try await container.searchKanjiUseCase().execute(text)
+                await MainActor.run {
+                    self.response = response
+                }
+            } catch {
                 print(error)
-            case .success(let response):
-                self.response = response
             }
         }
     }

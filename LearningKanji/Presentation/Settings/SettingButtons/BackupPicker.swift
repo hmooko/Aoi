@@ -19,22 +19,23 @@ struct BackupPicker: View {
             Section {
                 Button {
                     isBackingUP = true
-                    DispatchQueue.global().async {
-                        container.iCloudBookmarksUseCase().backup() { error in
-                            if let error = error {
-                                
-                                print(error)
+                    Task {
+                        do {
+                            try await container.iCloudBookmarksUseCase().backup()
+                            await MainActor.run {
+                                isBackingUP = false
+                                isAlert = true
+                                alertTitle = "백업 성공"
+                                alertMessage = "iCloud에 백업되었습니다."
+                            }
+                        } catch {
+                            print(error)
+                            await MainActor.run {
                                 isBackingUP = false
                                 isAlert = true
                                 alertTitle = "백업 실패"
                                 alertMessage = "apple 계정에 문제가 있는 지 확인해 주세요."
-                                return
                             }
-                            
-                            isBackingUP = false
-                            isAlert = true
-                            alertTitle = "백업 성공"
-                            alertMessage = "iCloud에 백업되었습니다."
                         }
                     }
                 } label: {
