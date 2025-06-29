@@ -107,6 +107,8 @@ extension BookmarkKanjiView {
                         alertMessage = "이미 추가된 한자입니다."
                         alertShown = true
                     }
+                } catch {
+                    print(error)
                 }
             }
             /*
@@ -125,8 +127,10 @@ extension BookmarkKanjiView {
                 do {
                     try await bookmarksUseCase.createBookmarks(title)
                     try await self.fetchBookmarksList()
-                    if let bookmarks = bookmarksList.filter({ $0.title == title}).first {
-                        self.bookmark(bookmarksId: bookmarks.id)
+                    await MainActor.run {
+                        if let bookmarks = bookmarksList.filter({ $0.title == title}).first {
+                            self.bookmark(bookmarksId: bookmarks.id)
+                        }
                     }
                 } catch {
                     print("북마크 생성에 실패했습니다: \(error)")
