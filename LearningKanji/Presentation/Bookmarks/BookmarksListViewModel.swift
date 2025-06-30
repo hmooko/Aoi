@@ -19,7 +19,7 @@ final class BookmarksListViewModel: ObservableObject {
         self.bookmarksUseCase = container.bookmarksUseCase()
         Task {
             do {
-                try await fetchBookmarksList()
+                try await performFetchBookmarksList()
             } catch {
                 print(error)
             }
@@ -27,10 +27,20 @@ final class BookmarksListViewModel: ObservableObject {
     }
     
     // MARK: - output
-    private func fetchBookmarksList() async throws {
+    private func performFetchBookmarksList() async throws {
         let bookmarksList = try await bookmarksUseCase.fetchBookmarks()
         await MainActor.run {
             self.bookmarksList = bookmarksList
+        }
+    }
+    
+    func fetchBookmarksList() {
+        Task {
+            do {
+                try await performFetchBookmarksList()
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -39,7 +49,7 @@ final class BookmarksListViewModel: ObservableObject {
         Task {
             do {
                 try await bookmarksUseCase.createBookmarks(title)
-                try await fetchBookmarksList()
+                try await performFetchBookmarksList()
             } catch {
                 print(error)
             }
@@ -50,7 +60,7 @@ final class BookmarksListViewModel: ObservableObject {
         Task {
             do {
                 try await bookmarksUseCase.removeBookmarks(id)
-                try await fetchBookmarksList()
+                try await performFetchBookmarksList()
             } catch {
                 print(error)
             }

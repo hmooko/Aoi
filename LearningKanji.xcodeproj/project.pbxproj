@@ -67,6 +67,7 @@
 		F40969A22C50C9AA00AB221C /* japanese_kanji_2136.json in Resources */ = {isa = PBXBuildFile; fileRef = F40969A12C50C9AA00AB221C /* japanese_kanji_2136.json */; };
 		F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969A52C62387D00AB221C /* BookmarkKanjiView.swift */; };
 		F41682D82C6489BC00671E47 /* LearningBookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41682D72C6489BC00671E47 /* LearningBookmarks.swift */; };
+		F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4563D472E12C2F300677133 /* BookmarksCell.swift */; };
 		F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EC2C02C907C4E0051CAB6 /* QuizCountPicker.swift */; };
 		F45EC2C32C9082C80051CAB6 /* TodaysKanjiCountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EC2C22C9082C80051CAB6 /* TodaysKanjiCountPicker.swift */; };
 		F45FF2B92DC1FA4D00E89371 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F45FF2B82DC1FA4D00E89371 /* FirebaseAnalytics */; };
@@ -182,6 +183,7 @@
 		F40969A12C50C9AA00AB221C /* japanese_kanji_2136.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = japanese_kanji_2136.json; sourceTree = "<group>"; };
 		F40969A52C62387D00AB221C /* BookmarkKanjiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkKanjiView.swift; sourceTree = "<group>"; };
 		F41682D72C6489BC00671E47 /* LearningBookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningBookmarks.swift; sourceTree = "<group>"; };
+		F4563D472E12C2F300677133 /* BookmarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCell.swift; sourceTree = "<group>"; };
 		F45EC2C02C907C4E0051CAB6 /* QuizCountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCountPicker.swift; sourceTree = "<group>"; };
 		F45EC2C22C9082C80051CAB6 /* TodaysKanjiCountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiCountPicker.swift; sourceTree = "<group>"; };
 		F45FF2C22DC2264500E89371 /* LearningKanji.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LearningKanji.entitlements; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				F40969512C50C99600AB221C /* BookmarksList.swift */,
+				F4563D472E12C2F300677133 /* BookmarksCell.swift */,
 				F40969522C50C99600AB221C /* BookmarksListView.swift */,
 				F40969532C50C99600AB221C /* BookmarksListViewModel.swift */,
 				F40969542C50C99600AB221C /* BookmarksMenu.swift */,
@@ -802,6 +805,7 @@
 				F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */,
 				F40969872C50C99600AB221C /* KanjiCardListView.swift in Sources */,
 				F409698C2C50C99600AB221C /* KanjiQuiz.swift in Sources */,
+				F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */,
 				F40969312C50C95D00AB221C /* DefaultUserDefaultsRepository.swift in Sources */,
 				F40969892C50C99600AB221C /* FlipableKanjiRow.swift in Sources */,
 				F40969462C50C98E00AB221C /* Grade.swift in Sources */,
