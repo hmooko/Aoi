@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import CryptoKit
+import Playgrounds
 
 final class DefaultsCloudKitBookmarksRepository: CloudKitBookmarksRepository {
     
@@ -116,41 +117,47 @@ final class DefaultsCloudKitBookmarksRepository: CloudKitBookmarksRepository {
     }
     
     func removeBookmarks(id: Int) async throws {
-        let recordID = CKRecord.ID(recordName: "\(id)")
-        
-    
-        func delete(id: CKRecord.ID) {
-            container.publicCloudDatabase.delete(withRecordID: id) { recordID, error in
-                print("삭제완료:")
-            }
-        }
-        
-        let predicate = NSPredicate(value: true)
+        // 1. 먼저 BookmarkedKanji에서 해당 bookmarks_id의 모든 레코드 id 추출
+        let predicate = NSPredicate(format: "bookmarks_id == %d", id)
         let query = CKQuery(recordType: "BookmarkedKanji", predicate: predicate)
-        let operation = CKQueryOperation(query: query)
-        operation.database = container.privateCloudDatabase
-            
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            operation.recordMatchedBlock = { recordID, result in
-                switch result {
-                case .success(let record):
-                    if record["bookmarks_id"] as! Int == id {
-                        self.container.privateCloudDatabase.delete(withRecordID: recordID) { recordID, error in
-                            print("삭제완료:")
-                            continuation.resume()
-                        }
-                    }
-                case .failure(let error):
-                    print(error)
+        let recordsToDelete = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CKRecord.ID], Error>) in
+            container.privateCloudDatabase.perform(query, inZoneWith: nil) { records, error in
+                if let error = error {
                     continuation.resume(throwing: error)
+                } else {
+                    let ids = records?.map { $0.recordID } ?? []
+                    continuation.resume(returning: ids)
                 }
             }
-            
-            operation.start()
-            
-            container.privateCloudDatabase.delete(withRecordID: recordID) { recordID, error in
-                print("삭제완료:")
-                continuation.resume()
+        }
+
+        // 2. 해당 레코드들 삭제 (병렬 처리)
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for recordID in recordsToDelete {
+                group.addTask {
+                    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                        self.container.privateCloudDatabase.delete(withRecordID: recordID) { _, error in
+                            if let error = error {
+                                continuation.resume(throwing: error)
+                            } else {
+                                continuation.resume()
+                            }
+                        }
+                    }
+                }
+            }
+            try await group.waitForAll()
+        }
+
+        // 3. 마지막으로 Bookmarks 자체 삭제
+        let bookmarksRecordID = CKRecord.ID(recordName: "\(id)")
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            container.privateCloudDatabase.delete(withRecordID: bookmarksRecordID) { _, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
             }
         }
     }
@@ -159,7 +166,8 @@ final class DefaultsCloudKitBookmarksRepository: CloudKitBookmarksRepository {
         let recordID = CKRecord.ID(recordName: "\(bookmarksId)-\(kanjiId)")
         
         container.privateCloudDatabase.delete(withRecordID: recordID) { recordID, error in
-            print("삭제완료:")
+            print("삭제완료")
         }
     }
 }
+

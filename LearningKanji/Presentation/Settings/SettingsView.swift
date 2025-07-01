@@ -30,7 +30,6 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                
                 settingDivider(text: "오늘의 퀴즈") {
                     todaysKanjiCountPicker
                     Divider()
@@ -41,7 +40,7 @@ struct SettingsView: View {
                     quizCountPicker
                 }
                 
-                settingDivider(text: "백업") {
+                settingDivider(text: "백업 및 불러오기") {
                     backupPicker
                 }
             }
@@ -69,7 +68,7 @@ struct SettingsView: View {
             }
             .background(Color("background"))
             .navigationBarBackButtonHidden()
-            .settingsPickerSheet(style: $pickerSheetStyle)
+            .settingsPickerSheet(style: $pickerSheetStyle, container: container)
             .onAppear {
                 loadSettings()
             }

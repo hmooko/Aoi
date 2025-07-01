@@ -71,7 +71,8 @@ final class DIContainer: ObservableObject {
         guard let icloudBookmarksService = self.iCloudBookmarksService else {
             return ICloudBookmarksService(
                 bookmarksRepository: makeBoookmarksRepository(),
-                cloudKitBookmarksRepository: makeCloudKitBookmarksRepository()
+                cloudKitBookmarksRepository: makeCloudKitBookmarksRepository(),
+                userDefaultsRepository: makeUserDefaultsRepository()
             )
         }
         

@@ -58,14 +58,14 @@ extension SettingsView {
     }
     
     var backupPicker: some View {
-        SettingsPicker(text: "백업", status: "") {
+        SettingsPicker(text: "백업 및 불러오기", status: "") {
             pickerSheetStyle = .backup
         }
     }
 }
 
 extension View {
-    func settingsPickerSheet(style: Binding<SettingsPickerStyle?>) -> some View {
+    func settingsPickerSheet(style: Binding<SettingsPickerStyle?>, container: DIContainer) -> some View {
         self
             .sheet(item: style) { picker in
                 switch picker {
@@ -79,8 +79,8 @@ extension View {
                     TodaysKanjiGradePicker()
                         .presentationDetents([.large, .medium])
                 case .backup:
-                    BackupPicker()
-                        .presentationDetents([.large, .medium])
+                    BackupPicker(viewModel: .init(container: container))
+                        .presentationDetents([.large])
                 }
             }
     }

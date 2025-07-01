@@ -8,21 +8,50 @@
 import Foundation
 
 protocol ICloudBookmarksUseCase {
+    func getIsBackingUp() -> Bool
+    func setIsBackingUP(_ newValue: Bool)
+    func getIsLoadingBackup() -> Bool
+    func setIsLoadingBackup(_ newValue: Bool)
     func backup() async throws
     func load() async throws
 }
 
 final class ICloudBookmarksService: ICloudBookmarksUseCase {
+    
     private let bookmarksRepository: BookmarksRepository
     private let cloudKitBookmarksRepository: CloudKitBookmarksRepository
+    private let userDefaultsRepository: UserDefaultsRepository
     
-    init(bookmarksRepository: BookmarksRepository, cloudKitBookmarksRepository: CloudKitBookmarksRepository) {
+    init(
+        bookmarksRepository: BookmarksRepository,
+        cloudKitBookmarksRepository: CloudKitBookmarksRepository,
+        userDefaultsRepository: UserDefaultsRepository
+    ) {
         self.bookmarksRepository = bookmarksRepository
         self.cloudKitBookmarksRepository = cloudKitBookmarksRepository
+        self.userDefaultsRepository = userDefaultsRepository
+    }
+    
+    func getIsBackingUp() -> Bool {
+        userDefaultsRepository.getIsBackingUp()
+    }
+    
+    func setIsBackingUP(_ newValue: Bool) {
+        userDefaultsRepository.setIsBackingUP(newValue)
+    }
+    
+    func getIsLoadingBackup() -> Bool {
+        userDefaultsRepository.getIsLoadingBackup()
+    }
+    
+    func setIsLoadingBackup(_ newValue: Bool) {
+        userDefaultsRepository.setIsLoadingBackup(newValue)
     }
     
     func backup() async throws {
+        sleep(5)
         print("백업 시작")
+        userDefaultsRepository.setIsBackingUP(true)
         print("1단계: 클라우드 데이터 삭제 시작...")
         let cloudBookmarksList = try await cloudKitBookmarksRepository.fetchBookmarks()
         try await withThrowingTaskGroup(of: Void.self) { group in
@@ -49,11 +78,13 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
             }
             try await group.waitForAll()
         }
+        userDefaultsRepository.setIsBackingUP(false)
         print("백업 완료")
     }
         
     func load() async throws {
         print("load 시작")
+        userDefaultsRepository.setIsLoadingBackup(true)
         try await bookmarksRepository.removeAllBookmarks()
         
         let cloudBookmarksList = try await cloudKitBookmarksRepository.fetchBookmarks()
@@ -69,6 +100,7 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
             }
             try await group.waitForAll()
         }
+        userDefaultsRepository.setIsBackingUP(false)
         print("로컬에 데이터 저장 완료.")
     }
 }
