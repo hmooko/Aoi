@@ -17,29 +17,53 @@ final class BookmarksListViewModel: ObservableObject {
     init(container: DIContainer) {
         self.container = container
         self.bookmarksUseCase = container.bookmarksUseCase()
-        fetchBookmarksList()
+        Task {
+            do {
+                try await performFetchBookmarksList()
+            } catch {
+                print(error)
+            }
+        }
     }
     
     // MARK: - output
+    private func performFetchBookmarksList() async throws {
+        let bookmarksList = try await bookmarksUseCase.fetchBookmarks()
+        await MainActor.run {
+            self.bookmarksList = bookmarksList
+        }
+    }
+    
     func fetchBookmarksList() {
-        bookmarksUseCase.fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
+        Task {
+            do {
+                try await performFetchBookmarksList()
+            } catch {
                 print(error)
-            case .success(let bookmarksList):
-                self.bookmarksList = bookmarksList
             }
         }
     }
     
     // MARK: - input
     func createBookmarks(_ title: String) {
-        bookmarksUseCase.createBookmarks(title)
-        fetchBookmarksList()
+        Task {
+            do {
+                try await bookmarksUseCase.createBookmarks(title)
+                try await performFetchBookmarksList()
+            } catch {
+                print(error)
+            }
+        }
     }
     
     func deleteBookmarks(_ id: Int) {
-        bookmarksUseCase.removeBookmarks(id)
-        fetchBookmarksList()
+        Task {
+            do {
+                try await bookmarksUseCase.removeBookmarks(id)
+                try await performFetchBookmarksList()
+            } catch {
+                print(error)
+            }
+        }
     }
 }

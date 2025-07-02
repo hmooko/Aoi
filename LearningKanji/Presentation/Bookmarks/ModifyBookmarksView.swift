@@ -29,32 +29,32 @@ struct ModifyBookmarksView: View {
                     viewModel.searchKanji()
                 }
         }
-            .environment(\.editMode, .constant(EditMode.active))
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        router.pop()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(.white)
-                    }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("완료") {
-                        viewModel.modify()
-                        router.pop()
-                    }
-                    .foregroundStyle(.white)
+        .environment(\.editMode, .constant(EditMode.active))
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(.white)
                 }
             }
-            .navigationBarBackButtonHidden()
-            .safeAreaInset(edge: .top) {
-                VStack { }
-                    .frame(maxWidth: .infinity)
-                    .background(Color("primary"))
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("완료") {
+                    viewModel.modify()
+                    router.pop()
+                }
+                .foregroundStyle(.white)
             }
-            .toolbarBackground(.hidden, for: .navigationBar)
+        }
+        .navigationBarBackButtonHidden()
+        .safeAreaInset(edge: .top) {
+            VStack { }
+                .frame(maxWidth: .infinity)
+                .background(Color("primary"))
+        }
+        .toolbarBackground(.hidden, for: .navigationBar)
     }
     
     @ViewBuilder private var searchBar: some View {
@@ -90,15 +90,25 @@ extension ModifyBookmarksView {
             self.selections = Set(bookmarks.contents.map { $0.id })
         }
         
-        private func bookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) {
-            for id in kanjiIdList {
-                bookmarksUseCase.bookmark(id, bookmarksId: bookmarksId)
+        private func bookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) async throws {
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                for id in kanjiIdList {
+                    group.addTask {
+                        try await self.bookmarksUseCase.bookmark(id, bookmarksId: bookmarksId)
+                    }
+                }
+                try await group.waitForAll()
             }
         }
         
-        private func removeBookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) {
-            for id in kanjiIdList {
-                bookmarksUseCase.removeBookmark(id, bookmarksId: bookmarksId)
+        private func removeBookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) async throws {
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                for id in kanjiIdList {
+                    group.addTask {
+                        try await self.bookmarksUseCase.removeBookmark(id, bookmarksId: bookmarksId)
+                    }
+                }
+                try await group.waitForAll()
             }
         }
         
@@ -108,17 +118,25 @@ extension ModifyBookmarksView {
             let removed = original.subtracting(selections)
             let added = selections.subtracting(original)
             
-            removeBookmark(removed, bookmarksId: bookmarks.id)
-            bookmark(added, bookmarksId: bookmarks.id)
+            Task {
+                do {
+                    try await removeBookmark(removed, bookmarksId: bookmarks.id)
+                    try await bookmark(added, bookmarksId: bookmarks.id)
+                } catch {
+                    print(error)
+                }
+            }
         }
         
         func searchKanji() {
-            container.searchKanjiUseCase().execute(text) { result in
-                switch result {
-                case .failure(let error):
+            Task {
+                do {
+                    let response = try await container.searchKanjiUseCase().execute(text)
+                    await MainActor.run {
+                        self.response = response
+                    }
+                } catch {
                     print(error)
-                case .success(let response):
-                    self.response = response
                 }
             }
         }

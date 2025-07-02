@@ -21,14 +21,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct LearningKanjiApp: App {
     @StateObject private var container = DIContainer()
     @StateObject private var router = Router()
+    @StateObject private var appState = AppState()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            ContentView(container: container)
+            ContentView(viewModel: .init(container: container))
                 .environmentObject(container)
                 .environmentObject(router)
+                .environmentObject(appState)
         }
     }
 }

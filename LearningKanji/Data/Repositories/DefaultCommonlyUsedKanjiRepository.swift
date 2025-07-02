@@ -2,14 +2,10 @@
 //  DefaultCommonlyUsedKanjiRepository.swift
 //  LearningKanji
 //
-//  Created by koohyunmo on 4/1/24.
+//  Created by koohyunmo on 6/28/25.
 //
 
 import Foundation
-
-enum CommonlyUsedKanjiRepositoryError: Error {
-    case notLoadCommonlyUsedKanji
-}
 
 final class DefaultCommonlyUsedKanjiRepository {
     private let commonlyUsedKanjiStorage: CommonlyUsedKanjiStorage
@@ -21,14 +17,13 @@ final class DefaultCommonlyUsedKanjiRepository {
 
 extension DefaultCommonlyUsedKanjiRepository: CommonlyUsedKanjiRepository {
     
-    func fetchCommonlyUsedKanji(completion: @escaping (Result<CommonlyUsedKanji, Error>) -> Void) {
-        guard let kanjiList = commonlyUsedKanjiStorage.kanjiList else {
-            completion(.failure(CommonlyUsedKanjiRepositoryError.notLoadCommonlyUsedKanji))
-            return
+    func fetchCommonlyUsedKanji() async throws -> CommonlyUsedKanji {
+        do {
+            let kanjiList = try await commonlyUsedKanjiStorage.load()
+            return CommonlyUsedKanji(kanjiList: kanjiList)
+        } catch {
+            throw error
         }
-        
-        let commonlyUsedKanji = CommonlyUsedKanji(kanjiList: kanjiList)
-        completion(.success(commonlyUsedKanji))
     }
     
 }

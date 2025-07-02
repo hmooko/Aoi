@@ -11,9 +11,27 @@ final class UserDefaultsKeys {
     static let TODAYS_KANJI_COUNT = "todaysKanjiCount"
     static let QUIZ_COUNT = "quizCount"
     static let TODATS_KANJI_GRADE = "todaysKanjiGrade"
+    static let IS_BACKING_UP = "isBackingUp"
+    static let IS_LOADING_BACKUP = "isLoadingBackup"
 }
 
 final class DefaultUserDefaultsRepository: UserDefaultsRepository {
+    func getIsBackingUp() -> Bool {
+        return UserDefaults.standard.bool(forKey: UserDefaultsKeys.IS_BACKING_UP)
+    }
+    
+    func setIsBackingUP(_ newValue: Bool) {
+        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.IS_BACKING_UP)
+    }
+    
+    func getIsLoadingBackup() -> Bool {
+        return UserDefaults.standard.bool(forKey: UserDefaultsKeys.IS_LOADING_BACKUP)
+    }
+    
+    func setIsLoadingBackup(_ newValue: Bool) {
+        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.IS_LOADING_BACKUP)
+    }
+    
     
     func getTodaysKanjiCount() -> Int {
         if UserDefaults.standard.integer(forKey: UserDefaultsKeys.TODAYS_KANJI_COUNT) == 0 {

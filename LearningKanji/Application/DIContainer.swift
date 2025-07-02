@@ -18,7 +18,7 @@ final class DIContainer: ObservableObject {
     private let iCloudBookmarksService: ICloudBookmarksUseCase? = nil
     
     // MARK: - singleton
-    private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage()
+    private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
 
     // MARK: - Use Cases
     func todaysKanjiUseCase() -> TodaysKanjiUseCase {
@@ -71,7 +71,8 @@ final class DIContainer: ObservableObject {
         guard let icloudBookmarksService = self.iCloudBookmarksService else {
             return ICloudBookmarksService(
                 bookmarksRepository: makeBoookmarksRepository(),
-                cloudKitBookmarksRepository: makeCloudKitBookmarksRepository()
+                cloudKitBookmarksRepository: makeCloudKitBookmarksRepository(),
+                userDefaultsRepository: makeUserDefaultsRepository()
             )
         }
         

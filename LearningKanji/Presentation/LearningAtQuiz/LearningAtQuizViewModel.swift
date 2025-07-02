@@ -20,12 +20,14 @@ class LearningAtQuizViewViewModel: ObservableObject {
     }
     
     func fetchQuizList(quizList kanjiList: [Kanji]) {
-        learningAtQuizUseCase.fetchKanjiListAtQuiz(quizList: kanjiList) { result in
-            switch result {
-            case .failure(let error):
+        Task {
+            do {
+                let quizList = try await learningAtQuizUseCase.fetchKanjiListAtQuiz(quizList: kanjiList)
+                await MainActor.run {
+                    self.quizList = quizList
+                }
+            } catch {
                 print(error)
-            case .success(let quizList):
-                self.quizList = quizList
             }
         }
     }

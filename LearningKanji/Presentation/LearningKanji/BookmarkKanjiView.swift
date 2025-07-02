@@ -78,21 +78,40 @@ extension BookmarkKanjiView {
             self.kanji = kanji
             self.container = container
             bookmarksUseCase = container.bookmarksUseCase()
-            fetchBookmarksList()
-        }
-        
-        func fetchBookmarksList() {
-            bookmarksUseCase.fetchBookmarks { result in
-                switch result {
-                case .failure(let error):
+            Task {
+                do {
+                    try await fetchBookmarksList()
+                } catch {
                     print(error)
-                case .success(let bookmarksList):
-                    self.bookmarksList = bookmarksList
                 }
             }
         }
         
+        private func fetchBookmarksList() async throws {
+            let bookmarksList = try await bookmarksUseCase.fetchBookmarks()
+            await MainActor.run {
+                self.bookmarksList = bookmarksList
+            }
+        }
+        
         func bookmark(bookmarksId: Int) {
+            Task {
+                do {
+                    try await bookmarksUseCase.bookmark(kanji.id, bookmarksId: bookmarksId)
+                    await MainActor.run {
+                        self.alertMessage = "추가되었습니다."
+                        self.alertShown = true
+                    }
+                } catch BookmarksError.bookmarkedKanjiDuplicationError {
+                    await MainActor.run {
+                        alertMessage = "이미 추가된 한자입니다."
+                        alertShown = true
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+            /*
             if !bookmarksUseCase.bookmark(kanji.id, bookmarksId: bookmarksId) {
                 alertMessage = "이미 추가된 한자입니다."
                 alertShown = true
@@ -100,13 +119,22 @@ extension BookmarkKanjiView {
                 self.alertMessage = "추가되었습니다."
                 self.alertShown = true
             }
+             */
         }
         
         func createAndBookmark(title: String) {
-            self.bookmarksUseCase.createBookmarks(title)
-            self.fetchBookmarksList()
-            if let bookmarks = bookmarksList.filter({ $0.title == title}).first {
-                self.bookmark(bookmarksId: bookmarks.id)
+            Task {
+                do {
+                    try await bookmarksUseCase.createBookmarks(title)
+                    try await self.fetchBookmarksList()
+                    await MainActor.run {
+                        if let bookmarks = bookmarksList.filter({ $0.title == title}).first {
+                            self.bookmark(bookmarksId: bookmarks.id)
+                        }
+                    }
+                } catch {
+                    print("북마크 생성에 실패했습니다: \(error)")
+                }
             }
         }
     }

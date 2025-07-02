@@ -8,12 +8,12 @@
 import Foundation
 
 protocol BookmarksRepository {
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void)
-    func createBookmarks(title: String)
-    func createBookmarks(title: String, id: Int)
-    func modifyBookmarks(id: Int, title: String)
-    func bookmark(_ kanjiId: Int, bookmarksId: Int)
-    func removeBookmarks(_ id: Int)
-    func removeBookmark(_ kanjiId: Int, bookmarksId: Int)
-    func removeAllBookmarks()
+    func fetchBookmarks() async throws -> [Bookmarks]
+    func createBookmarks(title: String) async throws
+    func createBookmarks(title: String, id: Int) async throws
+    func modifyBookmarks(id: Int, title: String) async throws
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws
+    func removeBookmarks(_ id: Int) async throws
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws
+    func removeAllBookmarks() async throws
 }

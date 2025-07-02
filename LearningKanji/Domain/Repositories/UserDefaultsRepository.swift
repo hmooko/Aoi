@@ -16,4 +16,9 @@ protocol UserDefaultsRepository {
     
     func getTodaysKanjiGrade() -> [Grade]
     func setTodaysKanjiGrade(_ newValue: [Grade])
+    
+    func getIsBackingUp() -> Bool
+    func setIsBackingUP(_ newValue: Bool)
+    func getIsLoadingBackup() -> Bool
+    func setIsLoadingBackup(_ newValue: Bool)
 }

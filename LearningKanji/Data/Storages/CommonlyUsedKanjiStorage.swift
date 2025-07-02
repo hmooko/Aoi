@@ -7,31 +7,50 @@
 
 import Foundation
 
-final class CommonlyUsedKanjiStorage {
-    var kanjiList: [Kanji]? = nil
+enum StorageError: Error, LocalizedError {
+    case fileNotFound
+    case loadingFailed(Error)
     
-    init() {
+    var errorDescription: String? {
+        switch self {
+        case .fileNotFound:
+            return "한자 데이터 파일을 찾을 수 없습니다."
+        case .loadingFailed(let error):
+            return "한자 데이터를 로드하는 데 실패했습니다: \(error.localizedDescription)"
+        }
+    }
+}
+
+final class CommonlyUsedKanjiStorage {
+    private(set) var kanjiList: [Kanji] = []
+    
+    static let shared = CommonlyUsedKanjiStorage()
+
+    func load() async throws -> [Kanji] {
+        if kanjiList.count != 0 {
+            return kanjiList
+        }
+        
         let data: Data
         
         guard let file = Bundle.main.url(forResource: "japanese_kanji_2136.json", withExtension: nil)
         else {
-            print("Couldn't find 'japanese_kanji_2136.json' in main bundle.")
-            return
+            throw StorageError.fileNotFound
         }
         
         do {
             data = try Data(contentsOf: file)
         } catch {
-            print("Couldn't load 'japanese_kanji_2136.json' from main bundle:\n\(error)")
-            return
+            throw StorageError.loadingFailed(error)
         }
         
         do {
             let decoder = JSONDecoder()
             self.kanjiList = try decoder.decode([Kanji].self, from: data)
         } catch {
-            print("Couldn't parse 'japanese_kanji_2136.json' as \([Kanji].self):\n\(error)")
+            throw StorageError.loadingFailed(error)
         }
+        
+        return kanjiList
     }
-
 }

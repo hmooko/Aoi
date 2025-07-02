@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LearningByGradeUseCase {
-    func fetchKanjiListByGrade(grade: Grade, _ completion: @escaping (Result<[Kanji], Error>) -> Void)
+    func fetchKanjiListByGrade(grade: Grade) async throws -> [Kanji]
 }
 
 final class LearningByGradeService: LearningByGradeUseCase {
@@ -18,15 +18,9 @@ final class LearningByGradeService: LearningByGradeUseCase {
         self.commonlyUsedKanjiRepository = commonlyUsedKanjiRepository
     }
     
-    func fetchKanjiListByGrade(grade: Grade, _ completion: @escaping (Result<[Kanji], Error>) -> Void) {
-        commonlyUsedKanjiRepository.fetchCommonlyUsedKanji { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let commonlyUsedKanji):
-                completion(.success(self.filterKanjiListByGrade(commonlyUsedKanji.kanjiList, grade: grade)))
-            }
-        }
+    func fetchKanjiListByGrade(grade: Grade) async throws -> [Kanji] {
+        let commonlyUsedKanji = try await commonlyUsedKanjiRepository.fetchCommonlyUsedKanji()
+        return filterKanjiListByGrade(commonlyUsedKanji.kanjiList, grade: grade)
     }
 }
 

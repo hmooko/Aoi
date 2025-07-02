@@ -8,6 +8,23 @@
 import Foundation
 import SQLite3
 
+enum SQLiteError: Error, LocalizedError {
+    case prepareFailed
+    case stepFailed
+    case bindFailed
+    
+    var errorDescription: String? {
+        switch self {
+        case .prepareFailed:
+            return "데이터베이스 준비에 실패했습니다"
+        case .stepFailed:
+            return "데이터베이스 작업 실행에 실패했습니다"
+        case .bindFailed:
+            return "데이터베이스 값 바인딩에 실패했습니다"
+        }
+    }
+}
+
 private enum Table: String, CustomStringConvertible {
     case bookmarks = "bookmarks"
     case bookmarkedKanji = "bookmarked_kanji"
@@ -123,25 +140,28 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         return result
     }
     
-    func fetchBookmarks(_ completion: @escaping (Result<[Bookmarks], Error>) -> Void) {
-        guard let kanjiList = commonlyUsedKanjiStorage.kanjiList else {
-            completion(.failure(CommonlyUsedKanjiRepositoryError.notLoadCommonlyUsedKanji))
-            return
-        }
+    func fetchBookmarks() async throws -> [Bookmarks] {
+        async let kanjiList = try commonlyUsedKanjiStorage.load()
         
         var result: [Bookmarks] = []
         let bookmarksTable = getBookmarks()
         let bookmarkedKanjiTable = getBookmarkedKanji()
         
-        for bookmarks in bookmarksTable {
-            let bookmarkedKanjiList = bookmarkedKanjiTable.filter { $0.bookmarksId == bookmarks.id }
-            result.append(bookmarks.toDomain(bookmarkedKanjiList.map { kanjiList[$0.kanjiId] }))
+        do {
+            let loadedKanjiList = try await kanjiList
+            
+            for bookmarks in bookmarksTable {
+                let bookmarkedKanjiList = bookmarkedKanjiTable.filter { $0.bookmarksId == bookmarks.id }
+                result.append(bookmarks.toDomain(bookmarkedKanjiList.map { loadedKanjiList[$0.kanjiId] }))
+            }
+        } catch {
+            throw error
         }
         
-        completion(.success(result))
+        return result
     }
     
-    func createBookmarks(title: String) {
+    func createBookmarks(title: String) async throws {
         let insertQuery = "insert into \(Table.bookmarks) (id, title) values (?, ?);"
         var statement: OpaquePointer? = nil
         
@@ -149,18 +169,18 @@ final class DefaultBookmarksRepository: BookmarksRepository {
             sqlite3_bind_text(statement, 2, NSString(string: title).utf8String, -1, nil)
         }
         else {
-            print("sqlite binding failure")
+            throw SQLiteError.bindFailed
         }
         
         if sqlite3_step(statement) == SQLITE_DONE {
             print("create bookmarks success \(title)")
         }
         else {
-            print("sqlite step failure")
+            throw SQLiteError.stepFailed
         }
     }
     
-    func createBookmarks(title: String, id: Int) {
+    func createBookmarks(title: String, id: Int) async throws {
         let insertQuery = "insert into \(Table.bookmarks) (id, title) values (?, ?);"
         var statement: OpaquePointer? = nil
         
@@ -169,18 +189,18 @@ final class DefaultBookmarksRepository: BookmarksRepository {
             sqlite3_bind_text(statement, 2, NSString(string: title).utf8String, -1, nil)
         }
         else {
-            print("sqlite binding failure")
+            throw SQLiteError.bindFailed
         }
         
         if sqlite3_step(statement) == SQLITE_DONE {
             print("create bookmarks success \(title)")
         }
         else {
-            print("sqlite step failure")
+            throw SQLiteError.stepFailed
         }
     }
     
-    func modifyBookmarks(id: Int, title: String) {
+    func modifyBookmarks(id: Int, title: String) async throws {
         var statement: OpaquePointer?
         // 등호 기호는 =이 아니라 ==이다.
         // string 부분은 작은 따옴표 두 개로 감싸줘야 한다.
@@ -190,19 +210,19 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         if sqlite3_prepare(db, queryString, -1, &statement, nil) != SQLITE_OK {
             let errorMessage = String(cString: sqlite3_errmsg(db))
             print("Error preparing update: \(errorMessage)")
-            return
+            throw SQLiteError.prepareFailed
         }
         // 쿼리 실행.
         if sqlite3_step(statement) != SQLITE_DONE {
             let errorMessage = String(cString: sqlite3_errmsg(db))
             print("Error preparing update: \(errorMessage)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         print("Update has been successfully done")
     }
     
-    func bookmark(_ kanjiId: Int, bookmarksId: Int) {
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
         let insertQuery = "insert into \(Table.bookmarkedKanji) (bookmarks_id, kanji_id) values (?, ?);"
         var statement: OpaquePointer? = nil
         
@@ -211,18 +231,18 @@ final class DefaultBookmarksRepository: BookmarksRepository {
             sqlite3_bind_int(statement, 2, Int32(kanjiId))
         }
         else {
-            print("sqlite binding failure")
+            throw SQLiteError.bindFailed
         }
         
         if sqlite3_step(statement) == SQLITE_DONE {
             print("sqlite insertion success")
         }
         else {
-            print("sqlite step failure")
+            throw SQLiteError.stepFailed
         }
     }
     
-    func removeBookmarks(_ id: Int) {
+    func removeBookmarks(_ id: Int) async throws {
         var stmt:OpaquePointer?
         
         // 북마크 id에 해당되는 한자들 삭제
@@ -231,13 +251,13 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         if sqlite3_prepare_v2(db, DELETE_BOOKMARKED_KANJI_QUERY, -1, &stmt, nil) != SQLITE_OK{
             let errMsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing delete: v1\(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errMsg = String(cString : sqlite3_errmsg(db)!)
             print("delete fail :: \(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         sqlite3_finalize(stmt)
         
@@ -247,18 +267,18 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         if sqlite3_prepare_v2(db, DELETE_BOOKMARKS_QUERY, -1, &stmt, nil) != SQLITE_OK{
             let errMsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing delete: v1\(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errMsg = String(cString : sqlite3_errmsg(db)!)
             print("delete fail :: \(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         sqlite3_finalize(stmt)
     }
     
-    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) {
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
         let DELETE_QUERY = "DELETE FROM \(Table.bookmarkedKanji) WHERE bookmarks_id = \(bookmarksId) AND kanji_id = \(kanjiId)"
         var stmt:OpaquePointer?
         
@@ -266,32 +286,32 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         if sqlite3_prepare_v2(db, DELETE_QUERY, -1, &stmt, nil) != SQLITE_OK{
             let errMsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing delete: v1\(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errMsg = String(cString : sqlite3_errmsg(db)!)
             print("delete fail :: \(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         sqlite3_finalize(stmt)
     }
     
-    func removeAllBookmarks() {
+    func removeAllBookmarks() async throws {
         let REMOVE_ALL_BOOKMARKS_QUERY = "DELETE FROM \(Table.bookmarks)"
         var stmt:OpaquePointer?
         
         print(REMOVE_ALL_BOOKMARKS_QUERY)
-        if sqlite3_prepare_v2(db, REMOVE_ALL_BOOKMARKS_QUERY, -1, &stmt, nil) != SQLITE_OK{
+        if sqlite3_prepare_v2(db, REMOVE_ALL_BOOKMARKS_QUERY, -1, &stmt, nil) != SQLITE_OK {
             let errMsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing delete: v1\(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errMsg = String(cString : sqlite3_errmsg(db)!)
             print("delete fail :: \(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         sqlite3_finalize(stmt)
         
@@ -301,13 +321,13 @@ final class DefaultBookmarksRepository: BookmarksRepository {
         if sqlite3_prepare_v2(db, REMOVE_ALL_BOOKMARK_QUERY, -1, &stmt, nil) != SQLITE_OK{
             let errMsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing delete: v1\(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errMsg = String(cString : sqlite3_errmsg(db)!)
             print("delete fail :: \(errMsg)")
-            return
+            throw SQLiteError.prepareFailed
         }
         sqlite3_finalize(stmt)
     }

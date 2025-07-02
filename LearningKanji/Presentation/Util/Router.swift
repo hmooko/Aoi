@@ -14,8 +14,7 @@ enum AppScene: Hashable {
     case learningScene(_ kanjiList: [Kanji])
     case learningBookmarks(_ bookmarks: Bookmarks)
     case modifyBookmarksScene(_ bookmarks: Bookmarks)
-    case todaysKanjiGradePickerScene
-    case userScene
+    case todaysKanjiGradePickerScene 
     case signInScene
 }
 
@@ -52,8 +51,6 @@ extension View {
                     ModifyBookmarksView(container, bookmarks: bookmarks)
                 case .todaysKanjiGradePickerScene:
                     TodaysKanjiGradePicker()
-                case .userScene:
-                    UserView()
                 case .signInScene:
                     LoginView(viewModel: LoginView.ViewModel())
                 }

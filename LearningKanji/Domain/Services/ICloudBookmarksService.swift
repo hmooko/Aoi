@@ -8,73 +8,99 @@
 import Foundation
 
 protocol ICloudBookmarksUseCase {
-    func backup(completion: @escaping (Error?) -> Void)
-    func load()
+    func getIsBackingUp() -> Bool
+    func setIsBackingUP(_ newValue: Bool)
+    func getIsLoadingBackup() -> Bool
+    func setIsLoadingBackup(_ newValue: Bool)
+    func backup() async throws
+    func load() async throws
 }
 
 final class ICloudBookmarksService: ICloudBookmarksUseCase {
+    
     private let bookmarksRepository: BookmarksRepository
     private let cloudKitBookmarksRepository: CloudKitBookmarksRepository
+    private let userDefaultsRepository: UserDefaultsRepository
     
-    init(bookmarksRepository: BookmarksRepository, cloudKitBookmarksRepository: CloudKitBookmarksRepository) {
+    init(
+        bookmarksRepository: BookmarksRepository,
+        cloudKitBookmarksRepository: CloudKitBookmarksRepository,
+        userDefaultsRepository: UserDefaultsRepository
+    ) {
         self.bookmarksRepository = bookmarksRepository
         self.cloudKitBookmarksRepository = cloudKitBookmarksRepository
+        self.userDefaultsRepository = userDefaultsRepository
     }
     
-    func backup(completion: @escaping (Error?) -> Void) {
-        let group = DispatchGroup()
-        
-        group.enter()
-        cloudKitBookmarksRepository.fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
-                completion(error)
-            case .success(let cloudBookmarksList):
-                for bookmarks in cloudBookmarksList {
-                    self.cloudKitBookmarksRepository.removeBookmarks(id: bookmarks.id)
+    func getIsBackingUp() -> Bool {
+        userDefaultsRepository.getIsBackingUp()
+    }
+    
+    func setIsBackingUP(_ newValue: Bool) {
+        userDefaultsRepository.setIsBackingUP(newValue)
+    }
+    
+    func getIsLoadingBackup() -> Bool {
+        userDefaultsRepository.getIsLoadingBackup()
+    }
+    
+    func setIsLoadingBackup(_ newValue: Bool) {
+        userDefaultsRepository.setIsLoadingBackup(newValue)
+    }
+    
+    func backup() async throws {
+        sleep(5)
+        print("백업 시작")
+        userDefaultsRepository.setIsBackingUP(true)
+        print("1단계: 클라우드 데이터 삭제 시작...")
+        let cloudBookmarksList = try await cloudKitBookmarksRepository.fetchBookmarks()
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for bookmarks in cloudBookmarksList {
+                group.addTask {
+                    try await self.cloudKitBookmarksRepository.removeBookmarks(id: bookmarks.id)
                 }
-                group.leave()
-                print("cloud에 있는 데이터 모두 삭제 완료")
             }
+            try await group.waitForAll()
         }
+        print("클라우드에 있는 데이터 모두 삭제 완료")
         
-        group.enter()
-        bookmarksRepository.fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
-                completion(error)
-            case .success(let localBookmarksList):
-                for bookmarks in localBookmarksList {
-                    self.cloudKitBookmarksRepository.createBookmarksRecord(id: bookmarks.id, title: bookmarks.title)
+        print("2단계: 로컬 데이터 업로드 시작...")
+        let localBookmarksList = try await bookmarksRepository.fetchBookmarks()
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for bookmarks in localBookmarksList {
+                group.addTask {
+                    try await self.cloudKitBookmarksRepository.createBookmarksRecord(id: bookmarks.id, title: bookmarks.title)
                     for kanji in bookmarks.contents {
-                        self.cloudKitBookmarksRepository.createBookmarkedKanjiRecord(bookmarksId: bookmarks.id, kanjiId: kanji.id)
+                        try await self.cloudKitBookmarksRepository.createBookmarkedKanjiRecord(bookmarksId: bookmarks.id, kanjiId: kanji.id)
                     }
                 }
-                group.leave()
-                print("backup complete")
             }
+            try await group.waitForAll()
         }
-        
-        group.notify(queue: .main) {
-            completion(nil)
-        }
+        userDefaultsRepository.setIsBackingUP(false)
+        print("백업 완료")
     }
         
-    func load() {
-        bookmarksRepository.removeAllBookmarks()
+    func load() async throws {
+        print("load 시작")
+        userDefaultsRepository.setIsLoadingBackup(true)
+        try await bookmarksRepository.removeAllBookmarks()
         
-        cloudKitBookmarksRepository.fetchBookmarks { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let cloudBookmarksList):
-                for bookmarks in cloudBookmarksList {
-                    self.bookmarksRepository.createBookmarks(title: bookmarks.title)
+        let cloudBookmarksList = try await cloudKitBookmarksRepository.fetchBookmarks()
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for bookmarks in cloudBookmarksList {
+                group.addTask {
+                    try await self.bookmarksRepository.createBookmarks(title: bookmarks.title, id: bookmarks.id)
                     for kanji in bookmarks.contents {
-                        self.bookmarksRepository.bookmark(kanji.id, bookmarksId: bookmarks.id)
+                        try await self.bookmarksRepository.bookmark(kanji.id, bookmarksId: bookmarks.id)
                     }
                 }
             }
+            try await group.waitForAll()
         }
+        userDefaultsRepository.setIsBackingUP(false)
+        print("로컬에 데이터 저장 완료.")
     }
 }
