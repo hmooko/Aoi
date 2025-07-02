@@ -49,7 +49,6 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
     }
     
     func backup() async throws {
-        sleep(5)
         print("백업 시작")
         userDefaultsRepository.setIsBackingUP(true)
         print("1단계: 클라우드 데이터 삭제 시작...")
@@ -89,18 +88,13 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
         
         let cloudBookmarksList = try await cloudKitBookmarksRepository.fetchBookmarks()
         
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            for bookmarks in cloudBookmarksList {
-                group.addTask {
-                    try await self.bookmarksRepository.createBookmarks(title: bookmarks.title, id: bookmarks.id)
-                    for kanji in bookmarks.contents {
-                        try await self.bookmarksRepository.bookmark(kanji.id, bookmarksId: bookmarks.id)
-                    }
-                }
+        for bookmarks in cloudBookmarksList {
+            try await self.bookmarksRepository.createBookmarks(title: bookmarks.title, id: bookmarks.id)
+            for kanji in bookmarks.contents {
+                try await self.bookmarksRepository.bookmark(kanji.id, bookmarksId: bookmarks.id)
             }
-            try await group.waitForAll()
         }
-        userDefaultsRepository.setIsBackingUP(false)
+        userDefaultsRepository.setIsLoadingBackup(false)
         print("로컬에 데이터 저장 완료.")
     }
 }

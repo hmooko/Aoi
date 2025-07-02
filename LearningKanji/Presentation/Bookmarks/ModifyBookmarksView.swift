@@ -91,24 +91,14 @@ extension ModifyBookmarksView {
         }
         
         private func bookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) async throws {
-            try await withThrowingTaskGroup(of: Void.self) { group in
-                for id in kanjiIdList {
-                    group.addTask {
-                        try await self.bookmarksUseCase.bookmark(id, bookmarksId: bookmarksId)
-                    }
-                }
-                try await group.waitForAll()
+            for id in kanjiIdList {
+                    try await self.bookmarksUseCase.bookmark(id, bookmarksId: bookmarksId)
             }
         }
         
         private func removeBookmark(_ kanjiIdList: Set<Int>, bookmarksId: Int) async throws {
-            try await withThrowingTaskGroup(of: Void.self) { group in
-                for id in kanjiIdList {
-                    group.addTask {
-                        try await self.bookmarksUseCase.removeBookmark(id, bookmarksId: bookmarksId)
-                    }
-                }
-                try await group.waitForAll()
+            for id in kanjiIdList {
+                try await self.bookmarksUseCase.removeBookmark(id, bookmarksId: bookmarksId)
             }
         }
         
