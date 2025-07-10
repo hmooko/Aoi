@@ -8,7 +8,6 @@
 import Foundation
 
 extension KanchuQuizView {
-    
     @MainActor
     final class ViewModel: ObservableObject {
         // MARK: - Use Cases

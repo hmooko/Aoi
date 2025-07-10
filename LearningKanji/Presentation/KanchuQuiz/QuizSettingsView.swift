@@ -15,33 +15,64 @@ struct QuizSettingsView: View {
     let problemCounts = [5, 10, 20]
     let elementaryTargets: [QuizTarget] = (1...6).map { .elementary(grade: $0) }
     let middleSchoolTargets: [QuizTarget] = (1...6).map { .middleSchool(index: $0) }
-    let bookmarkTargets: [QuizTarget] = []
+    let bookmarkTargets: [QuizTarget] = [
+        .bookmark(id: "bookmark_1", name: "북마크 1"),
+        .bookmark(id: "bookmark_2", name: "헷갈리는 단어")
+    ]
     
     var body: some View {
         VStack(alignment: .leading) {
-            Section("학습 대상") {
+            Section {
                 targetScrollView(title: "초등학교", targets: elementaryTargets)
                 targetScrollView(title: "중학교", targets: middleSchoolTargets)
                 targetScrollView(title: "나의 북마크", targets: bookmarkTargets)
+            } header: {
+                HStack {
+                    Image(systemName: "books.vertical")
+                    Text("학습 대상")
+                }
             }
-            .pretendardBold(size: 20)
             
-            Section("문제 유형") {
-                Picker("문제 유형", selection: $viewModel.quizSettings.problemType) {
+            Section {
+                HStack {
                     ForEach(problemTypes, id: \.self) { type in
-                        Text(type.rawValue).tag(type)
+                        Button(action: {
+                            viewModel.quizSettings.problemType = type
+                        }) {
+                            Text(type.rawValue)
+                                .pretendardLight(size: 20)
+                                .frame(maxWidth: .infinity)
+                                .padding(5)
+                        }
+                        .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.problemType == type))
                     }
                 }
-                .pickerStyle(.segmented)
+            } header: {
+                HStack {
+                    Image(systemName: "lightbulb")
+                    Text("문제 유형")
+                }
             }
             
-            Section("문항 수") {
-                Picker("문항 수", selection: $viewModel.quizSettings.count) {
+            Section {
+                HStack {
                     ForEach(problemCounts, id: \.self) { count in
-                        Text("\(count)개").tag(count)
+                        Button(action: {
+                            viewModel.quizSettings.count = count
+                        }) {
+                            Text("\(count)개")
+                                .pretendardLight(size: 20)
+                                .frame(maxWidth: .infinity)
+                                .padding(5)
+                        }
+                        .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.count == count))
                     }
                 }
-                .pickerStyle(.segmented)
+            } header: {
+                HStack {
+                    Image(systemName: "star")
+                    Text("문제 수")
+                }
             }
             
             Spacer()
@@ -76,22 +107,30 @@ struct QuizSettingsView: View {
                                 .pretendardLight(size: 20)
                                 .padding(5)
                         }
-                        .buttonStyle(.bordered)
-                        .tint(viewModel.quizSettings.target == target ? .blue : .gray)
+                        .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.target == target))
                     }
                 }
             }
-            .padding(.horizontal, -16)
         }
     }
     
-    @ViewBuilder
-    private func settingButton(_ title: String, action: @escaping () -> Void) -> some View {
-        Button {
-            action()
-        } label: {
-            Text(title)
-                .foregroundColor(.blue)
+    private struct SettingButton: ButtonStyle {
+        var isSelected: Bool
+        
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .pretendardBold(size: 18)
+                .fontWeight(.regular)
+                .padding(EdgeInsets(top: 8, leading: 13, bottom: 8, trailing: 13))
+                .background(isSelected ? Color.blue.opacity(0.1) : Color(.systemBackground))
+                .foregroundColor(isSelected ? .blue : .primary)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .strokeBorder(isSelected ? .blue : Color.gray.opacity(0.4), lineWidth: 2)
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
+                .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
         }
     }
 }
