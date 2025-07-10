@@ -65,7 +65,7 @@ extension BackupPicker {
                 } catch {
                     print(error)
                     await MainActor.run {
-                        isBackingUP = false
+                        isLoadingBackup = false
                         isAlert = true
                         alertTitle = "불러오기 실패"
                         alertMessage = "apple 계정에 문제가 있는 지 확인해 주세요."

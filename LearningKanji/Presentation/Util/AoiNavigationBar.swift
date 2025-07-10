@@ -14,7 +14,7 @@ extension View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Aoi")
-                        .pretendardMedium(size: 18)
+                        .pretendardBold(size: 18)
                         .foregroundStyle(.white)
                 }
                         

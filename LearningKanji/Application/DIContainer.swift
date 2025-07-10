@@ -16,6 +16,8 @@ final class DIContainer: ObservableObject {
     private let bookmarksService: BookmarksUseCase? = nil
     private let searchKanjiService: SearchKanjiUseCase? = nil
     private let iCloudBookmarksService: ICloudBookmarksUseCase? = nil
+    private let getKanchuProblemsService: GetKanchuProblemsUseCase? = nil
+    private let calculateKanchuProblemsResultervice: CalculateKanchuProblemsResultUseCase? = nil
     
     // MARK: - singleton
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
@@ -79,6 +81,22 @@ final class DIContainer: ObservableObject {
         return icloudBookmarksService
     }
     
+    func makeGetKanchuProblemsUsecase() -> GetKanchuProblemsUseCase {
+        guard let getKanchuProblemsService = self.getKanchuProblemsService else {
+            return DefaultGetKanchuProblemsService(kanchuRepository: makeKanchuRepository())
+        }
+        
+        return getKanchuProblemsService
+    }
+    
+    func makeCalculateKanchuProblemsResult() -> CalculateKanchuProblemsResultUseCase {
+        guard let calculateKanchuProblemsResultervice = self.calculateKanchuProblemsResultervice else {
+            return DefaultCalculateKanchuProblemsResultService()
+        }
+        
+        return calculateKanchuProblemsResultervice
+    }
+    
     // MARK: - Repository
     private func makeCommonlyUsedKanjiRepository() -> CommonlyUsedKanjiRepository {
         DefaultCommonlyUsedKanjiRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
@@ -94,5 +112,9 @@ final class DIContainer: ObservableObject {
     
     private func makeCloudKitBookmarksRepository() -> CloudKitBookmarksRepository {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
+    }
+    
+    private func makeKanchuRepository() -> KanchuRepository {
+        return MockKanjiRepository()
     }
 }

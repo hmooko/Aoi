@@ -68,11 +68,20 @@
 		F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40969A52C62387D00AB221C /* BookmarkKanjiView.swift */; };
 		F41682D82C6489BC00671E47 /* LearningBookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41682D72C6489BC00671E47 /* LearningBookmarks.swift */; };
 		F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4563D472E12C2F300677133 /* BookmarksCell.swift */; };
+		F45804972E1D027C0023CCE5 /* Kanchu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804962E1D02760023CCE5 /* Kanchu.swift */; };
+		F458049A2E1D039E0023CCE5 /* KanchuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804992E1D039E0023CCE5 /* KanchuRepository.swift */; };
+		F458049D2E1D040B0023CCE5 /* GetKanchuProblemsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458049C2E1D040B0023CCE5 /* GetKanchuProblemsService.swift */; };
+		F458049F2E1D04370023CCE5 /* CalculateKanchuResultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458049E2E1D04370023CCE5 /* CalculateKanchuResultService.swift */; };
+		F45804A22E1D0D380023CCE5 /* KanchuQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */; };
+		F45804A42E1D110E0023CCE5 /* KanchuQuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */; };
+		F45804A62E1D62290023CCE5 /* QuizSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */; };
+		F45804A82E1D7A400023CCE5 /* KanchuQuizInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804A72E1D7A400023CCE5 /* KanchuQuizInProgressView.swift */; };
+		F45804AA2E1D7AAE0023CCE5 /* KanchuQuizResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804A92E1D7AAE0023CCE5 /* KanchuQuizResultView.swift */; };
 		F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EC2C02C907C4E0051CAB6 /* QuizCountPicker.swift */; };
 		F45EC2C32C9082C80051CAB6 /* TodaysKanjiCountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EC2C22C9082C80051CAB6 /* TodaysKanjiCountPicker.swift */; };
-		F46AF6582E13974900D72D06 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F46AF6572E13974900D72D06 /* FirebaseAuth */; };
-		F46AF65A2E13974900D72D06 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F46AF6592E13974900D72D06 /* FirebaseCore */; };
-		F46AF65C2E13974900D72D06 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F46AF65B2E13974900D72D06 /* FirebaseFirestore */; };
+		F46973C42E19802D00586A4D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F46973C32E19802D00586A4D /* FirebaseAuth */; };
+		F46973C62E19802D00586A4D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F46973C52E19802D00586A4D /* FirebaseCore */; };
+		F46973C82E19802D00586A4D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F46973C72E19802D00586A4D /* FirebaseFirestore */; };
 		F46AF65F2E13C35700D72D06 /* BackupPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46AF65E2E13C35700D72D06 /* BackupPickerViewModel.swift */; };
 		F46AF6612E13EE5200D72D06 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46AF6602E13EE5200D72D06 /* ContentViewModel.swift */; };
 		F46AF6652E14235800D72D06 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46AF6642E14235800D72D06 /* AppState.swift */; };
@@ -183,6 +192,15 @@
 		F40969A52C62387D00AB221C /* BookmarkKanjiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkKanjiView.swift; sourceTree = "<group>"; };
 		F41682D72C6489BC00671E47 /* LearningBookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningBookmarks.swift; sourceTree = "<group>"; };
 		F4563D472E12C2F300677133 /* BookmarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCell.swift; sourceTree = "<group>"; };
+		F45804962E1D02760023CCE5 /* Kanchu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kanchu.swift; sourceTree = "<group>"; };
+		F45804992E1D039E0023CCE5 /* KanchuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuRepository.swift; sourceTree = "<group>"; };
+		F458049C2E1D040B0023CCE5 /* GetKanchuProblemsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKanchuProblemsService.swift; sourceTree = "<group>"; };
+		F458049E2E1D04370023CCE5 /* CalculateKanchuResultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateKanchuResultService.swift; sourceTree = "<group>"; };
+		F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuQuizView.swift; sourceTree = "<group>"; };
+		F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuQuizViewModel.swift; sourceTree = "<group>"; };
+		F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSettingsView.swift; sourceTree = "<group>"; };
+		F45804A72E1D7A400023CCE5 /* KanchuQuizInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuQuizInProgressView.swift; sourceTree = "<group>"; };
+		F45804A92E1D7AAE0023CCE5 /* KanchuQuizResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuQuizResultView.swift; sourceTree = "<group>"; };
 		F45EC2C02C907C4E0051CAB6 /* QuizCountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCountPicker.swift; sourceTree = "<group>"; };
 		F45EC2C22C9082C80051CAB6 /* TodaysKanjiCountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiCountPicker.swift; sourceTree = "<group>"; };
 		F45FF2C22DC2264500E89371 /* LearningKanji.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LearningKanji.entitlements; sourceTree = "<group>"; };
@@ -221,9 +239,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F46AF65A2E13974900D72D06 /* FirebaseCore in Frameworks */,
-				F46AF6582E13974900D72D06 /* FirebaseAuth in Frameworks */,
-				F46AF65C2E13974900D72D06 /* FirebaseFirestore in Frameworks */,
+				F46973C62E19802D00586A4D /* FirebaseCore in Frameworks */,
+				F46973C42E19802D00586A4D /* FirebaseAuth in Frameworks */,
+				F46973C82E19802D00586A4D /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +384,7 @@
 		F40969372C50C98E00AB221C /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				F45804952E1D02360023CCE5 /* Kanchu */,
 				F40969642C50C99600AB221C /* KanjiQuiz.swift */,
 				F40969332C50C98E00AB221C /* Bookmarks.swift */,
 				F40969342C50C98E00AB221C /* CommonlyUsedKanji.swift */,
@@ -380,6 +399,7 @@
 		F40969422C50C98E00AB221C /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F458049B2E1D03D90023CCE5 /* Kanchu */,
 				F409693B2C50C98E00AB221C /* BookmarksService.swift */,
 				F409693C2C50C98E00AB221C /* LearningAtQuizService.swift */,
 				F409693D2C50C98E00AB221C /* LearningByGradeService.swift */,
@@ -511,6 +531,7 @@
 		F409697D2C50C99600AB221C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */,
 				F409697B2C50C99600AB221C /* ContentView.swift */,
 				F46AF6602E13EE5200D72D06 /* ContentViewModel.swift */,
 				F47273062DD428DE0087168D /* Login */,
@@ -536,6 +557,35 @@
 				F46DAD092C983914009E83E0 /* AoiNavigationBar.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		F45804952E1D02360023CCE5 /* Kanchu */ = {
+			isa = PBXGroup;
+			children = (
+				F45804962E1D02760023CCE5 /* Kanchu.swift */,
+			);
+			path = Kanchu;
+			sourceTree = "<group>";
+		};
+		F458049B2E1D03D90023CCE5 /* Kanchu */ = {
+			isa = PBXGroup;
+			children = (
+				F458049C2E1D040B0023CCE5 /* GetKanchuProblemsService.swift */,
+				F458049E2E1D04370023CCE5 /* CalculateKanchuResultService.swift */,
+			);
+			path = Kanchu;
+			sourceTree = "<group>";
+		};
+		F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */,
+				F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */,
+				F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */,
+				F45804A72E1D7A400023CCE5 /* KanchuQuizInProgressView.swift */,
+				F45804A92E1D7AAE0023CCE5 /* KanchuQuizResultView.swift */,
+			);
+			path = KanchuQuiz;
 			sourceTree = "<group>";
 		};
 		F4597D512C9C59F0002D5E51 /* Resources */ = {
@@ -588,6 +638,7 @@
 				F40969382C50C98E00AB221C /* BookmarksRepository.swift */,
 				F40969412C50C98E00AB221C /* UserDefaultsRepository.swift */,
 				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
+				F45804992E1D039E0023CCE5 /* KanchuRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -625,9 +676,9 @@
 			);
 			name = LearningKanji;
 			packageProductDependencies = (
-				F46AF6572E13974900D72D06 /* FirebaseAuth */,
-				F46AF6592E13974900D72D06 /* FirebaseCore */,
-				F46AF65B2E13974900D72D06 /* FirebaseFirestore */,
+				F46973C32E19802D00586A4D /* FirebaseAuth */,
+				F46973C52E19802D00586A4D /* FirebaseCore */,
+				F46973C72E19802D00586A4D /* FirebaseFirestore */,
 			);
 			productName = LearningKanji;
 			productReference = F40968F12C50C8E100AB221C /* LearningKanji.app */;
@@ -704,7 +755,7 @@
 			mainGroup = F40968E82C50C8E100AB221C;
 			packageReferences = (
 				F45EC2B82C8F2F770051CAB6 /* XCRemoteSwiftPackageReference "Swinject" */,
-				F46AF6562E13974900D72D06 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F46973C22E19802D00586A4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F40968F22C50C8E100AB221C /* Products */;
 			projectDirPath = "";
@@ -764,6 +815,7 @@
 				F409699C2C50C99600AB221C /* ContentView.swift in Sources */,
 				F40969862C50C99600AB221C /* KanjiCard.swift in Sources */,
 				F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */,
+				F458049F2E1D04370023CCE5 /* CalculateKanchuResultService.swift in Sources */,
 				F46DAD082C972BA7009E83E0 /* SwipeAction.swift in Sources */,
 				F409698B2C50C99600AB221C /* KanjiRow.swift in Sources */,
 				F40969322C50C95D00AB221C /* CommonlyUsedKanjiStorage.swift in Sources */,
@@ -783,7 +835,10 @@
 				F40969882C50C99600AB221C /* CoveredKanjiList.swift in Sources */,
 				F40969942C50C99600AB221C /* LearningKanjiView.swift in Sources */,
 				F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */,
+				F45804AA2E1D7AAE0023CCE5 /* KanchuQuizResultView.swift in Sources */,
 				F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */,
+				F45804A62E1D62290023CCE5 /* QuizSettingsView.swift in Sources */,
+				F45804A82E1D7A400023CCE5 /* KanchuQuizInProgressView.swift in Sources */,
 				F40969922C50C99600AB221C /* LearningByGradeListView.swift in Sources */,
 				F472730A2DD429040087168D /* LoginView.swift in Sources */,
 				F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */,
@@ -792,11 +847,14 @@
 				F46FFDBC2C6F54E900C847AC /* Fonts.swift in Sources */,
 				F40969A02C50C99E00AB221C /* AppPreview.swift in Sources */,
 				F46DAD042C971C01009E83E0 /* LearningKanji.swift in Sources */,
+				F458049D2E1D040B0023CCE5 /* GetKanchuProblemsService.swift in Sources */,
 				F40969802C50C99600AB221C /* BookmarksListViewModel.swift in Sources */,
 				F4F60C3A2DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift in Sources */,
 				F47272FD2DD331940087168D /* User.swift in Sources */,
 				F46DAD0A2C983914009E83E0 /* AoiNavigationBar.swift in Sources */,
+				F45804A22E1D0D380023CCE5 /* KanchuQuizView.swift in Sources */,
 				F4F60C3E2DD64BAD004010B4 /* ICloudBookmarksService.swift in Sources */,
+				F45804A42E1D110E0023CCE5 /* KanchuQuizViewModel.swift in Sources */,
 				F409698D2C50C99600AB221C /* KanjiQuizCard.swift in Sources */,
 				F40969992C50C99600AB221C /* TodaysKanjiView.swift in Sources */,
 				F40969812C50C99600AB221C /* BookmarksMenu.swift in Sources */,
@@ -812,6 +870,7 @@
 				F40969872C50C99600AB221C /* KanjiCardListView.swift in Sources */,
 				F409698C2C50C99600AB221C /* KanjiQuiz.swift in Sources */,
 				F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */,
+				F45804972E1D027C0023CCE5 /* Kanchu.swift in Sources */,
 				F40969312C50C95D00AB221C /* DefaultUserDefaultsRepository.swift in Sources */,
 				F40969892C50C99600AB221C /* FlipableKanjiRow.swift in Sources */,
 				F40969462C50C98E00AB221C /* Grade.swift in Sources */,
@@ -819,6 +878,7 @@
 				F409699A2C50C99600AB221C /* TodaysKanjiViewModel.swift in Sources */,
 				F40969232C50C95400AB221C /* DIContainer.swift in Sources */,
 				F40969452C50C98E00AB221C /* CommonlyUsedKanji.swift in Sources */,
+				F458049A2E1D039E0023CCE5 /* KanchuRepository.swift in Sources */,
 				F40968F52C50C8E100AB221C /* LearningKanjiApp.swift in Sources */,
 				F409698E2C50C99600AB221C /* KanjiQuizListView.swift in Sources */,
 				F409692F2C50C95D00AB221C /* DefaultBookmarksRepository.swift in Sources */,
@@ -1023,7 +1083,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koo.LearningKanji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1060,7 +1120,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koo.LearningKanji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1199,7 +1259,7 @@
 				minimumVersion = 2.9.1;
 			};
 		};
-		F46AF6562E13974900D72D06 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		F46973C22E19802D00586A4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -1210,19 +1270,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F46AF6572E13974900D72D06 /* FirebaseAuth */ = {
+		F46973C32E19802D00586A4D /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F46AF6562E13974900D72D06 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = F46973C22E19802D00586A4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		F46AF6592E13974900D72D06 /* FirebaseCore */ = {
+		F46973C52E19802D00586A4D /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F46AF6562E13974900D72D06 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = F46973C22E19802D00586A4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
 		};
-		F46AF65B2E13974900D72D06 /* FirebaseFirestore */ = {
+		F46973C72E19802D00586A4D /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F46AF6562E13974900D72D06 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = F46973C22E19802D00586A4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
