@@ -16,7 +16,7 @@ extension KanchuQuizView {
         
         // MARK: - Published Properties (View의 상태)
         @Published var quizSettings = QuizSettings()
-        @Published private(set) var problems: [KanjiProblem] = []
+        @Published private(set) var problems: [KanchuProblem] = []
         @Published private(set) var currentProblemIndex: Int = 0
         @Published private(set) var userAnswers: [UserAnswer] = []
         @Published private(set) var quizResult: QuizSessionResult?
@@ -38,7 +38,7 @@ extension KanchuQuizView {
             var count: Int = 5
         }
         
-        var currentProblem: KanjiProblem? {
+        var currentProblem: KanchuProblem? {
             guard problems.indices.contains(currentProblemIndex) else { return nil }
             return problems[currentProblemIndex]
         }
@@ -48,6 +48,11 @@ extension KanchuQuizView {
              calculateKanchuProblemsResultUseCase: CalculateKanchuProblemsResultUseCase) {
             self.getKanchuProblemsUseCase = getKanchuProblemsUseCase
             self.calculateKanchuProblemsResultUseCase = calculateKanchuProblemsResultUseCase
+        }
+        
+        init(container: DIContainer) {
+            self.getKanchuProblemsUseCase = container.makeGetKanchuProblemsUsecase()
+            self.calculateKanchuProblemsResultUseCase = container.makeCalculateKanchuProblemsResult()
         }
         
         // MARK: - Public Methods (View의 Action)

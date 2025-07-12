@@ -78,4 +78,5 @@ struct KanchuQuizResultView: View {
 
 #Preview {
     KanchuQuizResultView()
+        .environmentObject(KanchuQuizView.ViewModel(container: DIContainer()))
 }

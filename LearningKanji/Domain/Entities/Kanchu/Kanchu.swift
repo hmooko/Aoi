@@ -32,7 +32,7 @@ enum QuizTarget: Hashable {
 }
 
 /// 한자 퀴즈 문제 하나를 나타내는 모델입니다.
-struct KanjiProblem: Identifiable {
+struct KanchuProblem: Identifiable {
     let id: UUID
     let type: ProblemType
     let sentence: String // 예: "これは[複雑]な問題です。"
@@ -43,7 +43,7 @@ struct KanjiProblem: Identifiable {
 
 /// 사용자의 답변과 그 결과를 담는 모델입니다.
 struct UserAnswer {
-    let problem: KanjiProblem
+    let problem: KanchuProblem
     let submittedAnswer: String
     
     var isCorrect: Bool {

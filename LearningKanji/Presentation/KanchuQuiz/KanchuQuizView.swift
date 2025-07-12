@@ -20,19 +20,19 @@ struct KanchuQuizView: View {
     
     var body: some View {
         // ViewModel의 viewState에 따라 적절한 화면을 보여줍니다.
-//        switch viewModel.viewState {
-//        case .settings:
-//            QuizSettingsView()
-//                .environmentObject(viewModel)
-//        case .loading:
-//            KanchuLoadingView(text: "퀴즈를 만들고 있어요...")
-//        case .quiz:
-//            KanchuQuizInProgressView()
-//                .environmentObject(viewModel)
-//        case .results:
-//            KanchuQuizResultView()
-//                .environmentObject(viewModel)
-//        }
+        switch viewModel.viewState {
+        case .settings:
+            QuizSettingsView()
+                .environmentObject(viewModel)
+        case .loading:
+            KanchuLoadingView(text: "퀴즈를 만들고 있어요...")
+        case .quiz:
+            KanchuQuizInProgressView()
+                .environmentObject(viewModel)
+        case .results:
+            KanchuQuizResultView()
+                .environmentObject(viewModel)
+        }
     }
 }
 

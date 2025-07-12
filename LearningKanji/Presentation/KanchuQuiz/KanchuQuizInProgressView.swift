@@ -84,4 +84,5 @@ struct KanchuQuizInProgressView: View {
 
 #Preview {
     KanchuQuizInProgressView()
+        .environmentObject(KanchuQuizView.ViewModel(container: DIContainer()))
 }

@@ -94,6 +94,9 @@
 		F47272FD2DD331940087168D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FC2DD331940087168D /* User.swift */; };
 		F472730A2DD429040087168D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47273092DD429040087168D /* LoginView.swift */; };
 		F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472730B2DD472A60087168D /* LoginViewModel.swift */; };
+		F479A5552E220A73007C3D41 /* DefaultKanchuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F479A5542E220A73007C3D41 /* DefaultKanchuRepository.swift */; };
+		F479A5572E22D798007C3D41 /* ApiKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = F479A5562E22D798007C3D41 /* ApiKeyList.plist */; };
+		F479A5592E22D944007C3D41 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F479A5582E22D944007C3D41 /* .gitignore */; };
 		F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */; };
 		F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */; };
 		F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C762E0CEF50005B1299 /* BackupPicker.swift */; };
@@ -218,6 +221,9 @@
 		F47272FC2DD331940087168D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F47273092DD429040087168D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F472730B2DD472A60087168D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F479A5542E220A73007C3D41 /* DefaultKanchuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuRepository.swift; sourceTree = "<group>"; };
+		F479A5562E22D798007C3D41 /* ApiKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeyList.plist; sourceTree = "<group>"; };
+		F479A5582E22D944007C3D41 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningAndSound.swift; sourceTree = "<group>"; };
 		F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSwipe.swift; sourceTree = "<group>"; };
 		F4A13C762E0CEF50005B1299 /* BackupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPicker.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 				F40969042C50C8E300AB221C /* LearningKanjiTests */,
 				F409690E2C50C8E300AB221C /* LearningKanjiUITests */,
 				F40968F22C50C8E100AB221C /* Products */,
+				F479A5582E22D944007C3D41 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -359,6 +366,7 @@
 				F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */,
 				F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */,
 				F4F60C392DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift */,
+				F479A54C2E217ADC007C3D41 /* KanchuRepository */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -597,6 +605,7 @@
 				F40969A12C50C9AA00AB221C /* japanese_kanji_2136.json */,
 				F400707A2C83EC2F006BB14C /* PretendardOTF */,
 				F4F60C2C2DD4EA13004010B4 /* User.xcdatamodeld */,
+				F479A5562E22D798007C3D41 /* ApiKeyList.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -629,6 +638,14 @@
 				F472730B2DD472A60087168D /* LoginViewModel.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		F479A54C2E217ADC007C3D41 /* KanchuRepository */ = {
+			isa = PBXGroup;
+			children = (
+				F479A5542E220A73007C3D41 /* DefaultKanchuRepository.swift */,
+			);
+			path = KanchuRepository;
 			sourceTree = "<group>";
 		};
 		F49EE13B2CF48B63002AD484 /* Repositories */ = {
@@ -774,8 +791,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F40969A22C50C9AA00AB221C /* japanese_kanji_2136.json in Resources */,
+				F479A5572E22D798007C3D41 /* ApiKeyList.plist in Resources */,
 				F400707E2C83EC5A006BB14C /* Pretendard-Light.otf in Resources */,
 				F4F60C302DD4F291004010B4 /* GoogleService-Info.plist in Resources */,
+				F479A5592E22D944007C3D41 /* .gitignore in Resources */,
 				F46FFDB02C6DC61000C847AC /* InfoPlist.strings in Resources */,
 				F40968FC2C50C8E300AB221C /* Preview Assets.xcassets in Resources */,
 				F40070792C83E59D006BB14C /* Pretendard-Black.otf in Resources */,
@@ -825,6 +844,7 @@
 				F46AF65F2E13C35700D72D06 /* BackupPickerViewModel.swift in Sources */,
 				F40969442C50C98E00AB221C /* Bookmarks.swift in Sources */,
 				F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */,
+				F479A5552E220A73007C3D41 /* DefaultKanchuRepository.swift in Sources */,
 				F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */,
 				F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */,
 				F409694A2C50C98E00AB221C /* BookmarksService.swift in Sources */,

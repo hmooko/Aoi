@@ -60,4 +60,5 @@ struct ContentView: View {
     ContentView(viewModel: .init(container: DIContainer()))
         .environmentObject(DIContainer())
         .environmentObject(Router())
+        .environmentObject(AppState())
 }
