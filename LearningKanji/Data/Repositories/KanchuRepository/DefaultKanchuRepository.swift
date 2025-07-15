@@ -281,13 +281,13 @@ final class DefaultKanchuRepository: KanchuRepository {
             type: "object",
             description: "빈칸 읽기 퀴즈 문제 객체. 각 문제는 한자, 빈칸이 포함된 문장, 4개의 선택지, 정답을 가집니다.",
             properties: [
-                "kanji": .init(type: "string", description: "이 문제의 대상이 된 한자 문자입니다."),
-                "word": .init(type: "string", description: "한자가 포함된 전체 단어"),
+                "targetKanji": .init(type: "string", description: "이 문제의 대상이 된 한자 문자입니다."),
+                "targetWord": .init(type: "string", description: "한자가 포함된 전체 단어"),
                 "sentence": .init(type: "string", description: "발음의 일부가 빈칸(___)으로 처리된 문제"),
                 "options": .init(type: "array", description: "정답 1개와 오답 3개를 포함한 4개의 선택지 발음(히라가나) 목록", items: .init(type: "string")),
                 "answer": .init(type: "string", description: "options 중 정답에 해당하는 발음")
             ],
-            required: ["kanji", "word", "sentence", "options", "answer"]
+            required: ["targetKanji", "targetWord", "sentence", "options", "answer"]
         )
         
         return GeminiAPIRequest.JSONSchema(
@@ -303,11 +303,12 @@ final class DefaultKanchuRepository: KanchuRepository {
             description: "한자 읽기 퀴즈 문제 하나를 나타내는 구조입니다.",
             properties: [
                 "targetKanji": .init(type: "string", description: "퀴즈의 대상이 되는 핵심 단어(한자)입니다."),
+                "targetWord": .init(type: "string", description: "한자가 포함된 전체 단어"),
                 "sentence": .init(type: "string", description: "핵심 단어가 괄호로 묶여 포함된 예문입니다."),
                 "options": .init(type: "array", description: "정답 1개와 오답 3개로 구성된 총 4개의 히라가나 보기 목록입니다.", items: .init(type: "string")),
                 "answer": .init(type: "string", description: "4개의 보기 중 정답에 해당하는 히라가나입니다.")
             ],
-            required: ["targetWord", "sentence", "options", "answer"]
+            required: ["targetKanji", "targetWord", "sentence", "options", "answer"]
         )
         
         // 문제 객체의 배열을 최상위 구조로 정의
