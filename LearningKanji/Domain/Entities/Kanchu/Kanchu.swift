@@ -40,7 +40,7 @@ struct KanchuProblem: Identifiable {
     let targetKanji: String // 예: "複雑" 또는 "しょうかい"
     let options: [String]
     let answer: String
-    let targetword: String // fillReading일 때만
+    let targetword: String 
 }
 
 /// 사용자의 답변과 그 결과를 담는 모델입니다.

@@ -69,7 +69,7 @@ private struct GeminiKanchuProblem: Decodable {
     let sentence: String
     let options: [String]
     let answer: String
-    let word: String?
+    let targetKanji: String
 }
 
 
@@ -156,7 +156,7 @@ final class DefaultKanchuRepository: KanchuRepository {
         }
         
         let problems = geminiProblems.map {
-            KanchuProblem(id: UUID(), type: problemType, sentence: $0.sentence, targetKanji: $0.targetWord, options: $0.options, answer: $0.answer, targetword: $0.targetWord)
+            KanchuProblem(id: UUID(), type: problemType, sentence: $0.sentence, targetKanji: $0.targetKanji, options: $0.options, answer: $0.answer, targetword: $0.targetWord)
         }
         
         return problems
