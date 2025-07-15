@@ -17,7 +17,7 @@ struct CommonlyUsedKanji {
     func getByGrade(grade: [Grade]) -> [Kanji] {
         var result: [Kanji] = []
         for grade in grade {
-            result += kanjiList.filter { $0.grade == grade.rawValue }
+            result += kanjiList.filter { $0.grade.contains(grade.rawValue) }
         }
         return result
     }
@@ -40,66 +40,51 @@ struct CommonlyUsedKanji {
 }
 
 struct MiddleSchoolKanjiList {
-    private let kanjiList: [Kanji]
+    private(set) var kanjiList: [Kanji]
     
     enum MiddleSchoolKanjiListError: Error {
         case invalidData(String)
     }
     
     init (kanjiList: [Kanji]) throws {
-        if kanjiList.count != 1110 {
+        if kanjiList.count != Grade.gradeCount(.middle) {
             throw MiddleSchoolKanjiListError.invalidData("Invalid data count")
         }
         
         if kanjiList.contains(where: { $0.grade != Grade.middle.rawValue}) {
-            throw MiddleSchoolKanjiListError.invalidData("Invalid grade data")
+            throw MiddleSchoolKanjiListError.invalidData("Invalid grade")
+        }
+        
+        self.kanjiList = kanjiList
+    }
+    
+    func indexed(index: Int) -> [Kanji] {
+        if index == 6 {
+            return Array(kanjiList[((index - 1) * 190)...])
+        } else {
+            return Array(kanjiList[(index - 1) * 190..<index * 190])
         }
     }
 }
 
 struct ElementarySchoolKanjiList {
-    private let kanjiList: [Kanji]
-    private let gradeInfo: GradeInfo
-    
-    enum GradeInfo {
-        case first, second, third, fourth, fifth, sixth, all
-        
-        func gradeCount() -> Int {
-            switch self {
-            case .first: return 80
-            case .second: return 160
-            case .third: return 200
-            case .fourth: return 202
-            case .fifth: return 193
-            case .sixth: return 191
-            case .all: return 1026
-            }
-        }
-        
-        func description() -> String {
-            switch self {
-            case .first: return "초등학교1학년"
-            case .second: return "초등학교2학년"
-            case .third: return "초등학교3학년"
-            case .fourth: return "초등학교4학년"
-            case .fifth: return "초등학교5학년"
-            case .sixth: return "초등학교6학년"
-            case .all: return "all"
-            }
-        }
-    }
+    private(set) var kanjiList: [Kanji]
+    private(set) var grade: Grade
     
     enum ElementarySchoolKanjiListError: Error {
         case invalidData(String)
     }
     
-    init (kanjiList: [Kanji]) throws {
-        if kanjiList.count != gradeInfo.gradeCount() {
+    init (kanjiList: [Kanji], grade: Grade) throws {
+        if kanjiList.count != Grade.gradeCount(grade) {
             throw ElementarySchoolKanjiListError.invalidData("Invalid data count")
         }
         
-        if kanjiList.contains(where: { $0.grade != gradeInfo.description()}) {
-            throw ElementarySchoolKanjiListError.invalidData("Invalid grade data")
+        if kanjiList.contains(where: { $0.grade != grade.rawValue }) {
+            throw ElementarySchoolKanjiListError.invalidData("Invalid grade")
         }
+        
+        self.kanjiList = kanjiList
+        self.grade = grade
     }
 }

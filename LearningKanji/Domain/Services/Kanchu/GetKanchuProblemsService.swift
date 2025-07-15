@@ -58,15 +58,11 @@ final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
             kanjiList = kanjiContents
             
         case .elementary(let grade):
-            let common = try await commonlyUsedKanjiRepository.fetchCommonlyUsedKanji()
-            
-            
+            let elementarySchoolKanjiList = try await commonlyUsedKanjiRepository.fetchElementarySchoolKanjiList(grade: grade)
+            kanjiList = elementarySchoolKanjiList.kanjiList
         case .middleSchool(let index):
-            kanjiList = try await commonlyUsedKanjiRepository.middleSchoolKanjiList(index: index)
-            
-        default:
-            // For other targets, return empty list or you may implement additional cases as needed.
-            kanjiList = []
+            let middleSchoolKanjiList = try await commonlyUsedKanjiRepository.fetchMiddleSchoolKanjiList()
+            kanjiList = middleSchoolKanjiList.indexed(index: index)
         }
         
         return try await kanchuRepository.fetchProblems(kanjiList: kanjiList, problemType: problemType, count: count)

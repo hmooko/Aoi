@@ -33,7 +33,7 @@ extension KanchuQuizView {
         }
         
         struct QuizSettings {
-            var target: QuizTarget = .elementary(grade: 1)
+            var target: QuizTarget = .elementary(grade: .first)
             var problemType: ProblemType = .findReading
             var count: Int = 5
         }

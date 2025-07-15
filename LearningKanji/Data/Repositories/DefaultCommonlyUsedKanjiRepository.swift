@@ -26,14 +26,9 @@ extension DefaultCommonlyUsedKanjiRepository: CommonlyUsedKanjiRepository {
         }
     }
     
-    func fetchElementarySchoolKanjiList(grade: ElementarySchoolKanjiList.GradeInfo) async throws -> ElementarySchoolKanjiList {
+    func fetchElementarySchoolKanjiList(grade: Grade) async throws -> ElementarySchoolKanjiList {
         let kanjiList = try await commonlyUsedKanjiStorage.load()
-        
-        if grade == .all {
-            return try ElementarySchoolKanjiList(kanjiList: kanjiList.filter({$0.grade.contains("초등학교")}))
-        } else {
-            return try ElementarySchoolKanjiList(kanjiList: kanjiList.filter({$0.grade == grade.description()}))
-        }
+        return try ElementarySchoolKanjiList(kanjiList: kanjiList.filter({$0.grade.contains(grade.rawValue)}), grade: grade)
     }
     
     func fetchMiddleSchoolKanjiList() async throws -> MiddleSchoolKanjiList {

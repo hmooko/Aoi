@@ -83,7 +83,11 @@ final class DIContainer: ObservableObject {
     
     func makeGetKanchuProblemsUsecase() -> GetKanchuProblemsUseCase {
         guard let getKanchuProblemsService = self.getKanchuProblemsService else {
-            return DefaultGetKanchuProblemsService(kanchuRepository: makeKanchuRepository())
+            return DefaultGetKanchuProblemsService(
+                kanchuRepository: makeKanchuRepository(),
+                bookmarksRepository: makeBoookmarksRepository(),
+                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
+            )
         }
         
         return getKanchuProblemsService
