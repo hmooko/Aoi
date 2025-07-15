@@ -13,11 +13,11 @@ struct QuizSettingsView: View {
     // UI 구성을 위한 데이터
     let problemTypes = ProblemType.allCases
     let problemCounts = [5, 10, 20]
-    let elementaryTargets: [QuizTarget] = (1...6).map { .elementary(grade: $0) }
+    let elementaryTargets: [QuizTarget] = Grade.elementarySchoolCases().map { .elementary(grade: $0) }
     let middleSchoolTargets: [QuizTarget] = (1...6).map { .middleSchool(index: $0) }
     let bookmarkTargets: [QuizTarget] = [
-        .bookmark(id: "bookmark_1", name: "북마크 1"),
-        .bookmark(id: "bookmark_2", name: "헷갈리는 단어")
+        .bookmark(id: 1, name: "북마크 1"),
+        .bookmark(id: 2, name: "헷갈리는 단어")
     ]
     
     var body: some View {

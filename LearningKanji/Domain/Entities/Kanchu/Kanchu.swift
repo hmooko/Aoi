@@ -11,21 +11,22 @@ import Foundation
 enum ProblemType: String, CaseIterable {
     case findReading = "올바른 발음 구하기"
     case findKanji = "올바른 한자 표기 구하기"
+    case fillReading = "발음에 해당하는 한자 표기 구하기"
 }
 
 /// 학습 대상을 나타내는 모델입니다. 학년 또는 북마크 그룹을 포함할 수 있습니다.
 enum QuizTarget: Hashable {
-    case elementary(grade: Int) // 초등학교 1~6학년
-    case middleSchool(index: Int) // 중학교 1~3학년
-    case bookmark(id: String, name: String) // 북마크 그룹
+    case elementary(grade: Grade)
+    case middleSchool(index: Int)
+    case bookmark(id: Int, name: String) // 북마크 그룹
     
     func getString() -> String {
         switch self {
         case .elementary(grade: let grade):
-            return "초\(grade)"
+            return "\(grade.rawValue)"
         case .middleSchool(index: let index):
             return "중\(index)"
-        case .bookmark(id: let id, name: let name):
+        case .bookmark(id: _, name: let name):
             return name
         }
     }
@@ -36,9 +37,10 @@ struct KanchuProblem: Identifiable {
     let id: UUID
     let type: ProblemType
     let sentence: String // 예: "これは[複雑]な問題です。"
-    let targetWord: String // 예: "複雑" 또는 "しょうかい"
+    let targetKanji: String // 예: "複雑" 또는 "しょうかい"
     let options: [String]
     let answer: String
+    let word: String? = nil // fillReading일 때만
 }
 
 /// 사용자의 답변과 그 결과를 담는 모델입니다.
@@ -62,3 +64,4 @@ struct QuizSessionResult {
         return (Double(correctAnswers) / Double(totalProblems)) * 100
     }
 }
+

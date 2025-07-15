@@ -26,4 +26,9 @@ extension DefaultCommonlyUsedKanjiRepository: CommonlyUsedKanjiRepository {
         }
     }
     
+    func fetchMiddleSchoolKanji() async throws -> CommonlyUsedKanji {
+        let kanjiList = try await commonlyUsedKanjiStorage.load()
+        
+    }
+    
 }
