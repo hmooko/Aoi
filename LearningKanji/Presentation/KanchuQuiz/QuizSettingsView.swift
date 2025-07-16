@@ -34,7 +34,7 @@ struct QuizSettingsView: View {
             }
             
             Section {
-                HStack {
+                VStack {
                     ForEach(problemTypes, id: \.self) { type in
                         Button(action: {
                             viewModel.quizSettings.problemType = type
