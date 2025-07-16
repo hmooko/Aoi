@@ -38,7 +38,7 @@ final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
             Kanji(id: 3, kanji: "会", grade: "", sound: "", meaning: "", korean: ""),
             Kanji(id: 4, kanji: "社", grade: "", sound: "", meaning: "", korean: "")
         ]
-        let problemType = ProblemType.fillReading
+        let problemType: ProblemType = .findReading
         let count = 3 // 실제 요청이므로 문제 수를 적게 설정
 
         // When
@@ -57,7 +57,8 @@ final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
             
             print("--- 문제 \(index + 1) 검증 완료 ---")
             print("문장: \(problem.sentence)")
-            print("핵심 단어: \(problem.targetKanji)")
+            print("핵심 단어: \(problem.targetWord)")
+            print("핵심 한자: \(problem.targetKanji)")
             print("보기: \(problem.options)")
             print("정답: \(problem.answer)")
             print("--------------------------\n")

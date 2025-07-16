@@ -30,7 +30,7 @@ struct KanchuQuizInProgressView: View {
                 Spacer()
                 
                 // 문제 예문
-                problemSentenceView(sentence: problem.sentence, target: problem.targetword)
+                problemSentenceView(sentence: problem.sentence, target: problem.targetWord)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                 

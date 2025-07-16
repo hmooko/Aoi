@@ -156,7 +156,7 @@ final class DefaultKanchuRepository: KanchuRepository {
         }
         
         let problems = geminiProblems.map {
-            KanchuProblem(id: UUID(), type: problemType, sentence: $0.sentence, targetKanji: $0.targetKanji, options: $0.options, answer: $0.answer, targetword: $0.targetWord)
+            KanchuProblem(id: UUID(), type: problemType, sentence: $0.sentence, targetKanji: $0.targetKanji, options: $0.options, answer: $0.answer, targetWord: $0.targetWord)
         }
         
         return problems
@@ -205,27 +205,38 @@ final class DefaultKanchuRepository: KanchuRepository {
         
         // 사용자가 제공한 프롬프트 템플릿을 기반으로 구성
         return """
-        당신은 일본어 상용한자 읽기 능력 평가를 위한 퀴즈를 만드는 전문 교사입니다.
+        [역할]
+        당신은 일본어 교육 및 평가 콘텐츠 제작 전문가입니다. 특히, 학습자의 수준에 맞는 어휘와 문법적으로 정확한 예문을 구성하는 데 능숙합니다.
 
-        아래 '퀴즈 조건'에 따라, 주어진 '대상 한자' 목록의 한자들만으로 핵심 단어를 만들어, 문맥에 맞는 읽기(読み方)를 맞추는 객관식 퀴즈 \(count)개를 생성해 주세요.
+        [지시사항]
+        아래 **[입력 정보]**에 명시된 [한자 리스트]를 사용하여, 다음 과정을 통해 객관식 퀴즈를 생성해야 합니다. 리스트에 있는 각 한자당 하나의 문제를 순서대로 만들어야 합니다.
 
-        [대상 한자]
-        [\(kanjiString)]
+        각 한자에 대한 문제 생성은 아래 2단계로 이루어집니다.
 
-        [퀴즈 조건]
-        1. 핵심 단어 생성:
-        반드시 '대상 한자' 목록에 있는 한자 1개 또는 2개 이상을 조합하여 의미가 통하는 일본어 상용 단어 1개를 만듭니다. (예: [医, 院]이 목록에 있다면 医院 생성 가능. 安만 있다면 安全은 생성 불가)
-        이 때 단일 한자로 된 단어도 적극 활용합니다. (예: 愛, 悪)
-        한자를 조합하여 명사, 동사, 형용사 등의 다양한 종류의 단어 중 하나를 만듭니다.
-        동사나 형용사를 만들 경우, 한자 뒤에 붙는 히라가나(오쿠리가나)까지 포함하여 하나의 완전한 단어로 만듭니다. (예: [食]이 목록에 있다면 食べる 생성, [新]이 있다면 新しい 생성)
-        2. 문장 생성:
-        생성한 핵심 단어를 사용하여 자연스러운 일본어 예문을 만듭니다.
-        핵심 단어를 제외한 문장의 다른 부분에는 '대상 한자' 목록에 없는 한자가 절대로 포함되어서는 안됩니다.
-        3. 문제 형식:
-        예문 속 핵심 단어를 괄호로 묶습니다.
-        해당 단어의 올바른 읽기(정답)를 히라가나로 제시합니다.
-        정답과 함께, 학습자가 헷갈릴 만한 오답(히라가나) 3개를 추가하여 총 4개의 보기를 만듭니다.
-        4개의 보기는 무작위 순서로 배열합니다.
+        1단계: 단어 선정
+        주어진 한자를 포함하는 일본어 단어를 하나 선정합니다. 이때, 단어의 난이도는 주어진 한자의 일반적인 사용 수준(예: JLPT 급수)과 비슷해야 합니다.
+
+        2단계: 문제 생성
+        1단계에서 선정한 단어를 사용하여, 이어지는 **[규칙]**과 **[JSON 스키마]**에 따라 문장형 객관식 문제를 생성합니다.
+
+        [한자 리스트]
+        \(kanjiString)
+
+        [규칙]
+
+        target_word와 예문의 형태 일치: target_word 필드에는 반드시 사전형이 아닌, sentence에 실제 사용된 활용형 단어를 그대로 기입해야 합니다. (예: 예문이 友達に会います이면, target_word는 会う가 아닌 会います가 되어야 합니다.)
+
+        선택지와 정답 기준: 선택지(options)와 정답(answer)은 위 1번 규칙에 따라 target_word로 지정된 활용형 단어의 실제 발음을 기준으로 만들어야 합니다. (예: target_word가 会います이면 정답은 あいます입니다.)
+
+        난이도 일치: 생성되는 **예문(sentence)**의 전체적인 어휘 수준과 문법 구조는, 문제의 기반이 되는 [한자]의 난이도와 비슷해야 합니다. 예를 들어, 쉬운 한자(N5 수준)에는 간단한 문장을, 어려운 한자(N1 수준)에는 좀 더 복잡한 문장을 사용해야 합니다.
+
+        최종 출력되는 문제의 순서는 [한자 리스트]의 순서와 정확히 일치해야 합니다.
+
+        각 문제 객체 안에는 kanji 프로퍼티를 포함하여, 어떤 한자로 문제를 만들었는지 명시해야 합니다.
+
+        오답 선택지 3개는 매우 중요합니다. 정답과 비슷하게 보이거나, 한자를 잘못 읽기 쉬운 발음, 혹은 흔한 실수(장음/단음, 탁음/반탁음 등)를 유도하는 그럴듯한 오답으로 구성해야 합니다.
+
+        모든 텍스트는 일본어로 작성하며, JSON 형식 규칙을 엄격히 준수합니다.
         """
     }
     
@@ -300,13 +311,13 @@ final class DefaultKanchuRepository: KanchuRepository {
     private func createFindReadingSchema() -> GeminiAPIRequest.JSONSchema {
         let problemSchema = GeminiAPIRequest.JSONSchema(
             type: "object",
-            description: "한자 읽기 퀴즈 문제 하나를 나타내는 구조입니다.",
+            description: "한자 퀴즈 문제 하나를 나타내는 구조입니다.",
             properties: [
-                "targetKanji": .init(type: "string", description: "퀴즈의 대상이 되는 핵심 단어(한자)입니다."),
-                "targetWord": .init(type: "string", description: "한자가 포함된 전체 단어"),
-                "sentence": .init(type: "string", description: "핵심 단어가 괄호로 묶여 포함된 예문입니다."),
-                "options": .init(type: "array", description: "정답 1개와 오답 3개로 구성된 총 4개의 히라가나 보기 목록입니다.", items: .init(type: "string")),
-                "answer": .init(type: "string", description: "4개의 보기 중 정답에 해당하는 히라가나입니다.")
+                "targetKanji": .init(type: "string", description: "한자 리스트에 있던, 이 문제의 기반이 된 한자"),
+                "targetWord": .init(type: "string", description: "AI가 생성한, 이 문제의 대상이 되는 핵심 단어"),
+                "sentence": .init(type: "string", description: "대상 단어가 포함된 일본어 예문"),
+                "options": .init(type: "array", description: "4개의 선택지 발음(히라가나) 목록", items: .init(type: "string")),
+                "answer": .init(type: "string", description: "options 중 정답에 해당하는 발음")
             ],
             required: ["targetKanji", "targetWord", "sentence", "options", "answer"]
         )

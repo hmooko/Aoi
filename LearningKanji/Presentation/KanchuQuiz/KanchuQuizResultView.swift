@@ -59,7 +59,7 @@ struct KanchuQuizResultView: View {
     @ViewBuilder
     private func incorrectAnswerCell(_ answer: UserAnswer) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(answer.problem.sentence.replacingOccurrences(of: "[\(answer.problem.targetword)]", with: answer.problem.targetword))
+            Text(answer.problem.sentence.replacingOccurrences(of: "[\(answer.problem.targetWord)]", with: answer.problem.targetWord))
                 .font(.body)
                 .foregroundStyle(.secondary)
             HStack {
