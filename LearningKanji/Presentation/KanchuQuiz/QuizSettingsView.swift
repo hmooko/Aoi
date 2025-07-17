@@ -15,10 +15,7 @@ struct QuizSettingsView: View {
     let problemCounts = [5, 10, 20]
     let elementaryTargets: [QuizTarget] = Grade.elementarySchoolCases().map { .elementary(grade: $0) }
     let middleSchoolTargets: [QuizTarget] = (1...6).map { .middleSchool(index: $0) }
-    let bookmarkTargets: [QuizTarget] = [
-        .bookmark(id: 1, name: "북마크 1"),
-        .bookmark(id: 2, name: "헷갈리는 단어")
-    ]
+    let bookmarkTargets: [QuizTarget] = []
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -137,7 +134,7 @@ struct QuizSettingsView: View {
 
 #Preview {
     QuizSettingsView()
-        .environmentObject(KanchuQuizView.ViewModel(getKanchuProblemsUseCase: DIContainer().makeGetKanchuProblemsUsecase(), calculateKanchuProblemsResultUseCase: DIContainer().makeCalculateKanchuProblemsResult()))
+        .environmentObject(KanchuQuizView.ViewModel(container: DIContainer()))
 }
 
 #Preview("settingButton") {

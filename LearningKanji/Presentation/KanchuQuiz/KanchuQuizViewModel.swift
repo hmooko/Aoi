@@ -11,11 +11,13 @@ extension KanchuQuizView {
     @MainActor
     final class ViewModel: ObservableObject {
         // MARK: - Use Cases
-        private let getKanchuProblemsUseCase: GetKanchuProblemsUseCase
+        private let getKanchuProblemsUseCase: GetKanchuProblemsUseCase?
         private let calculateKanchuProblemsResultUseCase: CalculateKanchuProblemsResultUseCase
+        private let bookmarksUseCase: BookmarksUseCase
         
         // MARK: - Published Properties (View의 상태)
         @Published var quizSettings = QuizSettings()
+        @Published var errorMessage: String? = nil
         @Published private(set) var problems: [KanchuProblem] = []
         @Published private(set) var currentProblemIndex: Int = 0
         @Published private(set) var userAnswers: [UserAnswer] = []
@@ -24,6 +26,7 @@ extension KanchuQuizView {
         @Published private(set) var isAnswered: Bool = false
         @Published private(set) var isLoading: Bool = false
         @Published private(set) var viewState: ViewState = .settings
+        @Published private(set) var bookmarksTargets: [QuizTarget] = []
         
         enum ViewState {
             case settings
@@ -43,22 +46,29 @@ extension KanchuQuizView {
             return problems[currentProblemIndex]
         }
         
-        // MARK: - Initializer (Dependency Injection)
-        init(getKanchuProblemsUseCase: GetKanchuProblemsUseCase,
-             calculateKanchuProblemsResultUseCase: CalculateKanchuProblemsResultUseCase) {
-            self.getKanchuProblemsUseCase = getKanchuProblemsUseCase
-            self.calculateKanchuProblemsResultUseCase = calculateKanchuProblemsResultUseCase
-        }
+        // MARK: - Initializer (Dependency Injection). Handles dependency errors and triggers error alert if needed.
         
         init(container: DIContainer) {
-            self.getKanchuProblemsUseCase = container.makeGetKanchuProblemsUsecase()
-            self.calculateKanchuProblemsResultUseCase = container.makeCalculateKanchuProblemsResult()
+            do {
+                self.getKanchuProblemsUseCase = try container.getKanchuProblemsUsecase()
+            } catch {
+                self.getKanchuProblemsUseCase = nil // Provide a dummy or fallback implementation if possible
+                self.errorMessage = error.localizedDescription
+                self.viewState = .loading
+            }
+            self.calculateKanchuProblemsResultUseCase = container.calculateKanchuProblemsResult()
+            self.bookmarksUseCase = container.bookmarksUseCase()
+            fetchBookmarksTargets()
         }
         
         // MARK: - Public Methods (View의 Action)
         
         /// 퀴즈 시작: 설정값에 따라 문제들을 가져옵니다.
         func startQuiz() {
+            guard let getKanchuProblemsUseCase = getKanchuProblemsUseCase else {
+                return
+            }
+            
             viewState = .loading
             isLoading = true
             
@@ -126,6 +136,18 @@ extension KanchuQuizView {
         private func finishQuiz() {
             self.quizResult = calculateKanchuProblemsResultUseCase.execute(userAnswers: userAnswers)
             self.viewState = .results
+        }
+        
+        private func fetchBookmarksTargets() {
+            Task {
+                do {
+                    self.bookmarksTargets = try await bookmarksUseCase.fetchBookmarks().map {
+                        QuizTarget.bookmark(id: $0.id, name: $0.title)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
         }
     }
 }

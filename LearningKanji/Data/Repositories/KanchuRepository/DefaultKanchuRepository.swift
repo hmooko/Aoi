@@ -76,38 +76,6 @@ private struct GeminiKanchuProblem: Decodable {
 // MARK: - Main Repository Implementation
 final class DefaultKanchuRepository: KanchuRepository {
     
-    enum GeminiError: Error, LocalizedError {
-        case apiKeyNotFound
-        case invalidURL
-        case requestEncodingFailed(Error)
-        case responseDecodingFailed(Error)
-        case apiError(String)
-        case kanjiFetchingFailed(Error)
-        case kanjiListEmpty
-
-        var errorDescription: String? {
-            switch self {
-            case .apiKeyNotFound: return "API 키를 찾을 수 없습니다. GenerativeAI-Info.plist를 확인하세요."
-            case .invalidURL: return "잘못된 API URL입니다."
-            case .requestEncodingFailed: return "요청 데이터를 인코딩하는 데 실패했습니다."
-            case .responseDecodingFailed: return "응답 데이터를 디코딩하는 데 실패했습니다."
-            case .apiError(let message): return "API 에러: \(message)"
-            case .kanjiFetchingFailed: return "퀴즈를 만들 한자를 가져오는 데 실패했습니다."
-            case .kanjiListEmpty: return "kanjiList가 비어있습니다."
-            }
-        }
-    }
-    
-    enum KanchuRepositoryError: Error, LocalizedError {
-        case kanjiListLessThanCount
-        
-        var errorDescription: String? {
-            switch self {
-            case .kanjiListLessThanCount: return "kanjiList의 길이가 퀴즈 문제로 필요한 수보다 적습니다."
-            }
-        }
-    }
-    
     private let apiKey: String
     private let session: URLSession
     

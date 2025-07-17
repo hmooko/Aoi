@@ -81,10 +81,10 @@ final class DIContainer: ObservableObject {
         return icloudBookmarksService
     }
     
-    func makeGetKanchuProblemsUsecase() -> GetKanchuProblemsUseCase {
+    func getKanchuProblemsUsecase() throws -> GetKanchuProblemsUseCase {
         guard let getKanchuProblemsService = self.getKanchuProblemsService else {
             return DefaultGetKanchuProblemsService(
-                kanchuRepository: makeKanchuRepository(),
+                kanchuRepository: try makeKanchuRepository(),
                 bookmarksRepository: makeBoookmarksRepository(),
                 commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
             )
@@ -93,7 +93,7 @@ final class DIContainer: ObservableObject {
         return getKanchuProblemsService
     }
     
-    func makeCalculateKanchuProblemsResult() -> CalculateKanchuProblemsResultUseCase {
+    func calculateKanchuProblemsResult() -> CalculateKanchuProblemsResultUseCase {
         guard let calculateKanchuProblemsResultervice = self.calculateKanchuProblemsResultervice else {
             return DefaultCalculateKanchuProblemsResultService()
         }
@@ -118,7 +118,11 @@ final class DIContainer: ObservableObject {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
     }
     
-    private func makeKanchuRepository() -> KanchuRepository {
+    private func makeKanchuRepository() throws -> KanchuRepository {
+        #if DEBUG
         return MockKanjiRepository()
+        #else
+        return try DefaultKanchuRepository()
+        #endif
     }
 }
