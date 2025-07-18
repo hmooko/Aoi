@@ -76,3 +76,36 @@ extension TodaysKanjiService {
         return result
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockTodaysKanjiService: TodaysKanjiUseCase {
+    private var todaysKanjiCount: Int
+    private var todaysKanjiGrade: Set<Grade>
+    private let sampleKanjiList: [Kanji]
+    
+    init(count: Int = 3, grade: Set<Grade> = [.first], kanjiList: [Kanji] = Kanji.sampleKanjiList) {
+        self.todaysKanjiCount = count
+        self.todaysKanjiGrade = grade
+        self.sampleKanjiList = kanjiList
+    }
+    
+    func fetchTodaysKanjiList() async throws -> [Kanji] {
+        Array(sampleKanjiList.prefix(todaysKanjiCount))
+    }
+    
+    func getTodaysKanjiCount() -> Int {
+        todaysKanjiCount
+    }
+    
+    func setTodaysKanjiCount(_ newValue: Int) {
+        todaysKanjiCount = newValue
+    }
+    
+    func getTodaysKanjiGrade() -> Set<Grade> {
+        todaysKanjiGrade
+    }
+    
+    func setTodaysKanjiGrade(_ newValue: Set<Grade>) {
+        todaysKanjiGrade = newValue
+    }
+}

@@ -59,5 +59,5 @@ struct KanchuLoadingView: View {
 }
 
 #Preview {
-    KanchuQuizView(container: DIContainer())
+    KanchuQuizView(container: .preview)
 }

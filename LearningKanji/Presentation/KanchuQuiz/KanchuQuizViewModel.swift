@@ -10,8 +10,14 @@ import Foundation
 extension KanchuQuizView {
     @MainActor
     final class ViewModel: ObservableObject {
+        private struct DummyGetKanchuProblemsUseCase: GetKanchuProblemsUseCase {
+            func execute(target: QuizTarget, problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
+                throw NSError(domain: "DummyGetKanchuProblemsUseCase", code: -1, userInfo: [NSLocalizedDescriptionKey: "Dependency injection failed. No real implementation provided."])
+            }
+        }
+
         // MARK: - Use Cases
-        private let getKanchuProblemsUseCase: GetKanchuProblemsUseCase?
+        private let getKanchuProblemsUseCase: GetKanchuProblemsUseCase
         private let calculateKanchuProblemsResultUseCase: CalculateKanchuProblemsResultUseCase
         private let bookmarksUseCase: BookmarksUseCase
         
@@ -52,7 +58,7 @@ extension KanchuQuizView {
             do {
                 self.getKanchuProblemsUseCase = try container.getKanchuProblemsUsecase()
             } catch {
-                self.getKanchuProblemsUseCase = nil // Provide a dummy or fallback implementation if possible
+                self.getKanchuProblemsUseCase = DummyGetKanchuProblemsUseCase()
                 self.errorMessage = error.localizedDescription
                 self.viewState = .loading
             }
@@ -65,10 +71,6 @@ extension KanchuQuizView {
         
         /// 퀴즈 시작: 설정값에 따라 문제들을 가져옵니다.
         func startQuiz() {
-            guard let getKanchuProblemsUseCase = getKanchuProblemsUseCase else {
-                return
-            }
-            
             viewState = .loading
             isLoading = true
             
@@ -151,3 +153,4 @@ extension KanchuQuizView {
         }
     }
 }
+

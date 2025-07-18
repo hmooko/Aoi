@@ -9,15 +9,32 @@ import Foundation
 import SwiftUI
 
 final class DIContainer: ObservableObject {
+    static var preview: Self {
+        let container = DIContainer()
+        container.setMockServices()
+        return container as! Self
+    }
+    
+    func setMockServices() {
+        self.todaysKanjiService = MockTodaysKanjiService() // TODO: Create this mock if it doesn't exist yet.
+        self.learningByGradeService = MockLearningByGradeService() // TODO: Create this mock if it doesn't exist yet.
+        self.learningAtQuizService = MockLearningAtQuizService() // TODO: Create this mock if it doesn't exist yet.
+        self.bookmarksService = MockBookmarksService() // TODO: Create this mock if it doesn't exist yet.
+        self.searchKanjiService = MockSearchKanjiService() // TODO: Create this mock if it doesn't exist yet.
+        self.iCloudBookmarksService = MockICloudBookmarksService() // TODO: Create this mock if it doesn't exist yet.
+        self.getKanchuProblemsService = MockGetKanchuProblemsService() // TODO: Create this mock if it doesn't exist yet.
+        self.calculateKanchuProblemsResultervice = MockCalculateKanchuProblemsResultService() // TODO: Create this mock if it doesn't exist yet.
+    }
+    
     // MARK: - Services
-    private let todaysKanjiService: TodaysKanjiUseCase? = nil
-    private let learningByGradeService: LearningByGradeUseCase? = nil
-    private let learningAtQuizService: LearningAtQuizUseCase? = nil
-    private let bookmarksService: BookmarksUseCase? = nil
-    private let searchKanjiService: SearchKanjiUseCase? = nil
-    private let iCloudBookmarksService: ICloudBookmarksUseCase? = nil
-    private let getKanchuProblemsService: GetKanchuProblemsUseCase? = nil
-    private let calculateKanchuProblemsResultervice: CalculateKanchuProblemsResultUseCase? = nil
+    private var todaysKanjiService: TodaysKanjiUseCase? = nil
+    private var learningByGradeService: LearningByGradeUseCase? = nil
+    private var learningAtQuizService: LearningAtQuizUseCase? = nil
+    private var bookmarksService: BookmarksUseCase? = nil
+    private var searchKanjiService: SearchKanjiUseCase? = nil
+    private var iCloudBookmarksService: ICloudBookmarksUseCase? = nil
+    private var getKanchuProblemsService: GetKanchuProblemsUseCase? = nil
+    private var calculateKanchuProblemsResultervice: CalculateKanchuProblemsResultUseCase? = nil
     
     // MARK: - singleton
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
@@ -119,10 +136,7 @@ final class DIContainer: ObservableObject {
     }
     
     private func makeKanchuRepository() throws -> KanchuRepository {
-        #if DEBUG
-        return MockKanjiRepository()
-        #else
         return try DefaultKanchuRepository()
-        #endif
     }
 }
+

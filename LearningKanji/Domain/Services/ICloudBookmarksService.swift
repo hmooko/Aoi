@@ -98,3 +98,26 @@ final class ICloudBookmarksService: ICloudBookmarksUseCase {
         print("로컬에 데이터 저장 완료.")
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockICloudBookmarksService: ICloudBookmarksUseCase {
+    private var isBackingUp: Bool = false
+    private var isLoadingBackup: Bool = false
+    
+    func getIsBackingUp() -> Bool { isBackingUp }
+    func setIsBackingUP(_ newValue: Bool) { isBackingUp = newValue }
+    func getIsLoadingBackup() -> Bool { isLoadingBackup }
+    func setIsLoadingBackup(_ newValue: Bool) { isLoadingBackup = newValue }
+    
+    func backup() async throws {
+        isBackingUp = true
+        try await Task.sleep(nanoseconds: 3_000_000_000) // Simulate async
+        isBackingUp = false
+    }
+    
+    func load() async throws {
+        isLoadingBackup = true
+        try await Task.sleep(nanoseconds: 3_000_000_000) // Simulate async
+        isLoadingBackup = false
+    }
+}

@@ -81,8 +81,8 @@ final class DefaultKanchuRepository: KanchuRepository {
     
     init(session: URLSession = .shared) throws {
         guard let path = Bundle.main.path(forResource: "ApiKeyList", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path),
-              let key = dict["GEMINI_API_KEY"] as? String, !key.isEmpty else {
+            let dict = NSDictionary(contentsOfFile: path),
+            let key = dict["GEMINI_API_KEY"] as? String, !key.isEmpty else {
             throw GeminiError.apiKeyNotFound
         }
         self.apiKey = key

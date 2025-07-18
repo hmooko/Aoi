@@ -68,3 +68,23 @@ final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
         return try await kanchuRepository.fetchProblems(kanjiList: kanjiList, problemType: problemType, count: count)
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockGetKanchuProblemsService: GetKanchuProblemsUseCase {
+    private let problems: [KanchuProblem]
+    
+    init(problems: [KanchuProblem]? = nil) {
+        if let problems = problems {
+            self.problems = problems
+        } else {
+            self.problems = [
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "友達に駅で会います。", targetKanji: "会", options: ["あいます", "かいます", "えいます", "あう"], answer: "あいます", targetWord: "会います"),
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "私は本を読みます。", targetKanji: "読", options: ["よみます", "とみます", "どくます", "よみ"], answer: "よみます", targetWord: "読みます")
+            ]
+        }
+    }
+    
+    func execute(target: QuizTarget, problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
+        Array(problems.prefix(count))
+    }
+}

@@ -18,3 +18,11 @@ final class DefaultCalculateKanchuProblemsResultService: CalculateKanchuProblems
         return QuizSessionResult(userAnswers: userAnswers)
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockCalculateKanchuProblemsResultService: CalculateKanchuProblemsResultUseCase {
+    func execute(userAnswers: [UserAnswer]) -> QuizSessionResult {
+        // Simply return a QuizSessionResult with the provided answers (mock behavior)
+        return QuizSessionResult(userAnswers: userAnswers)
+    }
+}
