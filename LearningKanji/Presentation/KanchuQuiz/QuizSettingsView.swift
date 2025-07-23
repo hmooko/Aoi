@@ -120,10 +120,10 @@ struct QuizSettingsView: View {
                 .fontWeight(.regular)
                 .padding(EdgeInsets(top: 8, leading: 13, bottom: 8, trailing: 13))
                 .background(isSelected ? Color.blue.opacity(0.1) : Color(.systemBackground))
-                .foregroundColor(isSelected ? .blue : .primary)
+                .foregroundColor(isSelected ? .primary : .black)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .strokeBorder(isSelected ? .blue : Color.gray.opacity(0.4), lineWidth: 2)
+                        .strokeBorder(isSelected ? .primary : Color.gray.opacity(0.4), lineWidth: 2)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
@@ -135,8 +135,4 @@ struct QuizSettingsView: View {
 #Preview {
     QuizSettingsView()
         .environmentObject(KanchuQuizView.ViewModel(container: DIContainer()))
-}
-
-#Preview("settingButton") {
-    
 }

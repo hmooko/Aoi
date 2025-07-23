@@ -64,7 +64,16 @@ extension KanchuQuizView {
             }
             self.calculateKanchuProblemsResultUseCase = container.calculateKanchuProblemsResult()
             self.bookmarksUseCase = container.bookmarksUseCase()
-            fetchBookmarksTargets()
+            
+            Task {
+                do {
+                    self.bookmarksTargets = try await bookmarksUseCase.fetchBookmarks().map {
+                        QuizTarget.bookmark(id: $0.id, name: $0.title)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
         }
         
         // MARK: - Public Methods (View의 Action)
@@ -112,8 +121,7 @@ extension KanchuQuizView {
             let userAnswer = UserAnswer(problem: currentProblem, submittedAnswer: choice)
             userAnswers.append(userAnswer)
             
-            // 1.2초 후 다음 로직 실행
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 if self.currentProblemIndex < self.problems.count - 1 {
                     self.goToNextProblem()
                 } else {

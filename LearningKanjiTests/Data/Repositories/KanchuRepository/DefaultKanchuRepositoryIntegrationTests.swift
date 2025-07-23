@@ -12,12 +12,11 @@ import XCTest
 /// API 키가 필요하며, 네트워크 상태에 따라 실행 시간이 길어지거나 실패할 수 있습니다.
 final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
 
-    var repository: DefaultKanchuRepository!
+    var repository: DefaultKanchuQuizRepository!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        // CI/CD 환경 등 API 키가 없는 환경에서는 테스트를 건너뛰기 위해 try? 사용
-        repository = try? DefaultKanchuRepository()
+        repository = try? DefaultKanchuQuizRepository()
     }
 
     override func tearDownWithError() throws {
@@ -36,10 +35,14 @@ final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
             Kanji(id: 1, kanji: "学", grade: "", sound: "", meaning: "", korean: ""),
             Kanji(id: 2, kanji: "生", grade: "", sound: "", meaning: "", korean: ""),
             Kanji(id: 3, kanji: "会", grade: "", sound: "", meaning: "", korean: ""),
-            Kanji(id: 4, kanji: "社", grade: "", sound: "", meaning: "", korean: "")
+            Kanji(id: 4, kanji: "社", grade: "", sound: "", meaning: "", korean: ""),
+            Kanji(id: 5, kanji: "日", grade: "", sound: "", meaning: "", korean: ""),
+            Kanji(id: 6, kanji: "本", grade: "", sound: "", meaning: "", korean: ""),
+            Kanji(id: 7, kanji: "語", grade: "", sound: "", meaning: "", korean: ""),
+            Kanji(id: 8, kanji: "人", grade: "", sound: "", meaning: "", korean: "")
         ]
-        let problemType: ProblemType = .findKanji
-        let count = 3 // 실제 요청이므로 문제 수를 적게 설정
+        let problemType: ProblemType = .findReading
+        let count = 5
 
         // When
         let problems = try await repository.fetchProblems(kanjiList: kanjiList, problemType: problemType, count: count)
@@ -65,3 +68,4 @@ final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
         }
     }
 }
+

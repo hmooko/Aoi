@@ -28,12 +28,12 @@ protocol GetKanchuProblemsUseCase {
 }
 
 final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
-    private let kanchuRepository: KanchuRepository
+    private let kanchuRepository: KanchuQuizRepository
     private let bookmarksRepository: BookmarksRepository
     private let commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
     
     init(
-        kanchuRepository: KanchuRepository,
+        kanchuRepository: KanchuQuizRepository,
         bookmarksRepository: BookmarksRepository,
         commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
     ) {
@@ -71,20 +71,42 @@ final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
 
 // MARK: - Mock Service for Testing/Preview
 final class MockGetKanchuProblemsService: GetKanchuProblemsUseCase {
-    private let problems: [KanchuProblem]
     
-    init(problems: [KanchuProblem]? = nil) {
-        if let problems = problems {
-            self.problems = problems
-        } else {
-            self.problems = [
-                KanchuProblem(id: UUID(), type: .findReading, sentence: "友達に駅で会います。", targetKanji: "会", options: ["あいます", "かいます", "えいます", "あう"], answer: "あいます", targetWord: "会います"),
-                KanchuProblem(id: UUID(), type: .findReading, sentence: "私は本を読みます。", targetKanji: "読", options: ["よみます", "とみます", "どくます", "よみ"], answer: "よみます", targetWord: "読みます")
-            ]
-        }
+    init() {
     }
     
     func execute(target: QuizTarget, problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
-        Array(problems.prefix(count))
+        switch problemType {
+        case .findReading:
+            let problems = [
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "友達に駅で(会います)。", targetKanji: "会", options: ["あいます", "かいます", "えいます", "あう"], answer: "あいます", targetWord: "会います"),
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "私は本を(読みます)。", targetKanji: "読", options: ["よみます", "とみます", "どくます", "よみ"], answer: "よみます", targetWord: "読みます"),
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "毎日水を(飲みます)。", targetKanji: "飲", options: ["のみます", "みずます", "のみる", "のみ"], answer: "のみます", targetWord: "飲みます"),
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "子供が公園で(遊びます)。", targetKanji: "遊", options: ["あそびます", "およぎます", "あそぶ", "あそび"], answer: "あそびます", targetWord: "遊びます"),
+                KanchuProblem(id: UUID(), type: .findReading, sentence: "朝ご飯を(食べます)。", targetKanji: "食", options: ["たべます", "しょくます", "たべる", "たべ"], answer: "たべます", targetWord: "食べます")
+            ]
+            try await Task.sleep(for: .seconds(3))
+            return Array(problems.prefix(count))
+        case .findKanji:
+            let problems = [
+                KanchuProblem(id: UUID(), type: .findKanji, sentence: "きょう(はは)なを買いました。", targetKanji: "花", options: ["花", "草", "木", "米"], answer: "花", targetWord: "はな"),
+                KanchuProblem(id: UUID(), type: .findKanji, sentence: "(みず)を飲みます。", targetKanji: "水", options: ["水", "火", "木", "金"], answer: "水", targetWord: "みず"),
+                KanchuProblem(id: UUID(), type: .findKanji, sentence: "(ひ)を消してください。", targetKanji: "火", options: ["水", "火", "風", "土"], answer: "火", targetWord: "ひ"),
+                KanchuProblem(id: UUID(), type: .findKanji, sentence: "あの(き)は高いです。", targetKanji: "木", options: ["木", "草", "花", "山"], answer: "木", targetWord: "き"),
+                KanchuProblem(id: UUID(), type: .findKanji, sentence: "(かね)が必要です。", targetKanji: "金", options: ["金", "土", "水", "火"], answer: "金", targetWord: "かね")
+            ]
+            try await Task.sleep(for: .seconds(3))
+            return Array(problems.prefix(count))
+        case .fillReading:
+            let problems = [
+                KanchuProblem(id: UUID(), type: .fillReading, sentence: "私は本を(＿＿＿)。", targetKanji: "読", options: ["よみます", "とみます", "どくます", "よみ"], answer: "よみます", targetWord: "読みます"),
+                KanchuProblem(id: UUID(), type: .fillReading, sentence: "朝ご飯を(＿＿＿)。", targetKanji: "食", options: ["たべます", "しょくます", "たべる", "たべ"], answer: "たべます", targetWord: "食べます"),
+                KanchuProblem(id: UUID(), type: .fillReading, sentence: "毎日水を(＿＿＿)。", targetKanji: "飲", options: ["のみます", "みずます", "のみる", "のみ"], answer: "のみます", targetWord: "飲みます"),
+                KanchuProblem(id: UUID(), type: .fillReading, sentence: "母と買い物に(＿＿＿)。", targetKanji: "行", options: ["いきます", "ゆきます", "こうきます", "いく"], answer: "いきます", targetWord: "行きます"),
+                KanchuProblem(id: UUID(), type: .fillReading, sentence: "子供が公園で(＿＿＿)。", targetKanji: "遊", options: ["あそびます", "およぎます", "あそぶ", "あそび"], answer: "あそびます", targetWord: "遊びます")
+            ]
+            try await Task.sleep(for: .seconds(3))
+            return Array(problems.prefix(count))
+        }
     }
 }

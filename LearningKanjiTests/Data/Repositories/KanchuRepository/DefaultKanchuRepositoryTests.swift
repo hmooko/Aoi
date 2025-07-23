@@ -44,7 +44,7 @@ class MockURLProtocol: URLProtocol {
 // MARK: - Test Class
 class DefaultKanchuRepositoryTests: XCTestCase {
 
-    var sut: DefaultKanchuRepository!
+    var sut: DefaultKanchuQuizRepository!
     var session: URLSession!
 
     override func setUpWithError() throws {
@@ -58,7 +58,7 @@ class DefaultKanchuRepositoryTests: XCTestCase {
         // The `DefaultKanchuRepository` initializer will fail if the file or key is not found.
         // This is a known dependency from the current implementation.
         do {
-            sut = try DefaultKanchuRepository(session: session)
+            sut = try DefaultKanchuQuizRepository(session: session)
         } catch {
             XCTFail("Failed to initialize DefaultKanchuRepository. Ensure ApiKeyList.plist is correctly set up for the test target. Error: \(error)")
         }
@@ -152,7 +152,7 @@ class DefaultKanchuRepositoryTests: XCTestCase {
             _ = try await sut.fetchProblems(kanjiList: dummyKanji, problemType: .findReading, count: 1)
             XCTFail("An error should have been thrown.")
         } catch {
-            guard let geminiError = error as? DefaultKanchuRepository.GeminiError else {
+            guard let geminiError = error as? GeminiError else {
                 XCTFail("Incorrect error type thrown: \(error)")
                 return
             }
@@ -184,7 +184,7 @@ class DefaultKanchuRepositoryTests: XCTestCase {
             _ = try await sut.fetchProblems(kanjiList: dummyKanji, problemType: .findReading, count: 1)
             XCTFail("A decoding error should have been thrown.")
         } catch {
-            guard let geminiError = error as? DefaultKanchuRepository.GeminiError else {
+            guard let geminiError = error as? GeminiError else {
                 XCTFail("Incorrect error type thrown: \(error)")
                 return
             }

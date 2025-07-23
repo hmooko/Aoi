@@ -11,7 +11,7 @@ import XCTest
 
 final class GetKanchuProblemsServiceIntegrationTests: XCTestCase {
 
-    var kanchuRepository: KanchuRepository!
+    var kanchuRepository: KanchuQuizRepository!
     var bookmarksRepository: BookmarksRepository!
     var commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository!
     var sut: GetKanchuProblemsUseCase!
@@ -20,7 +20,7 @@ final class GetKanchuProblemsServiceIntegrationTests: XCTestCase {
         try super.setUpWithError()
         
         let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage()
-        kanchuRepository = try DefaultKanchuRepository()
+        kanchuRepository = try DefaultKanchuQuizRepository()
         bookmarksRepository = DefaultBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
         commonlyUsedKanjiRepository = DefaultCommonlyUsedKanjiRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
         

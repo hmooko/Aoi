@@ -135,8 +135,8 @@ final class DIContainer: ObservableObject {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
     }
     
-    private func makeKanchuRepository() throws -> KanchuRepository {
-        return try DefaultKanchuRepository()
+    private func makeKanchuRepository() throws -> KanchuQuizRepository {
+        return try DefaultKanchuQuizRepository()
     }
 }
 

@@ -74,7 +74,7 @@ private struct GeminiKanchuProblem: Decodable {
 
 
 // MARK: - Main Repository Implementation
-final class DefaultKanchuRepository: KanchuRepository {
+final class DefaultKanchuQuizRepository: KanchuQuizRepository {
     
     private let apiKey: String
     private let session: URLSession
@@ -91,7 +91,7 @@ final class DefaultKanchuRepository: KanchuRepository {
     
     func fetchProblems(kanjiList: [Kanji], problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
         if kanjiList.count < count {
-            throw KanchuRepositoryError.kanjiListLessThanCount
+            throw KanchuQuizRepositoryError.kanjiListLessThanCount
         }
         
         let request = try buildRequest(kanjiList: kanjiList.map { $0.kanji }, problemType: problemType, count: count)
@@ -177,7 +177,7 @@ final class DefaultKanchuRepository: KanchuRepository {
         당신은 일본어 교육 및 평가 콘텐츠 제작 전문가입니다. 특히, 학습자의 수준에 맞는 어휘와 문법적으로 정확한 예문을 구성하는 데 능숙합니다.
 
         [지시사항]
-        아래 **[입력 정보]**에 명시된 [한자 리스트]를 사용하여, 다음 과정을 통해 객관식 퀴즈를 생성해야 합니다. 리스트에 있는 각 한자당 하나의 문제를 순서대로 만들어야 합니다.
+        아래 [한자 리스트]를 사용하여, 다음 과정을 통해 객관식 퀴즈를 생성해야 합니다. 리스트에 있는 각 한자당 하나의 문제를 순서대로 만들어야 합니다.
 
         각 한자에 대한 문제 생성은 아래 2단계로 이루어집니다.
 
@@ -192,25 +192,27 @@ final class DefaultKanchuRepository: KanchuRepository {
 
         [규칙]
 
-        target_word와 예문의 형태 일치: target_word 필드에는 반드시 사전형이 아닌, sentence에 실제 사용된 활용형 단어를 그대로 기입해야 합니다. (예: 예문이 友達に会います이면, target_word는 会う가 아닌 会います가 되어야 합니다.)
+        1. target_word와 예문의 형태 일치: target_word 필드에는 반드시 사전형이 아닌, sentence에 실제 사용된 활용형 단어를 그대로 기입해야 합니다. (예: 예문이 友達に会います이면, target_word는 会う가 아닌 会います가 되어야 합니다.)
+        
+        2. 예문 내의 target_word는 괄호로 감싸야 합니다.
 
-        선택지와 정답 기준: 선택지(options)와 정답(answer)은 위 1번 규칙에 따라 target_word로 지정된 활용형 단어의 실제 발음을 기준으로 만들어야 합니다. (예: target_word가 会います이면 정답은 あいます입니다.)
+        3. 선택지와 정답 기준: 선택지(options)와 정답(answer)은 위 1번 규칙에 따라 target_word로 지정된 활용형 단어의 실제 발음을 기준으로 만들어야 합니다. (예: target_word가 会います이면 정답은 あいます입니다.)
 
-        난이도 일치: 생성되는 **예문(sentence)**의 전체적인 어휘 수준과 문법 구조는, 문제의 기반이 되는 [한자]의 난이도와 비슷해야 합니다. 예를 들어, 쉬운 한자(N5 수준)에는 간단한 문장을, 어려운 한자(N1 수준)에는 좀 더 복잡한 문장을 사용해야 합니다.
+        4. 난이도 일치: 생성되는 **예문(sentence)**의 전체적인 어휘 수준과 문법 구조는, 문제의 기반이 되는 [한자]의 난이도와 비슷해야 합니다. 예를 들어, 쉬운 한자(N5 수준)에는 간단한 문장을, 어려운 한자(N1 수준)에는 좀 더 복잡한 문장을 사용해야 합니다.
 
-        최종 출력되는 문제의 순서는 [한자 리스트]의 순서와 정확히 일치해야 합니다.
+        5. 최종 출력되는 문제의 순서는 [한자 리스트]의 순서와 정확히 일치해야 합니다.
 
-        각 문제 객체 안에는 kanji 프로퍼티를 포함하여, 어떤 한자로 문제를 만들었는지 명시해야 합니다.
+        6. 각 문제 객체 안에는 kanji 프로퍼티를 포함하여, 어떤 한자로 문제를 만들었는지 명시해야 합니다.
 
-        오답 선택지 3개는 매우 중요합니다. 정답과 비슷하게 보이거나, 한자를 잘못 읽기 쉬운 발음, 혹은 흔한 실수(장음/단음, 탁음/반탁음 등)를 유도하는 그럴듯한 오답으로 구성해야 합니다.
+        7. 오답 선택지 3개는 매우 중요합니다. 정답과 비슷하게 보이거나, 한자를 잘못 읽기 쉬운 발음, 혹은 흔한 실수(장음/단음, 탁음/반탁음 등)를 유도하는 그럴듯한 오답으로 구성해야 합니다.
 
-        모든 텍스트는 일본어로 작성하며, JSON 형식 규칙을 엄격히 준수합니다.
+        8. 모든 텍스트는 일본어로 작성하며, JSON 형식 규칙을 엄격히 준수합니다.
         
         [예시]
         {
           "targetKanji": "会",
           "targetWord": "会います",
-          "sentence": "友達に駅で会います。",
+          "sentence": "友達に駅で(会います)。",
           "options": [
             "あいます",
             "かいます",
@@ -253,7 +255,7 @@ final class DefaultKanchuRepository: KanchuRepository {
         {
           "targetKanji": "語"
           "targetWord": "日本語",
-          "question": "にほん___",
+          "question": "にほん(___)",
           "options": [
             "ご",
             "ごう",
@@ -296,7 +298,9 @@ final class DefaultKanchuRepository: KanchuRepository {
 
         2. 난이도 일치: 생성하는 단어와 **예문(sentence_prompt)**의 전체적인 어휘 수준 및 문법 구조는, 입력된 [한자]의 일반적인 난이도와 비슷해야 합니다.
 
-        3. 예문 생성 방식: 예문(sentence_prompt)에서 핵심 단어가 와야 할 자리에 밑줄(___) 대신, 해당 단어의 발음인 targetWord 값을 직접 채워 넣어야 합니다.
+        3. 예문 생성 방식: 예문(sentence_prompt)에서 핵심 단어가 와야 할 자리에 해당 단어의 발음인 targetWord 값을 직접 채워 넣어야 합니다.
+        
+        4. 예문에서 targetWord는 괄호로 감싸야 합니다.
 
         4. 오답 생성 전략: 오답은 아래 전략을 적극적으로 활용합니다.
             * 동음이의어: targetWord와 발음이 같은 다른 단어.
@@ -311,7 +315,7 @@ final class DefaultKanchuRepository: KanchuRepository {
         {
           "targetKanji": "場",
           "targetWord": "こうじょう",
-          "sentence": "このこうじょうではくつを作っています。",
+          "sentence": "この(こうじょう)ではくつを作っています。",
           "options": [
             "工事",
             "公事",
