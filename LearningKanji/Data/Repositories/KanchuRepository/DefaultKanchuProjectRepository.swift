@@ -29,7 +29,8 @@ final class DefaultKanchuProjectRepository: KanchuProjectRepository {
                 name: project.name,
                 createdAt: project.createdAt,
                 questionCount: project.questionCount,
-                questions: project.questions
+                questions: project.questions,
+                isPinned: project.isPinned
             )
             context.insert(dto)
         }

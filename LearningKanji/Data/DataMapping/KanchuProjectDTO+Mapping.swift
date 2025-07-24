@@ -25,17 +25,21 @@ final class KanchuProjectDTO {
     /// 프로젝트에 포함된 실제 문제들의 배열
     var questions: [KanchuProblem]
     
-    init(id: UUID, name: String, createdAt: Date, questionCount: Int, questions: [KanchuProblem]) {
+    // 프로젝트 고정 여부
+    var isPinned: Bool
+    
+    init(id: UUID, name: String, createdAt: Date, questionCount: Int, questions: [KanchuProblem], isPinned: Bool) {
         self.id = id
         self.name = name
         self.createdAt = createdAt
         self.questionCount = questionCount
         self.questions = questions
+        self.isPinned = isPinned
     }
 }
 
 extension KanchuProjectDTO {
     func toDomain(from pr: KanchuProjectDTO) -> KanchuProject {
-        .init(id: pr.id, name: pr.name, createdAt: pr.createdAt, questionCount: pr.questionCount, questions: pr.questions)
+        .init(id: pr.id, name: pr.name, createdAt: pr.createdAt, questionCount: pr.questionCount, questions: pr.questions, isPinned: pr.isPinned)
     }
 }

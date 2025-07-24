@@ -7,8 +7,10 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 final class DIContainer: ObservableObject {
+    // MARK: - Mock
     static var preview: Self {
         let container = DIContainer()
         container.setMockServices()
@@ -24,6 +26,24 @@ final class DIContainer: ObservableObject {
         self.iCloudBookmarksService = MockICloudBookmarksService() // TODO: Create this mock if it doesn't exist yet.
         self.getKanchuProblemsService = MockGetKanchuProblemsService() // TODO: Create this mock if it doesn't exist yet.
         self.calculateKanchuProblemsResultervice = MockCalculateKanchuProblemsResultService() // TODO: Create this mock if it doesn't exist yet.
+    }
+    
+    // MARK: - Model
+    lazy var modelContainer: ModelContainer = {
+        // Task 모델을 위한 컨테이너를 생성합니다.
+        let schema = Schema([KanchuProjectDTO.self])
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [configuration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+
+    @MainActor
+    var modelContext: ModelContext {
+        modelContainer.mainContext
     }
     
     // MARK: - Services
@@ -101,7 +121,7 @@ final class DIContainer: ObservableObject {
     func getKanchuProblemsUsecase() throws -> GetKanchuProblemsUseCase {
         guard let getKanchuProblemsService = self.getKanchuProblemsService else {
             return DefaultGetKanchuProblemsService(
-                kanchuRepository: try makeKanchuRepository(),
+                kanchuRepository: try makeKanchuQuizRepository(),
                 bookmarksRepository: makeBoookmarksRepository(),
                 commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
             )
@@ -117,6 +137,22 @@ final class DIContainer: ObservableObject {
         
         return calculateKanchuProblemsResultervice
     }
+    
+    @MainActor
+    func fetchAllKanchuProjectsUseCase() -> FetchAllKanchuProjectsUseCase {
+        return DefaultFetchAllKanchuProjectsUseCase(kanchuRepository: makeKanchuProjectRepository())
+    }
+    
+    @MainActor
+    func insertKanchuProjectUseCase() -> InsertKanchuProjectUseCase {
+        return DefaultInsertKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+    }
+    
+    @MainActor
+    func deleteKanchuProjectUseCase() -> DeleteKanchuProjectUseCase {
+        return DefaultDeleteKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+    }
+    
     
     // MARK: - Repository
     private func makeCommonlyUsedKanjiRepository() -> CommonlyUsedKanjiRepository {
@@ -135,8 +171,12 @@ final class DIContainer: ObservableObject {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
     }
     
-    private func makeKanchuRepository() throws -> KanchuQuizRepository {
+    private func makeKanchuQuizRepository() throws -> KanchuQuizRepository {
         return try DefaultKanchuQuizRepository()
     }
+    
+    @MainActor
+    private func makeKanchuProjectRepository() -> KanchuProjectRepository {
+        return DefaultKanchuProjectRepository(context: modelContext)
+    }
 }
-

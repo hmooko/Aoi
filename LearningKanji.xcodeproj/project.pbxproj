@@ -127,6 +127,7 @@
 		F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F60C452DE01012004010B4 /* LearningSentence.swift */; };
 		F4FF73642E320DE7002176A3 /* InsertKanchuProjectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF73632E320DE7002176A3 /* InsertKanchuProjectUseCase.swift */; };
 		F4FF73662E320DEC002176A3 /* DeleteKanchuProjectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF73652E320DEC002176A3 /* DeleteKanchuProjectUseCase.swift */; };
+		F4FF736C2E32277D002176A3 /* KanchuHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +271,7 @@
 		F4F60C452DE01012004010B4 /* LearningSentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSentence.swift; sourceTree = "<group>"; };
 		F4FF73632E320DE7002176A3 /* InsertKanchuProjectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertKanchuProjectUseCase.swift; sourceTree = "<group>"; };
 		F4FF73652E320DEC002176A3 /* DeleteKanchuProjectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteKanchuProjectUseCase.swift; sourceTree = "<group>"; };
+		F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuHomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -628,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				F4F350082E2FAC6000B3A018 /* KanchuHomeView.swift */,
+				F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */,
 				F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */,
 				F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */,
 				F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */,
@@ -1000,6 +1003,7 @@
 				F40969992C50C99600AB221C /* TodaysKanjiView.swift in Sources */,
 				F40969812C50C99600AB221C /* BookmarksMenu.swift in Sources */,
 				F409698A2C50C99600AB221C /* KanjiListView.swift in Sources */,
+				F4FF736C2E32277D002176A3 /* KanchuHomeViewModel.swift in Sources */,
 				F41682D82C6489BC00671E47 /* LearningBookmarks.swift in Sources */,
 				F40969852C50C99600AB221C /* FlipableKanjiCard.swift in Sources */,
 				F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */,

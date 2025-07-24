@@ -23,6 +23,9 @@ struct KanchuProject: Identifiable, Codable {
     
     /// 프로젝트에 포함된 실제 문제들의 배열
     let questions: [KanchuProblem]
+    
+    /// 프로젝트 고정 여부
+    let isPinned: Bool
 }
 
 
@@ -43,7 +46,8 @@ func createExampleProject() -> KanchuProject {
         name: "초1 - 올바른 발음 구하기",
         createdAt: Date(),
         questionCount: exampleProblems.count,
-        questions: exampleProblems
+        questions: exampleProblems,
+        isPinned: false
     )
     
     print("새로운 문제집이 생성되었습니다: \(newProject.name)")
