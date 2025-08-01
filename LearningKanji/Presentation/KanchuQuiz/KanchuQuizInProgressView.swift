@@ -56,7 +56,7 @@ struct KanchuQuizInProgressView: View {
                 Spacer()
                 
             } else {
-                Text("문제를 불러오는 중입니다...")
+                AoiText("문제를 불러오는 중입니다...")
             }
         }
         .padding()

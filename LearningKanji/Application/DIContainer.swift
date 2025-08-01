@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 import SwiftData
 
 final class DIContainer: ObservableObject {
@@ -18,14 +17,20 @@ final class DIContainer: ObservableObject {
     }
     
     func setMockServices() {
-        self.todaysKanjiService = MockTodaysKanjiService() // TODO: Create this mock if it doesn't exist yet.
-        self.learningByGradeService = MockLearningByGradeService() // TODO: Create this mock if it doesn't exist yet.
-        self.learningAtQuizService = MockLearningAtQuizService() // TODO: Create this mock if it doesn't exist yet.
-        self.bookmarksService = MockBookmarksService() // TODO: Create this mock if it doesn't exist yet.
-        self.searchKanjiService = MockSearchKanjiService() // TODO: Create this mock if it doesn't exist yet.
-        self.iCloudBookmarksService = MockICloudBookmarksService() // TODO: Create this mock if it doesn't exist yet.
-        self.getKanchuProblemsService = MockGetKanchuProblemsService() // TODO: Create this mock if it doesn't exist yet.
-        self.calculateKanchuProblemsResultervice = MockCalculateKanchuProblemsResultService() // TODO: Create this mock if it doesn't exist yet.
+        let mockKanchuProjectRepository = MockKanchuProjectRepository(initialProjects: [createExampleProject()])
+        
+        self.todaysKanjiService = MockTodaysKanjiService()
+        self.learningByGradeService = MockLearningByGradeService()
+        self.learningAtQuizService = MockLearningAtQuizService()
+        self.bookmarksService = MockBookmarksService()
+        self.searchKanjiService = MockSearchKanjiService()
+        self.iCloudBookmarksService = MockICloudBookmarksService()
+        self.getKanchuProblemsService = MockGetKanchuProblemsService()
+        self.calculateKanchuProblemsResultService = MockCalculateKanchuProblemsResultService()
+        self.fetchAllKanchuProjectsService = MockFetchAllKanchuProjectsUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.insertKanchuProjectService = MockInsertKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.deleteKanchuProjectService = MockDefaultDeleteKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.updateKanchuProjectService = MockUpdateKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
     }
     
     // MARK: - Model
@@ -46,6 +51,8 @@ final class DIContainer: ObservableObject {
         modelContainer.mainContext
     }
     
+    var router: Router = Router()
+    
     // MARK: - Services
     private var todaysKanjiService: TodaysKanjiUseCase? = nil
     private var learningByGradeService: LearningByGradeUseCase? = nil
@@ -54,7 +61,11 @@ final class DIContainer: ObservableObject {
     private var searchKanjiService: SearchKanjiUseCase? = nil
     private var iCloudBookmarksService: ICloudBookmarksUseCase? = nil
     private var getKanchuProblemsService: GetKanchuProblemsUseCase? = nil
-    private var calculateKanchuProblemsResultervice: CalculateKanchuProblemsResultUseCase? = nil
+    private var calculateKanchuProblemsResultService: CalculateKanchuProblemsResultUseCase? = nil
+    private var fetchAllKanchuProjectsService: FetchAllKanchuProjectsUseCase? = nil
+    private var insertKanchuProjectService: InsertKanchuProjectUseCase? = nil
+    private var deleteKanchuProjectService: DeleteKanchuProjectUseCase? = nil
+    private var updateKanchuProjectService: UpdateKanchuProjectUseCase? = nil
     
     // MARK: - singleton
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
@@ -131,26 +142,43 @@ final class DIContainer: ObservableObject {
     }
     
     func calculateKanchuProblemsResult() -> CalculateKanchuProblemsResultUseCase {
-        guard let calculateKanchuProblemsResultervice = self.calculateKanchuProblemsResultervice else {
+        guard let calculateKanchuProblemsResultService = self.calculateKanchuProblemsResultService else {
             return DefaultCalculateKanchuProblemsResultService()
         }
         
-        return calculateKanchuProblemsResultervice
+        return calculateKanchuProblemsResultService
     }
     
     @MainActor
     func fetchAllKanchuProjectsUseCase() -> FetchAllKanchuProjectsUseCase {
-        return DefaultFetchAllKanchuProjectsUseCase(kanchuRepository: makeKanchuProjectRepository())
+        guard let fetchAllKanchuProjectsService = self.fetchAllKanchuProjectsService else {
+            return DefaultFetchAllKanchuProjectsUseCase(kanchuRepository: makeKanchuProjectRepository())
+        }
+        return fetchAllKanchuProjectsService
     }
     
     @MainActor
     func insertKanchuProjectUseCase() -> InsertKanchuProjectUseCase {
-        return DefaultInsertKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        guard let insertKanchuProjectService = self.insertKanchuProjectService else {
+            return DefaultInsertKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        }
+        return insertKanchuProjectService
     }
     
     @MainActor
     func deleteKanchuProjectUseCase() -> DeleteKanchuProjectUseCase {
-        return DefaultDeleteKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        guard let deleteKanchuProjectService = self.deleteKanchuProjectService else {
+            return DefaultDeleteKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        }
+        return deleteKanchuProjectService
+    }
+    
+    @MainActor
+    func updateKanchuProjectUseCase() -> UpdateKanchuProjectUseCase {
+        guard let updateKanchuProjectService = self.updateKanchuProjectService else {
+            return DefaultUpdateKanchuProjectUseCase(kanchuProjectRepository: makeKanchuProjectRepository())
+        }
+        return updateKanchuProjectService
     }
     
     

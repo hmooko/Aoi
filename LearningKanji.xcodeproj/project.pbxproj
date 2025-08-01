@@ -99,8 +99,8 @@
 		F472730A2DD429040087168D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47273092DD429040087168D /* LoginView.swift */; };
 		F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472730B2DD472A60087168D /* LoginViewModel.swift */; };
 		F479A5552E220A73007C3D41 /* DefaultKanchuQuizRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */; };
-		F479A5572E22D798007C3D41 /* ApiKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = F479A5562E22D798007C3D41 /* ApiKeyList.plist */; };
 		F479A5592E22D944007C3D41 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F479A5582E22D944007C3D41 /* .gitignore */; };
+		F48EEEC42E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */; };
 		F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */; };
 		F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */; };
 		F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C762E0CEF50005B1299 /* BackupPicker.swift */; };
@@ -243,8 +243,8 @@
 		F47273092DD429040087168D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F472730B2DD472A60087168D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuQuizRepository.swift; sourceTree = "<group>"; };
-		F479A5562E22D798007C3D41 /* ApiKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeyList.plist; sourceTree = "<group>"; };
 		F479A5582E22D944007C3D41 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateKanchuProjectUseCase.swift; sourceTree = "<group>"; };
 		F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningAndSound.swift; sourceTree = "<group>"; };
 		F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSwipe.swift; sourceTree = "<group>"; };
 		F4A13C762E0CEF50005B1299 /* BackupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPicker.swift; sourceTree = "<group>"; };
@@ -649,7 +649,6 @@
 				F40969A12C50C9AA00AB221C /* japanese_kanji_2136.json */,
 				F400707A2C83EC2F006BB14C /* PretendardOTF */,
 				F4F60C2C2DD4EA13004010B4 /* Model.xcdatamodeld */,
-				F479A5562E22D798007C3D41 /* ApiKeyList.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -778,6 +777,7 @@
 				F4F3500E2E30EAF900B3A018 /* FetchAllKanchuProjectsUseCase.swift */,
 				F4FF73632E320DE7002176A3 /* InsertKanchuProjectUseCase.swift */,
 				F4FF73652E320DEC002176A3 /* DeleteKanchuProjectUseCase.swift */,
+				F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -906,7 +906,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F40969A22C50C9AA00AB221C /* japanese_kanji_2136.json in Resources */,
-				F479A5572E22D798007C3D41 /* ApiKeyList.plist in Resources */,
 				F400707E2C83EC5A006BB14C /* Pretendard-Light.otf in Resources */,
 				F4F60C302DD4F291004010B4 /* GoogleService-Info.plist in Resources */,
 				F479A5592E22D944007C3D41 /* .gitignore in Resources */,
@@ -940,6 +939,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F48EEEC42E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift in Sources */,
 				F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */,
 				F40969832C50C99600AB221C /* ModifyBookmarksView.swift in Sources */,
 				F4F350142E3143E000B3A018 /* KanchuProjectDTO+Mapping.swift in Sources */,

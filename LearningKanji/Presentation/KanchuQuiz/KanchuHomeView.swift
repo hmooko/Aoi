@@ -9,39 +9,46 @@ import SwiftUI
 
 struct KanchuHomeView: View {
     
-    //@StateObject private var viewModel: ViewModel
+    @StateObject private var viewModel: ViewModel
     
     init(container: DIContainer) {
-        //_viewModel = .init(wrappedValue: .init(container: container))
+        _viewModel = .init(wrappedValue: .init(container: container))
     }
     
     var body: some View {
-        List([createExampleProject()], id: \.id) { project in
-            KanchuProjectCard(project: project)
+        List {
+            ForEach(viewModel.projects) { project in
+                KanchuProjectCard(project: project)
+                    .environmentObject(viewModel)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+            }
         }
+        .listStyle(.plain)
+        .background(Color(.systemGray6))
     }
     
     private struct KanchuProjectCard: View {
         let project: KanchuProject
+        @EnvironmentObject var viewModel: KanchuHomeView.ViewModel
         
         var body: some View {
             HStack {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text(project.name)
                         .font(.headline)
                         .fontWeight(.bold)
                         .lineLimit(1)
                     
                     HStack(spacing: 16) {
-                        Label("\(project.questionCount)문제", systemImage: "number")
-                        Label {
-                            Text(project.createdAt, format: .dateTime.year().month().day())
-                        } icon: {
+                        Text("\(project.questionCount)문제")
+                        HStack(spacing: 4) {
                             Image(systemName: "calendar")
+                            Text(project.createdAt, format: .dateTime.year().month().day())
                         }
                     }
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.gray)
                 }
                 
                 Spacer()
@@ -50,10 +57,23 @@ struct KanchuHomeView: View {
                     Image(systemName: "pin.fill")
                         .foregroundColor(.yellow)
                         .font(.title3)
+                        .onTapGesture {
+                            viewModel.togglePin(for: project)
+                        }
+                } else {
+                    Image(systemName: "pin")
+                        .foregroundColor(.gray)
+                        .onTapGesture {
+                            viewModel.togglePin(for: project)
+                        }
                 }
             }
             .padding()
-            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.white)
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+            }
         }
     }
 }

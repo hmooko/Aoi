@@ -38,22 +38,45 @@ extension View {
     func aoiNavigationDestination(container: DIContainer) -> some View {
         self
             .navigationDestination(for: AppScene.self) { scene in
-                switch scene {
-                case .settingScene:
-                    SettingsView()
-                case .quizScene(let kanjiList):
-                    LearningAtQuizView(viewModel: .init(container, quizList: kanjiList))
-                case .learningScene(let kanjiList):
-                    LearningKanjiView(kanjiList: kanjiList)
-                case .learningBookmarks(let bookmarks):
-                    LearningBookmarks(.init(bookmarks, container: container))
-                case .modifyBookmarksScene(let bookmarks):
-                    ModifyBookmarksView(container, bookmarks: bookmarks)
-                case .todaysKanjiGradePickerScene:
-                    TodaysKanjiGradePicker()
-                case .signInScene:
-                    LoginView(viewModel: LoginView.ViewModel())
+                Group {
+                    switch scene {
+                    case .settingScene:
+                        SettingsView()
+                    case .quizScene(let kanjiList):
+                        LearningAtQuizView(viewModel: .init(container, quizList: kanjiList))
+                    case .learningScene(let kanjiList):
+                        LearningKanjiView(kanjiList: kanjiList)
+                    case .learningBookmarks(let bookmarks):
+                        LearningBookmarks(.init(bookmarks, container: container))
+                    case .modifyBookmarksScene(let bookmarks):
+                        ModifyBookmarksView(container, bookmarks: bookmarks)
+                    case .todaysKanjiGradePickerScene:
+                        TodaysKanjiGradePicker()
+                    case .signInScene:
+                        LoginView(viewModel: LoginView.ViewModel())
+                    }
                 }
+                .environmentObject(container)
+                .environmentObject(container.router)
             }
+    }
+}
+
+struct AoiNavigationView: View {
+    @StateObject private var container: DIContainer
+    @StateObject private var router: Router
+    
+    init(container: DIContainer) {
+        self._container = .init(wrappedValue: container)
+        self._router = .init(wrappedValue: container.router)
+    }
+    
+    var body: some View {
+        NavigationStack(path: $router.path) {
+            ContentView(viewModel: .init(container: container))
+                .aoiNavigationDestination(container: container)
+                .environmentObject(container)
+                .environmentObject(router)
+        }
     }
 }

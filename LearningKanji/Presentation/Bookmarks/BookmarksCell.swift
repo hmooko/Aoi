@@ -57,7 +57,7 @@ struct BookmarksCell: View {
         .background {
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color(.white))
-                .stroke(Color("secondary"))
+                .stroke(Color.secondaryColor)
                 .shadow(color: Color("shadow"), radius: 13.9, y: 4)
         }
         .padding()

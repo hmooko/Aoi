@@ -41,7 +41,7 @@ struct LearningByGradeRow: View {
             .foregroundStyle(Color("primary"))
             .padding(10)
             .frame(maxWidth: .infinity)
-            .background(Color("secondary"))
+            .background(Color.secondaryColor)
             
             Button {
                 router.push(.learningScene(viewModel.kanjiList))

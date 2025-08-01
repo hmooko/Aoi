@@ -135,6 +135,10 @@ extension KanchuQuizView {
             viewState = .settings
         }
         
+        func goHome() {
+            
+        }
+        
         // MARK: - Private Methods
         
         private func goToNextProblem() {

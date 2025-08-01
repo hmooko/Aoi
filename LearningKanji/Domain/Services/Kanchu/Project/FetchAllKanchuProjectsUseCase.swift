@@ -46,14 +46,16 @@ final class DefaultFetchAllKanchuProjectsUseCase: FetchAllKanchuProjectsUseCase 
 
 // MARK: - Mock for Preview/Testing
 final class MockFetchAllKanchuProjectsUseCase: FetchAllKanchuProjectsUseCase {
-    private let mockProjects: [KanchuProject]
+    private let kanchuProjectRepository: KanchuProjectRepository
     
-    init(mockProjects: [KanchuProject] = [createExampleProject()]) {
-        self.mockProjects = mockProjects
+    init(kanchuProjectRepository: KanchuProjectRepository) {
+        self.kanchuProjectRepository = kanchuProjectRepository
     }
     
     func execute(sortOption: DefaultFetchAllKanchuProjectsUseCase.SortOption) async throws -> [KanchuProject] {
-        let sortedProjects = mockProjects.sorted { lhs, rhs in
+        let projects = try await kanchuProjectRepository.fetchAllProjects()
+        
+        let sortedProjects = projects.sorted { lhs, rhs in
             switch sortOption {
             case .name(let ascending):
                 let comparison = lhs.name.localizedStandardCompare(rhs.name)

@@ -40,20 +40,41 @@ struct KanchuQuizResultView: View {
                         }
                     }
                 }
-                
-                Button(action: {
-                    viewModel.startNewQuiz()
-                }) {
-                    Text("새로운 퀴즈 시작")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
             }
             .padding()
         }
         .navigationTitle("학습 결과")
         .navigationBarBackButtonHidden()
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Button(action: {
+                    viewModel.startNewQuiz()
+                }) {
+                    AoiText("새로운 퀴즈 시작", size: 20)
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.white)
+                        .padding(10)
+                }
+                .background {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.primaryColor)
+                }
+                
+                Button(action: {
+                    viewModel.goHome()
+                }) {
+                    AoiText("홈으로", size: 20)
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(Color.primaryColor)
+                        .padding(10)
+                }
+                .background {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.tertiaryColor)
+                }
+            }
+            .padding()
+        }
     }
     
     @ViewBuilder

@@ -17,17 +17,18 @@ final class DefaultInsertKanchuProjectUseCase: InsertKanchuProjectUseCase {
 }
 
 final class MockInsertKanchuProjectUseCase: InsertKanchuProjectUseCase {
-    private(set) var receivedProjects: [KanchuProject]?
+    private let kanchuProjectRepository: KanchuProjectRepository
     var errorToThrow: Error?
     
-    init(errorToThrow: Error? = nil) {
+    init(kanchuProjectRepository: KanchuProjectRepository, errorToThrow: Error? = nil) {
+        self.kanchuProjectRepository = kanchuProjectRepository
         self.errorToThrow = errorToThrow
     }
 
     func execute(projects: [KanchuProject]) async throws {
-        receivedProjects = projects
         if let errorToThrow = errorToThrow {
             throw errorToThrow
         }
+        try await kanchuProjectRepository.insertProjects(projects)
     }
 }

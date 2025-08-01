@@ -26,7 +26,7 @@ struct TodaysKanjiCell: View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color("secondary"))
+                        .fill(Color.secondaryColor)
                 }
                 
                 VStack(alignment: .leading) {
@@ -41,7 +41,7 @@ struct TodaysKanjiCell: View {
                     .pretendardMedium(size: 15)
                     .foregroundStyle(Color("primary"))
                     .padding(EdgeInsets(top: 5, leading: 8, bottom: 5, trailing: 8))
-                    .background(Color("secondary"))
+                    .background(Color.secondaryColor)
                     .clipShape(.rect(cornerRadius: 8))
                 
                 Spacer()

@@ -18,10 +18,11 @@ final class DefaultDeleteKanchuProjectUseCase: DeleteKanchuProjectUseCase {
 
 // MARK: - Mock Implementation for DefaultDeleteKanchuProjectUseCase
 final class MockDefaultDeleteKanchuProjectUseCase: DeleteKanchuProjectUseCase {
-    private(set) var receivedIds: [[UUID]] = []
+    private let kanchuProjectRepository: KanchuProjectRepository
     var errorToThrow: Error?
 
-    init(errorToThrow: Error? = nil) {
+    init(kanchuProjectRepository: KanchuProjectRepository, errorToThrow: Error? = nil) {
+        self.kanchuProjectRepository = kanchuProjectRepository
         self.errorToThrow = errorToThrow
     }
 
@@ -29,6 +30,6 @@ final class MockDefaultDeleteKanchuProjectUseCase: DeleteKanchuProjectUseCase {
         if let error = errorToThrow {
             throw error
         }
-        receivedIds.append(ids)
+        try await kanchuProjectRepository.deleteProjects(ids)
     }
 }

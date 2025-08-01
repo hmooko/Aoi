@@ -69,7 +69,7 @@ struct MeaningAndSound: View {
                 .foregroundStyle(Color("primary"))
                 .background {
                     Circle()
-                        .fill(Color("secondary"))
+                        .fill(Color.secondaryColor)
                 }
                 .pretendardMedium(size: size)
             Text(kanji.sound)
