@@ -28,3 +28,4 @@ struct KanchuProblem: Identifiable, Codable {
     /// 문제 대상 단어
     let targetWord: String 
 }
+

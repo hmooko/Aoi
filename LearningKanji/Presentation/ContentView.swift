@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var appState: AppState
     @StateObject var viewModel: ViewModel
     
     var body: some View {
@@ -31,6 +30,12 @@ struct ContentView: View {
                         Image("bookmark")
                         Text("북마크")
                     }
+                
+                KanchuHomeView(container: viewModel.container)
+                    .tabItem {
+                        Image("aqi.medium")
+                        Text("Ai문제")
+                    }
             }
             .aoiNavigationBar(router: router)
             .navigationBarTitleDisplayMode(.inline)
@@ -43,8 +48,9 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(viewModel: .init(container: DIContainer()))
-        .environmentObject(DIContainer())
+    let container = DIContainer.preview
+    
+    ContentView(viewModel: .init(container: container))
+        .environmentObject(container)
         .environmentObject(Router())
-        .environmentObject(AppState())
 }

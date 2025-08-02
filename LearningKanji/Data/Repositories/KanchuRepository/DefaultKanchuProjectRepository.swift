@@ -19,7 +19,7 @@ final class DefaultKanchuProjectRepository: KanchuProjectRepository {
     func fetchAllProjects() async throws -> [KanchuProject] {
         let fetchDescriptor = FetchDescriptor<KanchuProjectDTO>()
         let dtos = try context.fetch(fetchDescriptor)
-        return dtos.map { $0.toDomain(from: $0) }
+        return dtos.map { $0.toDomain() }
     }
     
     func insertProjects(_ projects: [KanchuProject]) async throws {
@@ -29,7 +29,7 @@ final class DefaultKanchuProjectRepository: KanchuProjectRepository {
                 name: project.name,
                 createdAt: project.createdAt,
                 questionCount: project.questionCount,
-                questions: project.questions,
+                questions: project.questions.map { $0.toDTO(projectId: project.id) },
                 isPinned: project.isPinned
             )
             context.insert(dto)
@@ -58,7 +58,7 @@ final class DefaultKanchuProjectRepository: KanchuProjectRepository {
         dto.name = project.name
         dto.createdAt = project.createdAt
         dto.questionCount = project.questionCount
-        dto.questions = project.questions
+        dto.questions = project.questions.map { $0.toDTO(projectId: project.id) }
         dto.isPinned = project.isPinned
         
         try context.save()
