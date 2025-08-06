@@ -8,6 +8,7 @@
 import Foundation
 
 extension ContentView {
+    @MainActor
     final class ViewModel: ObservableObject {
         let container: DIContainer
         @Published var isAlert = false
@@ -18,6 +19,8 @@ extension ContentView {
             self.container = container
             BackingUp()
             LoadingBackup()
+            
+            // let fetchSetvice = container.fetchAllKanchuProjectsUseCase()
         }
         
         private func BackingUp() {

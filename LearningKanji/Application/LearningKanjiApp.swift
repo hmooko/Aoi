@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(
@@ -19,14 +20,53 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct LearningKanjiApp: App {
-    private let container: DIContainer = DIContainer()
+    private let container: DIContainer
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    init() {
+        container = DIContainer()
+    }
     
     var body: some Scene {
         
         WindowGroup {
             AoiNavigationView(container: container)
+            //AView()
+        }
+    }
+}
+
+struct AView: View {
+    
+    var body: some View {
+        NavigationStack {
+            TabView {
+                VStack {
+                    Text("hihi")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                .tabItem {
+                    Image(systemName: "add")
+                    Text("추가")
+                }
+                
+                VStack {
+                    
+                }
+                .tabItem {
+                    Image(systemName: "minus")
+                    Text("제거")
+                }
+            }
         }
     }
 }

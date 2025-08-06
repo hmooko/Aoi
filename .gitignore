@@ -6,6 +6,7 @@
 xcuserdata/
 .DS_Store
 ApiKeyList.plist
+*.xcconfig
 
 ## Xcode 8 and earlier
 *.xcscmblueprint

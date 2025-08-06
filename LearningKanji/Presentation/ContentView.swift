@@ -18,6 +18,7 @@ struct ContentView: View {
                         Image("open book")
                         Text("학습")
                     }
+                    .aoiNavigationBar(router: router)
                 
                 SearchKanjiView(viewModel: .init(viewModel.container))
                     .tabItem {
@@ -25,16 +26,16 @@ struct ContentView: View {
                         Text("검색")
                     }
                 
+                KanchuHomeView(container: viewModel.container)
+                    .tabItem {
+                        Image(systemName: "aqi.medium")
+                        Text("칸츄")
+                    }
+                
                 BookmarksListView(viewModel: .init(container: viewModel.container))
                     .tabItem {
                         Image("bookmark")
                         Text("북마크")
-                    }
-                
-                KanchuHomeView(container: viewModel.container)
-                    .tabItem {
-                        Image("aqi.medium")
-                        Text("Ai문제")
                     }
             }
             .aoiNavigationBar(router: router)

@@ -30,7 +30,7 @@ extension View {
             .safeAreaInset(edge: .top) {
                 VStack { }
                     .frame(maxWidth: .infinity)
-                    .background(Color("primary"))
+                    .background(Color.primaryColor)
             }
     }
     

@@ -12,7 +12,7 @@ import Foundation
  
  Codable 프로토콜을 채택하여 KanchuProject와 같은 다른 Codable 타입에서 사용할 수 있습니다.
  */
-struct KanchuProblem: Identifiable, Codable {
+struct KanchuProblem: Identifiable, Codable, Hashable {
     /// 문제 고유 식별자
     let id: UUID
     /// 문제 유형

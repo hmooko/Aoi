@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import os
 
 extension KanchuQuizView {
     @MainActor
     final class ViewModel: ObservableObject {
+        private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "KanchuQuizViewModel")
+        
         private struct DummyGetKanchuProblemsUseCase: GetKanchuProblemsUseCase {
             func execute(target: QuizTarget, problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
                 throw NSError(domain: "DummyGetKanchuProblemsUseCase", code: -1, userInfo: [NSLocalizedDescriptionKey: "Dependency injection failed. No real implementation provided."])
@@ -20,6 +23,8 @@ extension KanchuQuizView {
         private let getKanchuProblemsUseCase: GetKanchuProblemsUseCase
         private let calculateKanchuProblemsResultUseCase: CalculateKanchuProblemsResultUseCase
         private let bookmarksUseCase: BookmarksUseCase
+        private let insertKanchuProjectUseCase: InsertKanchuProjectUseCase
+        private var router: Router
         
         // MARK: - Published Properties (View의 상태)
         @Published var quizSettings = QuizSettings()
@@ -64,16 +69,10 @@ extension KanchuQuizView {
             }
             self.calculateKanchuProblemsResultUseCase = container.calculateKanchuProblemsResult()
             self.bookmarksUseCase = container.bookmarksUseCase()
+            self.router = container.router
+            self.insertKanchuProjectUseCase = container.insertKanchuProjectUseCase()
             
-            Task {
-                do {
-                    self.bookmarksTargets = try await bookmarksUseCase.fetchBookmarks().map {
-                        QuizTarget.bookmark(id: $0.id, name: $0.title)
-                    }
-                } catch {
-                    print(error)
-                }
-            }
+            fetchBookmarksTargets()
         }
         
         // MARK: - Public Methods (View의 Action)
@@ -102,6 +101,16 @@ extension KanchuQuizView {
                     self.isLoading = false
                     self.viewState = .quiz
                     
+                    let project = KanchuProject(
+                        id: UUID(),
+                        name: "\(self.quizSettings.target.getString()) - \(self.quizSettings.problemType.rawValue)",
+                        createdAt: Date(),
+                        questions: self.problems,
+                        isPinned: false
+                    )
+                    
+                    try await insertKanchuProjectUseCase.execute(projects: [project])
+                    
                 } catch {
                     // TODO: 에러 처리 UI 구현
                     print("Error fetching problems: \(error)")
@@ -109,6 +118,19 @@ extension KanchuQuizView {
                     self.viewState = .settings // 에러 발생 시 설정 화면으로 복귀
                 }
             }
+        }
+        
+        /// KanchuHomeView에서 프로젝트를 클릭하여 퀴즈를 바로 시작할 때 사용됩니다.
+        func startQuiz(with project: KanchuProject) {
+            self.problems = project.questions
+            self.currentProblemIndex = 0
+            self.userAnswers = []
+            self.quizResult = nil
+            self.isAnswered = false
+            self.selectedChoice = nil
+            
+            self.isLoading = false
+            self.viewState = .quiz
         }
         
         /// 답안 제출: 사용자의 선택을 처리하고 다음 문제로 넘어갑니다.
@@ -136,7 +158,7 @@ extension KanchuQuizView {
         }
         
         func goHome() {
-            
+            router.popToRoot()
         }
         
         // MARK: - Private Methods
@@ -155,11 +177,16 @@ extension KanchuQuizView {
         private func fetchBookmarksTargets() {
             Task {
                 do {
-                    self.bookmarksTargets = try await bookmarksUseCase.fetchBookmarks().map {
-                        QuizTarget.bookmark(id: $0.id, name: $0.title)
-                    }
+                    self.bookmarksTargets = try await bookmarksUseCase.fetchBookmarks()
+                        .filter {
+                            $0.contents.count >= 10
+                        }
+                        .map {
+                            QuizTarget.bookmark(id: $0.id, name: $0.title)
+                        }
+                    logger.info("북마크 타겟들을 성공적으로 불러왔습니다.")
                 } catch {
-                    print(error)
+                    logger.error("북마크 타겟들을 불러오는데 실패했습니다: \(error)")
                 }
             }
         }

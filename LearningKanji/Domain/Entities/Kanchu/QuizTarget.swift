@@ -30,9 +30,26 @@ enum QuizTarget: Hashable {
     func getString() -> String {
         switch self {
         case .elementary(grade: let grade):
-            return "\(grade.rawValue)"
+            switch grade {
+            case .first:
+                return "초1"
+            case .second:
+                return "초2"
+            case .third:
+                return "초3"
+            case .forth:
+                return "초4"
+            case .fifth:
+                return "초5"
+            case .sixth:
+                return "초6"
+            case .elementary:
+                return "초등학교"
+            case .middle:
+                return "중학교"
+            }
         case .middleSchool(index: let index):
-            return "중학교\(index)"
+            return "중\(index)"
         case .bookmark(id: _, name: let name):
             return name
         }

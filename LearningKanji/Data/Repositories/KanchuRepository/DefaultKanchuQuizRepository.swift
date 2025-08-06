@@ -7,6 +7,12 @@
 
 import Foundation
 
+extension Bundle {
+    var geminiApiKey: String? {
+        return infoDictionary?["GEMINI_API_KEY"] as? String
+    }
+}
+
 // MARK: - Gemini API Request/Response Models
 private struct GeminiAPIRequest: Encodable {
     let contents: [Content]
@@ -80,12 +86,16 @@ final class DefaultKanchuQuizRepository: KanchuQuizRepository {
     private let session: URLSession
     
     init(session: URLSession = .shared) throws {
-        guard let path = Bundle.main.path(forResource: "ApiKeyList", ofType: "plist"),
-            let dict = NSDictionary(contentsOfFile: path),
-            let key = dict["GEMINI_API_KEY"] as? String, !key.isEmpty else {
+//        guard let path = Bundle.main.path(forResource: "ApiKeyList", ofType: "plist"),
+//            let dict = NSDictionary(contentsOfFile: path),
+//            let key = dict["GEMINI_API_KEY"] as? String, !key.isEmpty else {
+//            throw GeminiError.apiKeyNotFound
+//        }
+        guard let apiKey = Bundle.main.geminiApiKey else {
+            print("API 키를 로드하지 못했습니다.")
             throw GeminiError.apiKeyNotFound
         }
-        self.apiKey = key
+        self.apiKey = apiKey
         self.session = session
     }
     
@@ -168,6 +178,7 @@ final class DefaultKanchuQuizRepository: KanchuQuizRepository {
         return request
     }
     
+    // MARK: - Prompt
     private func createFindReadingPrompt(kanjiList: [String], count: Int) throws -> String {
         let kanjiString = Array(kanjiList.shuffled().prefix(count))
         

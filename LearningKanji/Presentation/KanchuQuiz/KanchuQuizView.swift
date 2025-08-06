@@ -9,10 +9,19 @@ import SwiftUI
 
 struct KanchuQuizView: View {
     
+    private let project: KanchuProject?
     @StateObject private var viewModel: ViewModel
     
+    /// Kanchu를 통해 문제를 생성하고 풀 수 있는 뷰입니다.
     init(container: DIContainer) {
         _viewModel = StateObject(wrappedValue: ViewModel(container: container))
+        project = nil
+    }
+    
+    /// 프로젝트의 문제들을 푸는 뷰로 바로 넘어갑니다.
+    init(project: KanchuProject, container: DIContainer) {
+        _viewModel = StateObject(wrappedValue: ViewModel(container: container))
+        self.project = project
     }
     
     var body: some View {
@@ -41,6 +50,11 @@ struct KanchuQuizView: View {
                 Text(errorMessage)
             }
         })
+        .onAppear {
+            if let project = project, viewModel.viewState == .settings {
+                viewModel.startQuiz(with: project)
+            }
+        }
     }
 }
 

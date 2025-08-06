@@ -16,63 +16,68 @@ struct KanchuHomeView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(viewModel.projects) { project in
-                KanchuProjectCard(project: project)
-                    .environmentObject(viewModel)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+        ScrollView {
+            VStack {
+                ForEach(viewModel.projects) { project in
+                    KanchuProjectCard(project: project)
+                        .environmentObject(viewModel)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                withAnimation(.spring) {
+                                    viewModel.deleteProject(project)
+                                }
+                            } label: {
+                                Label("프로젝트 삭제", systemImage: "trash.fill")
+                            }
+                        }
+                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
+                        .onTapGesture {
+                            viewModel.startQuiz(project: project)
+                        }
+                }
+                
+                addProjectButton
+                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
             }
         }
-        .listStyle(.plain)
         .background(Color(.systemGray6))
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing, content: {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "plus")
+                }
+            })
+        }
+        .onAppear {
+            viewModel.fetchAllKanchuProjects()
+        }
     }
     
-    private struct KanchuProjectCard: View {
-        let project: KanchuProject
-        @EnvironmentObject var viewModel: KanchuHomeView.ViewModel
-        
-        var body: some View {
+    private var addProjectButton: some View {
+        Button {
+            viewModel.createQuiz()
+        } label: {
             HStack {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(project.name)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .lineLimit(1)
-                    
-                    HStack(spacing: 16) {
-                        Text("\(project.questionCount)문제")
-                        HStack(spacing: 4) {
-                            Image(systemName: "calendar")
-                            Text(project.createdAt, format: .dateTime.year().month().day())
-                        }
-                    }
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                }
-                
-                Spacer()
-                
-                if project.isPinned {
-                    Image(systemName: "pin.fill")
-                        .foregroundColor(.yellow)
-                        .font(.title3)
-                        .onTapGesture {
-                            viewModel.togglePin(for: project)
-                        }
-                } else {
-                    Image(systemName: "pin")
+                Spacer() // Pushes the content to the center
+                VStack(alignment: .center, spacing: 8) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.largeTitle)
                         .foregroundColor(.gray)
-                        .onTapGesture {
-                            viewModel.togglePin(for: project)
-                        }
+                    Text("새 프로젝트 추가")
+                        .font(.headline)
+                        .foregroundColor(.gray)
                 }
+                Spacer()
             }
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.white)
-                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                    .strokeBorder(
+                        Color.gray.opacity(0.5),
+                        style: StrokeStyle(lineWidth: 2, dash: [6, 6])
+                    )
             }
         }
     }
@@ -81,4 +86,3 @@ struct KanchuHomeView: View {
 #Preview {
     KanchuHomeView(container: .preview)
 }
-

@@ -8,8 +8,9 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class DefaultKanchuProjectRepository: KanchuProjectRepository {
-    
+
     private let context: ModelContext
 
     init(context: ModelContext) {
@@ -17,51 +18,44 @@ final class DefaultKanchuProjectRepository: KanchuProjectRepository {
     }
 
     func fetchAllProjects() async throws -> [KanchuProject] {
-        let fetchDescriptor = FetchDescriptor<KanchuProjectDTO>()
-        let dtos = try context.fetch(fetchDescriptor)
-        return dtos.map { $0.toDomain() }
+        let descriptor = FetchDescriptor<KanchuProjectDTO>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
+        let projectDTOs = try context.fetch(descriptor)
+        return projectDTOs.map { $0.toDomain() }
     }
     
     func insertProjects(_ projects: [KanchuProject]) async throws {
         for project in projects {
-            let dto = KanchuProjectDTO(
-                id: project.id,
-                name: project.name,
-                createdAt: project.createdAt,
-                questionCount: project.questionCount,
-                questions: project.questions.map { $0.toDTO(projectId: project.id) },
-                isPinned: project.isPinned
-            )
-            context.insert(dto)
+            let projectDTO = project.toDTO()
+            context.insert(projectDTO)
         }
-        try context.save()
     }
     
     func deleteProjects(_ projectIds: [UUID]) async throws {
-        guard !projectIds.isEmpty else { return }
-        let predicate = #Predicate<KanchuProjectDTO> { projectIds.contains($0.id) }
-        let fetchDescriptor = FetchDescriptor<KanchuProjectDTO>(predicate: predicate)
-        let dtos = try context.fetch(fetchDescriptor)
-        for dto in dtos {
-            context.delete(dto)
+        let predicate = #Predicate<KanchuProjectDTO> { projectDTO in
+            projectIds.contains(projectDTO.id)
         }
-        try context.save()
+        try context.delete(model: KanchuProjectDTO.self, where: predicate)
     }
-
+    
     func updateKanchuProject(_ project: KanchuProject) async throws {
         let predicate = #Predicate<KanchuProjectDTO> { $0.id == project.id }
-        var fetchDescriptor = FetchDescriptor<KanchuProjectDTO>(predicate: predicate)
-        fetchDescriptor.fetchLimit = 1
+        let descriptor = FetchDescriptor(predicate: predicate)
         
-        guard let dto = try context.fetch(fetchDescriptor).first else { return }
+        guard let projectToUpdate = try context.fetch(descriptor).first else {
+            throw KanchuProjectRepositoryError.ProjectNotFound
+        }
         
-        dto.name = project.name
-        dto.createdAt = project.createdAt
-        dto.questionCount = project.questionCount
-        dto.questions = project.questions.map { $0.toDTO(projectId: project.id) }
-        dto.isPinned = project.isPinned
+        projectToUpdate.name = project.name
+        projectToUpdate.isPinned = project.isPinned
         
-        try context.save()
+        if let existingQuestions = projectToUpdate.questions {
+            for question in existingQuestions {
+                context.delete(question)
+            }
+        }
+        
+        let newQuestionDTOs = project.questions.map { $0.toDTO(project: projectToUpdate) }
+        projectToUpdate.questions = newQuestionDTOs
     }
 }
 
@@ -103,4 +97,3 @@ final class MockKanchuProjectRepository: KanchuProjectRepository {
         }
     }
 }
-

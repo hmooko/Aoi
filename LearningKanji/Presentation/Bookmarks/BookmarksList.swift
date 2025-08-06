@@ -27,6 +27,9 @@ struct BookmarksList: View {
         .onChange(of: router.path) {
             viewModel.fetchBookmarksList()
         }
+        .onAppear {
+            viewModel.fetchBookmarksList()
+        }
     }
 
 }

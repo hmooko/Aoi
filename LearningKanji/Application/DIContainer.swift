@@ -8,6 +8,15 @@
 import Foundation
 import SwiftData
 
+@Model
+final class AC {
+    var a: Int
+    
+    init(a: Int) {
+        self.a = a
+    }
+}
+
 final class DIContainer: ObservableObject {
     // MARK: - Mock
     static var preview: Self {
@@ -17,7 +26,7 @@ final class DIContainer: ObservableObject {
     }
     
     func setMockServices() {
-        let mockKanchuProjectRepository = MockKanchuProjectRepository(initialProjects: [createExampleProject()])
+        let mockKanchuProjectRepository = MockKanchuProjectRepository(initialProjects: createExampleProjects())
         
         self.todaysKanjiService = MockTodaysKanjiService()
         self.learningByGradeService = MockLearningByGradeService()
@@ -35,12 +44,13 @@ final class DIContainer: ObservableObject {
     
     // MARK: - Model
     lazy var modelContainer: ModelContainer = {
-        // Task 모델을 위한 컨테이너를 생성합니다.
-        let schema = Schema([KanchuProjectDTO.self])
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let schema = Schema([
+            KanchuProjectDTO.self
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
-            return try ModelContainer(for: schema, configurations: [configuration])
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
@@ -205,6 +215,7 @@ final class DIContainer: ObservableObject {
     
     @MainActor
     private func makeKanchuProjectRepository() -> KanchuProjectRepository {
-        return DefaultKanchuProjectRepository(context: modelContext)
+        // return MockKanchuProjectRepository()
+        DefaultKanchuProjectRepository(context: modelContext)
     }
 }

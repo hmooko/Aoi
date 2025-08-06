@@ -15,64 +15,70 @@ struct QuizSettingsView: View {
     let problemCounts = [5, 10, 20]
     let elementaryTargets: [QuizTarget] = Grade.elementarySchoolCases().map { .elementary(grade: $0) }
     let middleSchoolTargets: [QuizTarget] = (1...6).map { .middleSchool(index: $0) }
-    let bookmarkTargets: [QuizTarget] = []
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Section {
-                targetScrollView(title: "초등학교", targets: elementaryTargets)
-                targetScrollView(title: "중학교", targets: middleSchoolTargets)
-                targetScrollView(title: "나의 북마크", targets: bookmarkTargets)
-            } header: {
-                HStack {
-                    Image(systemName: "books.vertical")
-                    Text("학습 대상")
-                }
-            }
-            
-            Section {
-                VStack {
-                    ForEach(problemTypes, id: \.self) { type in
-                        Button(action: {
-                            viewModel.quizSettings.problemType = type
-                        }) {
-                            Text(type.rawValue)
-                                .pretendardLight(size: 20)
-                                .frame(maxWidth: .infinity)
-                                .padding(5)
-                        }
-                        .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.problemType == type))
+        ScrollView {
+            VStack(alignment: .leading) {
+                Section {
+                    targetScrollView(title: "초등학교", targets: elementaryTargets)
+                    targetScrollView(title: "중학교", targets: middleSchoolTargets)
+                    targetScrollView(title: "나의 북마크", targets: viewModel.bookmarksTargets)
+                } header: {
+                    HStack {
+                        Image(systemName: "books.vertical")
+                        Text("학습 대상")
+                    }
+                } footer: {
+                    VStack(alignment: .leading) {
+                        AoiText("* 문제를 만들기 위해서는 북마크에 최소 10개 이상의 한자가 있어야 합니다.", size: 11)
+                            .foregroundStyle(.gray)
                     }
                 }
-            } header: {
-                HStack {
-                    Image(systemName: "lightbulb")
-                    Text("문제 유형")
-                }
-            }
-            
-            Section {
-                HStack {
-                    ForEach(problemCounts, id: \.self) { count in
-                        Button(action: {
-                            viewModel.quizSettings.count = count
-                        }) {
-                            Text("\(count)개")
-                                .pretendardLight(size: 20)
-                                .frame(maxWidth: .infinity)
-                                .padding(5)
+                
+                Section {
+                    VStack {
+                        ForEach(problemTypes, id: \.self) { type in
+                            Button(action: {
+                                viewModel.quizSettings.problemType = type
+                            }) {
+                                Text(type.rawValue)
+                                    .pretendardLight(size: 20)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(5)
+                            }
+                            .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.problemType == type))
                         }
-                        .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.count == count))
+                    }
+                } header: {
+                    HStack {
+                        Image(systemName: "lightbulb")
+                        Text("문제 유형")
                     }
                 }
-            } header: {
-                HStack {
-                    Image(systemName: "star")
-                    Text("문제 수")
+                
+                Section {
+                    HStack {
+                        ForEach(problemCounts, id: \.self) { count in
+                            Button(action: {
+                                viewModel.quizSettings.count = count
+                            }) {
+                                Text("\(count)개")
+                                    .pretendardLight(size: 20)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(5)
+                            }
+                            .buttonStyle(SettingButton(isSelected: viewModel.quizSettings.count == count))
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Image(systemName: "star")
+                        Text("문제 수")
+                    }
                 }
+                
+                Spacer()
             }
-            
-            Spacer()
         }
         .padding()
         .background(Color(.systemGray6))

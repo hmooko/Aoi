@@ -98,8 +98,10 @@
 		F47272FD2DD331940087168D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FC2DD331940087168D /* User.swift */; };
 		F472730A2DD429040087168D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47273092DD429040087168D /* LoginView.swift */; };
 		F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472730B2DD472A60087168D /* LoginViewModel.swift */; };
+		F476062E2E3F913500703C89 /* KanchuProjectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476062D2E3F913400703C89 /* KanchuProjectCard.swift */; };
 		F479A5552E220A73007C3D41 /* DefaultKanchuQuizRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */; };
 		F479A5592E22D944007C3D41 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F479A5582E22D944007C3D41 /* .gitignore */; };
+		F4841DCF2E3FA9BD000589E2 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */; };
 		F48EEEC42E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */; };
 		F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */; };
 		F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */; };
@@ -107,6 +109,7 @@
 		F4A13C792E0FCFB7005B1299 /* CommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */; };
 		F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */; };
 		F4AA9D552E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */; };
+		F4C44CBA2E3E1EED00275990 /* KanchuProblemDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */; };
 		F4D982C32E2686BF00BA7909 /* DefaultKanchuRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D982C02E2686BF00BA7909 /* DefaultKanchuRepositoryTests.swift */; };
 		F4D982C42E2686BF00BA7909 /* DefaultKanchuRepositoryIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D982BF2E2686BF00BA7909 /* DefaultKanchuRepositoryIntegrationTests.swift */; };
 		F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */; };
@@ -242,8 +245,10 @@
 		F47272FC2DD331940087168D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F47273092DD429040087168D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F472730B2DD472A60087168D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F476062D2E3F913400703C89 /* KanchuProjectCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuProjectCard.swift; sourceTree = "<group>"; };
 		F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuQuizRepository.swift; sourceTree = "<group>"; };
 		F479A5582E22D944007C3D41 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateKanchuProjectUseCase.swift; sourceTree = "<group>"; };
 		F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningAndSound.swift; sourceTree = "<group>"; };
 		F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSwipe.swift; sourceTree = "<group>"; };
@@ -251,6 +256,7 @@
 		F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKanchuProblemsServiceTests.swift; sourceTree = "<group>"; };
+		F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KanchuProblemDTO+Mapping.swift"; sourceTree = "<group>"; };
 		F4D982BF2E2686BF00BA7909 /* DefaultKanchuRepositoryIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuRepositoryIntegrationTests.swift; sourceTree = "<group>"; };
 		F4D982C02E2686BF00BA7909 /* DefaultKanchuRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuRepositoryTests.swift; sourceTree = "<group>"; };
 		F4DFD0BE2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysKanjiGradePicker.swift; sourceTree = "<group>"; };
@@ -391,6 +397,7 @@
 			children = (
 				F40969252C50C95D00AB221C /* BookmarksDTO+Mapping.swift */,
 				F4F350132E3143E000B3A018 /* KanchuProjectDTO+Mapping.swift */,
+				F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -575,11 +582,11 @@
 		F409697D2C50C99600AB221C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				F409699F2C50C99E00AB221C /* Util */,
 				F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */,
 				F409697B2C50C99600AB221C /* ContentView.swift */,
 				F46AF6602E13EE5200D72D06 /* ContentViewModel.swift */,
 				F47273062DD428DE0087168D /* Login */,
-				F409699F2C50C99E00AB221C /* Util */,
 				F409695A2C50C99600AB221C /* Home */,
 				F40969722C50C99600AB221C /* SearchKanji */,
 				F40969572C50C99600AB221C /* Bookmarks */,
@@ -629,13 +636,11 @@
 		F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				F4841DD02E422909000589E2 /* Component */,
 				F4F350082E2FAC6000B3A018 /* KanchuHomeView.swift */,
 				F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */,
 				F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */,
 				F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */,
-				F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */,
-				F45804A72E1D7A400023CCE5 /* KanchuQuizInProgressView.swift */,
-				F45804A92E1D7AAE0023CCE5 /* KanchuQuizResultView.swift */,
 			);
 			path = KanchuQuiz;
 			sourceTree = "<group>";
@@ -649,6 +654,7 @@
 				F40969A12C50C9AA00AB221C /* japanese_kanji_2136.json */,
 				F400707A2C83EC2F006BB14C /* PretendardOTF */,
 				F4F60C2C2DD4EA13004010B4 /* Model.xcdatamodeld */,
+				F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -690,6 +696,17 @@
 				F4F350112E30EBEF00B3A018 /* DefaultKanchuProjectRepository.swift */,
 			);
 			path = KanchuRepository;
+			sourceTree = "<group>";
+		};
+		F4841DD02E422909000589E2 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				F476062D2E3F913400703C89 /* KanchuProjectCard.swift */,
+				F45804A52E1D62290023CCE5 /* QuizSettingsView.swift */,
+				F45804A72E1D7A400023CCE5 /* KanchuQuizInProgressView.swift */,
+				F45804A92E1D7AAE0023CCE5 /* KanchuQuizResultView.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		F49EE13B2CF48B63002AD484 /* Repositories */ = {
@@ -915,6 +932,7 @@
 				F400707C2C83EC4C006BB14C /* Pretendard-Bold.otf in Resources */,
 				F40968F92C50C8E300AB221C /* Assets.xcassets in Resources */,
 				F40070802C83EC6C006BB14C /* Pretendard-Medium.otf in Resources */,
+				F4841DCF2E3FA9BD000589E2 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,6 +1000,7 @@
 				F45804AA2E1D7AAE0023CCE5 /* KanchuQuizResultView.swift in Sources */,
 				F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */,
 				F45804A62E1D62290023CCE5 /* QuizSettingsView.swift in Sources */,
+				F4C44CBA2E3E1EED00275990 /* KanchuProblemDTO+Mapping.swift in Sources */,
 				F45804A82E1D7A400023CCE5 /* KanchuQuizInProgressView.swift in Sources */,
 				F40969922C50C99600AB221C /* LearningByGradeListView.swift in Sources */,
 				F472730A2DD429040087168D /* LoginView.swift in Sources */,
@@ -1011,6 +1030,7 @@
 				F40969242C50C95400AB221C /* Router.swift in Sources */,
 				F40969842C50C99600AB221C /* HomeView.swift in Sources */,
 				F40969912C50C99600AB221C /* LearningAtQuizViewModel.swift in Sources */,
+				F476062E2E3F913500703C89 /* KanchuProjectCard.swift in Sources */,
 				F4F350122E30EBEF00B3A018 /* DefaultKanchuProjectRepository.swift in Sources */,
 				F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */,
 				F4F60C462DE01012004010B4 /* LearningSentence.swift in Sources */,
@@ -1213,6 +1233,7 @@
 		};
 		F40969162C50C8E300AB221C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1250,6 +1271,7 @@
 		};
 		F40969172C50C8E300AB221C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1287,6 +1309,7 @@
 		};
 		F40969192C50C8E300AB221C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1307,6 +1330,7 @@
 		};
 		F409691A2C50C8E300AB221C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1327,6 +1351,7 @@
 		};
 		F409691C2C50C8E300AB221C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1345,6 +1370,7 @@
 		};
 		F409691D2C50C8E300AB221C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
