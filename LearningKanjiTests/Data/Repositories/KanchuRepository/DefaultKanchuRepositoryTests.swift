@@ -74,10 +74,6 @@ class DefaultKanchuRepositoryTests: XCTestCase {
     }
 
     // MARK: - Test Cases
-    func test_hi() async throws {
-        XCTAssertTrue(true, "하이용")
-    }
-
     func test_fetchProblems_succeedsWithValidData() async throws {
         // Given
         let mockProblemsJSON = """

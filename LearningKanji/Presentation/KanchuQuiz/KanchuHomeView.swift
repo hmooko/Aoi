@@ -29,29 +29,36 @@ struct KanchuHomeView: View {
                             } label: {
                                 Label("프로젝트 삭제", systemImage: "trash.fill")
                             }
+                            
+                            Button {
+                                viewModel.selectProjectToRename(project)
+                            } label: {
+                                Label("이름 변경", systemImage: "pencil")
+                            }
                         }
                         .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                         .onTapGesture {
                             viewModel.startQuiz(project: project)
                         }
                 }
-                
-                addProjectButton
-                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
             }
         }
         .background(Color(.systemGray6))
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing, content: {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                }
-            })
+        .safeAreaInset(edge: .bottom, alignment: .trailing) {
+            addProjectButton
         }
         .onAppear {
             viewModel.fetchAllKanchuProjects()
+        }
+        .alert("프로젝트 이름 변경", isPresented: .init(get: { viewModel.projectToRename != nil }, set: { if !$0 { viewModel.cancelProjectRename() } }), presenting: viewModel.projectToRename) { _ in
+            TextField("새로운 이름", text: $viewModel.newProjectName)
+            
+            Button("변경") {
+                viewModel.commitProjectRename()
+            }
+            Button("취소", role: .cancel) { }
+        } message: { project in
+            Text("'\(project.name)' 프로젝트의 새로운 이름을 입력하세요.")
         }
     }
     
@@ -59,27 +66,13 @@ struct KanchuHomeView: View {
         Button {
             viewModel.createQuiz()
         } label: {
-            HStack {
-                Spacer() // Pushes the content to the center
-                VStack(alignment: .center, spacing: 8) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
-                    Text("새 프로젝트 추가")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-                Spacer()
-            }
-            .padding()
-            .background {
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(
-                        Color.gray.opacity(0.5),
-                        style: StrokeStyle(lineWidth: 2, dash: [6, 6])
-                    )
-            }
+            Image(systemName: "plus")
         }
+        .foregroundStyle(.white)
+        .padding()
+        .background(Color.yellow)
+        .clipShape(.rect(cornerRadius: 15))
+        .padding(30)
     }
 }
 

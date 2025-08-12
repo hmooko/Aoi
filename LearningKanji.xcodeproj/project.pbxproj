@@ -95,13 +95,28 @@
 		F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FFDAA2C6D9B4400C847AC /* LearningByGradeRow.swift */; };
 		F46FFDB02C6DC61000C847AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F46FFDAE2C6DC61000C847AC /* InfoPlist.strings */; };
 		F46FFDBC2C6F54E900C847AC /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FFDBB2C6F54E900C847AC /* Fonts.swift */; };
-		F47272FD2DD331940087168D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FC2DD331940087168D /* User.swift */; };
+		F47272FD2DD331940087168D /* AoiUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47272FC2DD331940087168D /* AoiUser.swift */; };
 		F472730A2DD429040087168D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47273092DD429040087168D /* LoginView.swift */; };
 		F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472730B2DD472A60087168D /* LoginViewModel.swift */; };
 		F476062E2E3F913500703C89 /* KanchuProjectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476062D2E3F913400703C89 /* KanchuProjectCard.swift */; };
+		F4775EAA2E44CB1A007B3704 /* UserRepositoryIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4775EA92E44CB1A007B3704 /* UserRepositoryIntegrationTests.swift */; };
 		F479A5552E220A73007C3D41 /* DefaultKanchuQuizRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */; };
 		F479A5592E22D944007C3D41 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F479A5582E22D944007C3D41 /* .gitignore */; };
+		F47AF22B2E47B4E2002A991B /* RenameKanchuProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47AF22A2E47B4E2002A991B /* RenameKanchuProjectService.swift */; };
+		F47AF22D2E47B57C002A991B /* ToggleKanchuProjectPinStateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47AF22C2E47B57C002A991B /* ToggleKanchuProjectPinStateUseCase.swift */; };
 		F4841DCF2E3FA9BD000589E2 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */; };
+		F4841DD82E4367A4000589E2 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DD72E4367A4000589E2 /* AuthRepository.swift */; };
+		F4841DDA2E436994000589E2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DD92E436994000589E2 /* UserRepository.swift */; };
+		F4841DDC2E4369D5000589E2 /* SignInWithAppleUseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DDB2E4369C4000589E2 /* SignInWithAppleUseService.swift */; };
+		F4841DDF2E436B19000589E2 /* NonceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DDE2E436B19000589E2 /* NonceHelper.swift */; };
+		F4841DE22E436B7B000589E2 /* DefaultAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DE12E436B74000589E2 /* DefaultAuthRepository.swift */; };
+		F4841DE42E436BA9000589E2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DE32E436BA2000589E2 /* DefaultUserRepository.swift */; };
+		F4841DE62E438518000589E2 /* AuthHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DE52E438511000589E2 /* AuthHandlerView.swift */; };
+		F4841DEA2E4392D7000589E2 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DE92E4392D7000589E2 /* UserInfoView.swift */; };
+		F4841DEC2E43958B000589E2 /* GetUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DEB2E43958B000589E2 /* GetUserInfoUseCase.swift */; };
+		F4841DEE2E4395FC000589E2 /* GetCurrentUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DED2E4395FC000589E2 /* GetCurrentUserUseCase.swift */; };
+		F4841DF02E4396A5000589E2 /* SignOutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DEF2E4396A5000589E2 /* SignOutService.swift */; };
+		F4841DF32E43ACAD000589E2 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4841DF22E43ACA7000589E2 /* UserInfoViewModel.swift */; };
 		F48EEEC42E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */; };
 		F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */; };
 		F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */; };
@@ -242,13 +257,28 @@
 		F46FFDB22C6DC65100C847AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F46FFDBA2C6F517A00C847AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F46FFDBB2C6F54E900C847AC /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		F47272FC2DD331940087168D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F47272FC2DD331940087168D /* AoiUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoiUser.swift; sourceTree = "<group>"; };
 		F47273092DD429040087168D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F472730B2DD472A60087168D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F476062D2E3F913400703C89 /* KanchuProjectCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuProjectCard.swift; sourceTree = "<group>"; };
+		F4775EA92E44CB1A007B3704 /* UserRepositoryIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryIntegrationTests.swift; sourceTree = "<group>"; };
 		F479A5542E220A73007C3D41 /* DefaultKanchuQuizRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKanchuQuizRepository.swift; sourceTree = "<group>"; };
 		F479A5582E22D944007C3D41 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F47AF22A2E47B4E2002A991B /* RenameKanchuProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameKanchuProjectService.swift; sourceTree = "<group>"; };
+		F47AF22C2E47B57C002A991B /* ToggleKanchuProjectPinStateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleKanchuProjectPinStateUseCase.swift; sourceTree = "<group>"; };
 		F4841DCE2E3FA9BD000589E2 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		F4841DD72E4367A4000589E2 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		F4841DD92E436994000589E2 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		F4841DDB2E4369C4000589E2 /* SignInWithAppleUseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleUseService.swift; sourceTree = "<group>"; };
+		F4841DDE2E436B19000589E2 /* NonceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonceHelper.swift; sourceTree = "<group>"; };
+		F4841DE12E436B74000589E2 /* DefaultAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAuthRepository.swift; sourceTree = "<group>"; };
+		F4841DE32E436BA2000589E2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		F4841DE52E438511000589E2 /* AuthHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerView.swift; sourceTree = "<group>"; };
+		F4841DE92E4392D7000589E2 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		F4841DEB2E43958B000589E2 /* GetUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserInfoUseCase.swift; sourceTree = "<group>"; };
+		F4841DED2E4395FC000589E2 /* GetCurrentUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUserUseCase.swift; sourceTree = "<group>"; };
+		F4841DEF2E4396A5000589E2 /* SignOutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutService.swift; sourceTree = "<group>"; };
+		F4841DF22E43ACA7000589E2 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateKanchuProjectUseCase.swift; sourceTree = "<group>"; };
 		F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningAndSound.swift; sourceTree = "<group>"; };
 		F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSwipe.swift; sourceTree = "<group>"; };
@@ -405,6 +435,7 @@
 		F409692A2C50C95D00AB221C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				F47AF2302E48A75F002A991B /* AuthUser */,
 				F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */,
 				F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */,
 				F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */,
@@ -441,7 +472,7 @@
 				F40969342C50C98E00AB221C /* CommonlyUsedKanji.swift */,
 				F40969352C50C98E00AB221C /* Grade.swift */,
 				F40969362C50C98E00AB221C /* Kanji.swift */,
-				F47272FC2DD331940087168D /* User.swift */,
+				F47272FC2DD331940087168D /* AoiUser.swift */,
 				F4F60C452DE01012004010B4 /* LearningSentence.swift */,
 			);
 			path = Entities;
@@ -450,6 +481,7 @@
 		F40969422C50C98E00AB221C /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F4841DF12E43AC1E000589E2 /* AuthUser */,
 				F458049B2E1D03D90023CCE5 /* Kanchu */,
 				F409693B2C50C98E00AB221C /* BookmarksService.swift */,
 				F409693C2C50C98E00AB221C /* LearningAtQuizService.swift */,
@@ -586,7 +618,7 @@
 				F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */,
 				F409697B2C50C99600AB221C /* ContentView.swift */,
 				F46AF6602E13EE5200D72D06 /* ContentViewModel.swift */,
-				F47273062DD428DE0087168D /* Login */,
+				F47273062DD428DE0087168D /* AuthUser */,
 				F409695A2C50C99600AB221C /* Home */,
 				F40969722C50C99600AB221C /* SearchKanji */,
 				F40969572C50C99600AB221C /* Bookmarks */,
@@ -607,6 +639,7 @@
 				F49CF6502C88A5D600CBA5DE /* MeaningAndSound.swift */,
 				F49CF6522C89E78F00CBA5DE /* BackSwipe.swift */,
 				F46DAD092C983914009E83E0 /* AoiNavigationBar.swift */,
+				F4841DDE2E436B19000589E2 /* NonceHelper.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -680,13 +713,16 @@
 			path = BackupPicker;
 			sourceTree = "<group>";
 		};
-		F47273062DD428DE0087168D /* Login */ = {
+		F47273062DD428DE0087168D /* AuthUser */ = {
 			isa = PBXGroup;
 			children = (
+				F4841DE52E438511000589E2 /* AuthHandlerView.swift */,
 				F47273092DD429040087168D /* LoginView.swift */,
 				F472730B2DD472A60087168D /* LoginViewModel.swift */,
+				F4841DE92E4392D7000589E2 /* UserInfoView.swift */,
+				F4841DF22E43ACA7000589E2 /* UserInfoViewModel.swift */,
 			);
-			path = Login;
+			path = AuthUser;
 			sourceTree = "<group>";
 		};
 		F479A54C2E217ADC007C3D41 /* KanchuRepository */ = {
@@ -696,6 +732,15 @@
 				F4F350112E30EBEF00B3A018 /* DefaultKanchuProjectRepository.swift */,
 			);
 			path = KanchuRepository;
+			sourceTree = "<group>";
+		};
+		F47AF2302E48A75F002A991B /* AuthUser */ = {
+			isa = PBXGroup;
+			children = (
+				F4841DE32E436BA2000589E2 /* DefaultUserRepository.swift */,
+				F4841DE12E436B74000589E2 /* DefaultAuthRepository.swift */,
+			);
+			path = AuthUser;
 			sourceTree = "<group>";
 		};
 		F4841DD02E422909000589E2 /* Component */ = {
@@ -709,6 +754,17 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		F4841DF12E43AC1E000589E2 /* AuthUser */ = {
+			isa = PBXGroup;
+			children = (
+				F4841DDB2E4369C4000589E2 /* SignInWithAppleUseService.swift */,
+				F4841DEF2E4396A5000589E2 /* SignOutService.swift */,
+				F4841DEB2E43958B000589E2 /* GetUserInfoUseCase.swift */,
+				F4841DED2E4395FC000589E2 /* GetCurrentUserUseCase.swift */,
+			);
+			path = AuthUser;
+			sourceTree = "<group>";
+		};
 		F49EE13B2CF48B63002AD484 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +773,8 @@
 				F40969412C50C98E00AB221C /* UserDefaultsRepository.swift */,
 				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
 				F4F350102E30EB9B00B3A018 /* Kanchu */,
+				F4841DD72E4367A4000589E2 /* AuthRepository.swift */,
+				F4841DD92E436994000589E2 /* UserRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -758,6 +816,7 @@
 			isa = PBXGroup;
 			children = (
 				F4D982C12E2686BF00BA7909 /* KanchuRepository */,
+				F4775EA92E44CB1A007B3704 /* UserRepositoryIntegrationTests.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -794,6 +853,8 @@
 				F4F3500E2E30EAF900B3A018 /* FetchAllKanchuProjectsUseCase.swift */,
 				F4FF73632E320DE7002176A3 /* InsertKanchuProjectUseCase.swift */,
 				F4FF73652E320DEC002176A3 /* DeleteKanchuProjectUseCase.swift */,
+				F47AF22C2E47B57C002A991B /* ToggleKanchuProjectPinStateUseCase.swift */,
+				F47AF22A2E47B4E2002A991B /* RenameKanchuProjectService.swift */,
 				F48EEEC32E3342ED003545B1 /* UpdateKanchuProjectUseCase.swift */,
 			);
 			path = Project;
@@ -961,6 +1022,7 @@
 				F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */,
 				F40969832C50C99600AB221C /* ModifyBookmarksView.swift in Sources */,
 				F4F350142E3143E000B3A018 /* KanchuProjectDTO+Mapping.swift in Sources */,
+				F4841DDC2E4369D5000589E2 /* SignInWithAppleUseService.swift in Sources */,
 				F40969982C50C99600AB221C /* TodaysKanjiCell.swift in Sources */,
 				F40969902C50C99600AB221C /* LearningAtQuizView.swift in Sources */,
 				F45EC2C32C9082C80051CAB6 /* TodaysKanjiCountPicker.swift in Sources */,
@@ -982,20 +1044,25 @@
 				F46AF65F2E13C35700D72D06 /* BackupPickerViewModel.swift in Sources */,
 				F40969442C50C98E00AB221C /* Bookmarks.swift in Sources */,
 				F49CF6512C88A5D600CBA5DE /* MeaningAndSound.swift in Sources */,
+				F4841DD82E4367A4000589E2 /* AuthRepository.swift in Sources */,
 				F479A5552E220A73007C3D41 /* DefaultKanchuQuizRepository.swift in Sources */,
 				F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */,
 				F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */,
 				F4F350092E2FAC6000B3A018 /* KanchuHomeView.swift in Sources */,
+				F4841DF02E4396A5000589E2 /* SignOutService.swift in Sources */,
 				F409694A2C50C98E00AB221C /* BookmarksService.swift in Sources */,
 				F40969972C50C99600AB221C /* SettingsView.swift in Sources */,
+				F47AF22B2E47B4E2002A991B /* RenameKanchuProjectService.swift in Sources */,
 				F4F3500B2E2FAD5100B3A018 /* KanchuProject.swift in Sources */,
 				F4A13C792E0FCFB7005B1299 /* CommonlyUsedKanjiRepository.swift in Sources */,
 				F409694B2C50C98E00AB221C /* LearningAtQuizService.swift in Sources */,
 				F40969952C50C99600AB221C /* LearningMode.swift in Sources */,
 				F4F350072E2F9F1600B3A018 /* Color.swift in Sources */,
 				F40969882C50C99600AB221C /* CoveredKanjiList.swift in Sources */,
+				F4841DDA2E436994000589E2 /* UserRepository.swift in Sources */,
 				F40969942C50C99600AB221C /* LearningKanjiView.swift in Sources */,
 				F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */,
+				F4841DEA2E4392D7000589E2 /* UserInfoView.swift in Sources */,
 				F40974AF2E2D557600C0F731 /* KanchuProblem.swift in Sources */,
 				F45804AA2E1D7AAE0023CCE5 /* KanchuQuizResultView.swift in Sources */,
 				F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */,
@@ -1004,8 +1071,12 @@
 				F45804A82E1D7A400023CCE5 /* KanchuQuizInProgressView.swift in Sources */,
 				F40969922C50C99600AB221C /* LearningByGradeListView.swift in Sources */,
 				F472730A2DD429040087168D /* LoginView.swift in Sources */,
+				F4841DDF2E436B19000589E2 /* NonceHelper.swift in Sources */,
+				F4841DE62E438518000589E2 /* AuthHandlerView.swift in Sources */,
 				F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */,
 				F40969962C50C99600AB221C /* SearchKanjiView.swift in Sources */,
+				F47AF22D2E47B57C002A991B /* ToggleKanchuProjectPinStateUseCase.swift in Sources */,
+				F4841DE22E436B7B000589E2 /* DefaultAuthRepository.swift in Sources */,
 				F40969472C50C98E00AB221C /* Kanji.swift in Sources */,
 				F46FFDBC2C6F54E900C847AC /* Fonts.swift in Sources */,
 				F40969A02C50C99E00AB221C /* AppPreview.swift in Sources */,
@@ -1013,8 +1084,9 @@
 				F458049D2E1D040B0023CCE5 /* GetKanchuProblemsService.swift in Sources */,
 				F40969802C50C99600AB221C /* BookmarksListViewModel.swift in Sources */,
 				F4F60C3A2DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift in Sources */,
-				F47272FD2DD331940087168D /* User.swift in Sources */,
+				F47272FD2DD331940087168D /* AoiUser.swift in Sources */,
 				F46DAD0A2C983914009E83E0 /* AoiNavigationBar.swift in Sources */,
+				F4841DEE2E4395FC000589E2 /* GetCurrentUserUseCase.swift in Sources */,
 				F45804A22E1D0D380023CCE5 /* KanchuQuizView.swift in Sources */,
 				F4F60C3E2DD64BAD004010B4 /* ICloudBookmarksService.swift in Sources */,
 				F45804A42E1D110E0023CCE5 /* KanchuQuizViewModel.swift in Sources */,
@@ -1030,6 +1102,7 @@
 				F40969242C50C95400AB221C /* Router.swift in Sources */,
 				F40969842C50C99600AB221C /* HomeView.swift in Sources */,
 				F40969912C50C99600AB221C /* LearningAtQuizViewModel.swift in Sources */,
+				F4841DF32E43ACAD000589E2 /* UserInfoViewModel.swift in Sources */,
 				F476062E2E3F913500703C89 /* KanchuProjectCard.swift in Sources */,
 				F4F350122E30EBEF00B3A018 /* DefaultKanchuProjectRepository.swift in Sources */,
 				F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */,
@@ -1037,6 +1110,7 @@
 				F40969872C50C99600AB221C /* KanjiCardListView.swift in Sources */,
 				F409698C2C50C99600AB221C /* KanjiQuiz.swift in Sources */,
 				F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */,
+				F4841DEC2E43958B000589E2 /* GetUserInfoUseCase.swift in Sources */,
 				F40969312C50C95D00AB221C /* DefaultUserDefaultsRepository.swift in Sources */,
 				F40969892C50C99600AB221C /* FlipableKanjiRow.swift in Sources */,
 				F40969462C50C98E00AB221C /* Grade.swift in Sources */,
@@ -1060,6 +1134,7 @@
 				F40969822C50C99600AB221C /* MakingBookmarksView.swift in Sources */,
 				F4F60C3C2DD64B48004010B4 /* CloudKitBookmarksRepository.swift in Sources */,
 				F409692E2C50C95D00AB221C /* BookmarksDTO+Mapping.swift in Sources */,
+				F4841DE42E436BA9000589E2 /* DefaultUserRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1144,7 @@
 			files = (
 				F4F60C422DDD54F7004010B4 /* BookmarksDTO+MappingTests.swift in Sources */,
 				F4D982C32E2686BF00BA7909 /* DefaultKanchuRepositoryTests.swift in Sources */,
+				F4775EAA2E44CB1A007B3704 /* UserRepositoryIntegrationTests.swift in Sources */,
 				F4D982C42E2686BF00BA7909 /* DefaultKanchuRepositoryIntegrationTests.swift in Sources */,
 				F4AA9D552E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift in Sources */,
 				F40969062C50C8E300AB221C /* LearningKanjiTests.swift in Sources */,

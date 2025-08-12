@@ -37,13 +37,17 @@ struct KanchuProjectCard: View {
                     .foregroundColor(.yellow)
                     .font(.title3)
                     .onTapGesture {
-                        viewModel.togglePin(for: project)
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            viewModel.togglePin(for: project)
+                        }
                     }
             } else {
                 Image(systemName: "pin")
                     .foregroundColor(.gray)
                     .onTapGesture {
-                        viewModel.togglePin(for: project)
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            viewModel.togglePin(for: project)
+                        }
                     }
             }
         }

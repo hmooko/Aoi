@@ -12,6 +12,7 @@ enum AppScene: Hashable {
     // MARK: - Setting
     case settingScene
     case todaysKanjiGradePickerScene
+    case accountCenterScene
     // MARK: - Home Tab
     case quizScene(_ kanjiList: [Kanji])
     case learningScene(_ kanjiList: [Kanji])
@@ -50,6 +51,8 @@ extension View {
                         SettingsView()
                     case .todaysKanjiGradePickerScene:
                         TodaysKanjiGradePicker()
+                    case .accountCenterScene:
+                        AuthHandlerView(container: container)
                     // MARK: - Home Tab
                     case .quizScene(let kanjiList):
                         LearningAtQuizView(viewModel: .init(container, quizList: kanjiList))

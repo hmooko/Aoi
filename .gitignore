@@ -7,6 +7,7 @@ xcuserdata/
 .DS_Store
 ApiKeyList.plist
 *.xcconfig
+GoogleService-Info.plist
 
 ## Xcode 8 and earlier
 *.xcscmblueprint

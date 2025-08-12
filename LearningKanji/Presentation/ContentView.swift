@@ -28,7 +28,7 @@ struct ContentView: View {
                 
                 KanchuHomeView(container: viewModel.container)
                     .tabItem {
-                        Image(systemName: "aqi.medium")
+                        Image("AoiIcon")
                         Text("칸츄")
                     }
                 

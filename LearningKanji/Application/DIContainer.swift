@@ -39,7 +39,12 @@ final class DIContainer: ObservableObject {
         self.fetchAllKanchuProjectsService = MockFetchAllKanchuProjectsUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
         self.insertKanchuProjectService = MockInsertKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
         self.deleteKanchuProjectService = MockDefaultDeleteKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.updateKanchuProjectService = MockUpdateKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.renameKanchuProjectService = MockRenameKanchuProjectService(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.toggleKanchuProjectPinStateService = MockToggleKanchuProjectPinStateService(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.signInWithAppleService = MockSignInWithAppleService()
+        self.getUserInfoService = MockGetUserInfoService()
+        self.getCurrentUserService = MockGetCurrentUserService()
+        self.signOutService = MockSignOutService()
     }
     
     // MARK: - Model
@@ -75,7 +80,12 @@ final class DIContainer: ObservableObject {
     private var fetchAllKanchuProjectsService: FetchAllKanchuProjectsUseCase? = nil
     private var insertKanchuProjectService: InsertKanchuProjectUseCase? = nil
     private var deleteKanchuProjectService: DeleteKanchuProjectUseCase? = nil
-    private var updateKanchuProjectService: UpdateKanchuProjectUseCase? = nil
+    private var renameKanchuProjectService: RenameKanchuProjectUseCase? = nil
+    private var toggleKanchuProjectPinStateService: ToggleKanchuProjectPinStateUseCase? = nil
+    private var signInWithAppleService: SignInWithAppleUseCase?
+    private var getUserInfoService: GetUserInfoUseCase? = nil
+    private var getCurrentUserService: GetCurrentUserUseCase? = nil
+    private var signOutService: SignOutUseCase? = nil // 추가
     
     // MARK: - singleton
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
@@ -184,13 +194,49 @@ final class DIContainer: ObservableObject {
     }
     
     @MainActor
-    func updateKanchuProjectUseCase() -> UpdateKanchuProjectUseCase {
-        guard let updateKanchuProjectService = self.updateKanchuProjectService else {
-            return DefaultUpdateKanchuProjectUseCase(kanchuProjectRepository: makeKanchuProjectRepository())
+    func renameKanchuProjectUseCase() -> RenameKanchuProjectUseCase {
+        guard let renameKanchuProjectService = self.renameKanchuProjectService else {
+            return RenameKanchuProjectService(kanchuProjectRepository: makeKanchuProjectRepository())
         }
-        return updateKanchuProjectService
+        return renameKanchuProjectService
     }
     
+    @MainActor
+    func toggleKanchuProjectPinStateUseCase() -> ToggleKanchuProjectPinStateUseCase {
+        guard let toggleKanchuProjectPinStateService = self.toggleKanchuProjectPinStateService else {
+            return ToggleKanchuProjectPinStateService(kanchuProjectRepository: makeKanchuProjectRepository())
+        }
+        return toggleKanchuProjectPinStateService
+    }
+    
+    func signInWithAppleUseCase() -> SignInWithAppleUseCase {
+        guard let signInWithAppleService = self.signInWithAppleService else {
+            return SignInWithAppleService(authRepository: makeAuthRepository(), userRepository: makeUserRepository())
+        }
+        return signInWithAppleService
+    }
+    
+    func getUserInfoUseCase() -> GetUserInfoUseCase {
+        guard let getUserInfoService = self.getUserInfoService else {
+            return DefaultGetUserInfoService(userRepository: makeUserRepository())
+        }
+        return getUserInfoService
+    }
+
+    func getCurrentUserUseCase() -> GetCurrentUserUseCase {
+        guard let getCurrentUserService = self.getCurrentUserService else {
+            return DefaultGetCurrentUserService(authRepository: makeAuthRepository())
+        }
+        return getCurrentUserService
+    }
+
+    // signOutUseCase 추가
+    func signOutUseCase() -> SignOutUseCase {
+        guard let signOutService = self.signOutService else {
+            return SignOutService(authRepository: makeAuthRepository())
+        }
+        return signOutService
+    }
     
     // MARK: - Repository
     private func makeCommonlyUsedKanjiRepository() -> CommonlyUsedKanjiRepository {
@@ -217,5 +263,14 @@ final class DIContainer: ObservableObject {
     private func makeKanchuProjectRepository() -> KanchuProjectRepository {
         // return MockKanchuProjectRepository()
         DefaultKanchuProjectRepository(context: modelContext)
+    }
+    
+    private func makeUserRepository() -> UserRepository {
+        DefaultUserRepository()
+    }
+    
+    // 이 메서드는 DIContainer 내부 UseCase 팩토리에서만 사용되므로 private를 유지하는 것이 좋습니다.
+    private func makeAuthRepository() -> AuthRepository {
+        DefaultAuthRepository()
     }
 }

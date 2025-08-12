@@ -28,7 +28,7 @@ final class DefaultsCloudKitBookmarksRepository: CloudKitBookmarksRepository {
                 saving: [record], deleting: [], savePolicy: .changedKeys
             ) { result in
                 switch result {
-                case .success(let success):
+                case .success(_):
                     print("저장완료! \(record)")
                     continuation.resume()
                 case .failure(let error):

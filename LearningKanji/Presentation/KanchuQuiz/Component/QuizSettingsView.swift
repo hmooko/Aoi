@@ -12,7 +12,7 @@ struct QuizSettingsView: View {
     
     // UI 구성을 위한 데이터
     let problemTypes = ProblemType.allCases
-    let problemCounts = [5, 10, 20]
+    let problemCounts = [3, 5, 10]
     let elementaryTargets: [QuizTarget] = Grade.elementarySchoolCases().map { .elementary(grade: $0) }
     let middleSchoolTargets: [QuizTarget] = (1...6).map { .middleSchool(index: $0) }
     

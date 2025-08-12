@@ -39,6 +39,12 @@ extension SettingsView {
         }
     }
     
+    func accountCenterPicker(router: Router) -> some View {
+        SettingsPicker(text: "계정 센터") {
+            router.push(.accountCenterScene)
+        }
+    }
+    
     var quizCountPicker: some View {
         SettingsPicker(text: "퀴즈에 나올 한자", status: quizCount == -1 ? "All" : "\(quizCount)") {
             pickerSheetStyle = .quizCount
@@ -85,3 +91,4 @@ extension View {
             }
     }
 }
+
