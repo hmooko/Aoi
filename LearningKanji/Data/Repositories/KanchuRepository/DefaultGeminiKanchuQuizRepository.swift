@@ -7,9 +7,52 @@
 
 import Foundation
 
-extension Bundle {
-    var geminiApiKey: String? {
-        return infoDictionary?["GEMINI_API_KEY"] as? String
+// MARK: - Error
+
+/// Gemini API와 통신 시 발생할 수 있는 에러를 정의한 열거형입니다.
+enum GeminiError: Error, LocalizedError {
+    /// API 키를 찾을 수 없는 경우 발생하는 에러입니다.
+    case apiKeyNotFound
+    /// 잘못된 API KEY를 사용한 경우 발생하는 에러입니다.
+    case invalidAPIKey
+    /// API KEY가 비어있을 경우 발생하는 에러입니다.
+    case apiKeyisEmpty
+    /// 잘못된 API URL인 경우 발생하는 에러입니다.
+    case invalidURL
+    /// 요청 데이터를 인코딩하는 데 실패했을 때 발생하는 에러입니다.
+    case requestEncodingFailed(Error)
+    /// 응답 데이터를 디코딩하는 데 실패했을 때 발생하는 에러입니다.
+    case responseDecodingFailed(Error)
+    /// API 호출 중 발생한 에러 메시지를 포함하는 에러입니다.
+    case apiError(String)
+
+    /// 각 에러에 대한 사용자 친화적인 설명을 반환합니다.
+    var errorDescription: String? {
+        switch self {
+        case .apiKeyNotFound: return "API 키를 찾을 수 없습니다. GenerativeAI-Info.plist를 확인하세요."
+        case .invalidAPIKey: return "잘못된 API KEY를 사용했습니다. 정확한 API KEY를 입력해주세요."
+        case .apiKeyisEmpty: return "API KEY를 입력해주세요."
+        case .invalidURL: return "잘못된 API URL입니다."
+        case .requestEncodingFailed: return "요청 데이터를 인코딩하는 데 실패했습니다."
+        case .responseDecodingFailed: return "응답 데이터를 디코딩하는 데 실패했습니다."
+        case .apiError(let message): return "API 에러: \(message)"
+        }
+    }
+}
+
+/// KanchuRepository 관련 에러를 정의한 열거형입니다.
+enum GeminiKanchuQuizRepositoryError: Error, LocalizedError {
+    /// kanjiList의 길이가 퀴즈 문제로 필요한 수보다 적을 때 발생하는 에러입니다.
+    case kanjiListLessThanCount
+    /// 한자 데이터를 가져오는 중 실패했을 때 발생하는 에러입니다.
+    case kanjiFetchingFailed(Error)
+    
+    /// 각 에러에 대한 사용자 친화적인 설명을 반환합니다.
+    var errorDescription: String? {
+        switch self {
+        case .kanjiListLessThanCount: return "kanjiList의 길이가 퀴즈 문제로 필요한 수보다 적습니다."
+        case .kanjiFetchingFailed: return "퀴즈를 만들 한자를 가져오는 데 실패했습니다."
+        }
     }
 }
 
@@ -80,36 +123,35 @@ private struct GeminiKanchuProblem: Decodable {
 
 
 // MARK: - Main Repository Implementation
-final class DefaultKanchuQuizRepository: KanchuQuizRepository {
+final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
     
     private let apiKey: String
     private let session: URLSession
     
-    init(session: URLSession = .shared) throws {
-//        guard let path = Bundle.main.path(forResource: "ApiKeyList", ofType: "plist"),
-//            let dict = NSDictionary(contentsOfFile: path),
-//            let key = dict["GEMINI_API_KEY"] as? String, !key.isEmpty else {
-//            throw GeminiError.apiKeyNotFound
-//        }
-        guard let apiKey = Bundle.main.geminiApiKey else {
-            print("API 키를 로드하지 못했습니다.")
-            throw GeminiError.apiKeyNotFound
-        }
-        self.apiKey = apiKey
+    init(userDefaultsRepository: UserDefaultsRepository, session: URLSession = .shared) throws {
+        self.apiKey = userDefaultsRepository.getKanchuAPIKey()
         self.session = session
     }
     
-    func fetchProblems(kanjiList: [Kanji], problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
-        if kanjiList.count < count {
-            throw KanchuQuizRepositoryError.kanjiListLessThanCount
+    func fetchProblems(kanjiList: [Kanji], problemType: ProblemType, count: Int, model: GeminiModel) async throws -> [KanchuProblem] {
+        if self.apiKey.isEmpty {
+            throw GeminiError.apiKeyisEmpty
         }
         
-        let request = try buildRequest(kanjiList: kanjiList.map { $0.kanji }, problemType: problemType, count: count)
+        if kanjiList.count < count {
+            throw GeminiKanchuQuizRepositoryError.kanjiListLessThanCount
+        }
+        
+        let request = try buildRequest(kanjiList: kanjiList.map { $0.kanji }, problemType: problemType, count: count, model: model)
         
         let (data, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             let errorText = String(data: data, encoding: .utf8) ?? "알 수 없는 에러"
+            if errorText.contains("API_KEY_INVALID") {
+                throw GeminiError.invalidAPIKey
+            }
+            
             throw GeminiError.apiError("Status Code: \((response as? HTTPURLResponse)?.statusCode ?? 0), \(errorText)")
         }
         
@@ -140,8 +182,8 @@ final class DefaultKanchuQuizRepository: KanchuQuizRepository {
         return problems
     }
     
-    private func buildRequest(kanjiList: [String], problemType: ProblemType, count: Int) throws -> URLRequest {
-        let urlString = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=\(apiKey)"
+    private func buildRequest(kanjiList: [String], problemType: ProblemType, count: Int, model: GeminiModel) throws -> URLRequest {
+        let urlString = "https://generativelanguage.googleapis.com/v1beta/models/\(model.rawValue):generateContent?key=\(apiKey)"
         guard let url = URL(string: urlString) else {
             throw GeminiError.invalidURL
         }

@@ -1,0 +1,79 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "49807500",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6554000732",
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "Z85JFS7S4J",
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 776885478.25235796,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21755869",
+      "localizations" : [
+
+      ],
+      "name" : "Kanchu",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6751057203",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "AI를 통해 현재 공부하고 있는 한자를 이용해 문제 생성 및 학습이 가능",
+              "displayName" : "AI문제생성 월 정기구독",
+              "locale" : "ko"
+            }
+          ],
+          "productID" : "com.koo.LearningKanji.Kanchu.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "KanchuMonthly",
+          "subscriptionGroupID" : "21755869",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

@@ -10,6 +10,7 @@ import Foundation
 enum GetKanchuProblemsServiceError: Error, LocalizedError {
     case bookmarksNotFound(Int)
     case bookmarkedKanjiLessThan10
+    case modelNotFound
     
     var errorDescription: String? {
         switch self {
@@ -17,6 +18,8 @@ enum GetKanchuProblemsServiceError: Error, LocalizedError {
             return "ID가 \(id)인 북마크를 찾을 수 없습니다."
         case .bookmarkedKanjiLessThan10:
             return "북마크에 저장된 한자가 너무 적습니다."
+        case .modelNotFound:
+            return "AI모델을 찾을 수 없습니다."
         }
     }
 }
@@ -28,18 +31,21 @@ protocol GetKanchuProblemsUseCase {
 }
 
 final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
-    private let kanchuRepository: KanchuQuizRepository
+    private let geminiKanchuRepository: GeminiKanchuQuizRepository
     private let bookmarksRepository: BookmarksRepository
     private let commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
+    private let userDefaultsRepsoitory: UserDefaultsRepository
     
     init(
-        kanchuRepository: KanchuQuizRepository,
+        geminiKanchuRepository: GeminiKanchuQuizRepository,
         bookmarksRepository: BookmarksRepository,
-        commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository
+        commonlyUsedKanjiRepository: CommonlyUsedKanjiRepository,
+        userDefaultsRepsoitory: UserDefaultsRepository
     ) {
-        self.kanchuRepository = kanchuRepository
+        self.geminiKanchuRepository = geminiKanchuRepository
         self.bookmarksRepository = bookmarksRepository
         self.commonlyUsedKanjiRepository = commonlyUsedKanjiRepository
+        self.userDefaultsRepsoitory = userDefaultsRepsoitory
     }
     
     func execute(target: QuizTarget, problemType: ProblemType, count: Int) async throws -> [KanchuProblem] {
@@ -65,7 +71,12 @@ final class DefaultGetKanchuProblemsService: GetKanchuProblemsUseCase {
             kanjiList = middleSchoolKanjiList.indexed(index: index)
         }
         
-        return try await kanchuRepository.fetchProblems(kanjiList: kanjiList, problemType: problemType, count: count)
+        // 새로운 AIModel을 추가하게 된다면 여기에 추가해줘야 함
+        if let model = try userDefaultsRepsoitory.getAIModel() as? GeminiModel {
+            return try await geminiKanchuRepository.fetchProblems(kanjiList: kanjiList, problemType: problemType, count: count, model: model)
+        } else {
+            throw GetKanchuProblemsServiceError.modelNotFound
+        }
     }
 }
 

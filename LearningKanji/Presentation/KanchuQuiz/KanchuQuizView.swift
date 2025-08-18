@@ -31,7 +31,7 @@ struct KanchuQuizView: View {
                 QuizSettingsView()
                     .environmentObject(viewModel)
             case .loading:
-                KanchuLoadingView(text: "퀴즈를 만들고 있어요...")
+                KanchuLoadingView(text: "로딩 중...")
             case .quiz:
                 KanchuQuizInProgressView()
                     .environmentObject(viewModel)

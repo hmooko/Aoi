@@ -116,6 +116,7 @@ extension KanchuQuizView {
                     print("Error fetching problems: \(error)")
                     self.isLoading = false
                     self.viewState = .settings // 에러 발생 시 설정 화면으로 복귀
+                    self.errorMessage = error.localizedDescription
                 }
             }
         }

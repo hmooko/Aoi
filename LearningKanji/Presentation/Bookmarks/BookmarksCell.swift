@@ -11,7 +11,6 @@ struct BookmarksCell: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var viewModel: BookmarksListViewModel
     let bookmarks: Bookmarks
-    let proxy: GeometryProxy
     
     var body: some View {
         VStack {
@@ -53,21 +52,20 @@ struct BookmarksCell: View {
             }
         }
         .padding(30)
-        .frame(width: proxy.size.width / 2.3, height: proxy.size.width / 2.3, alignment: .topLeading)
+        //.frame(width: proxy.size.width / 2.3, height: proxy.size.width / 2.3, alignment: .topLeading)
+        .frame(maxWidth: .infinity)
+        .aspectRatio(1, contentMode: .fit)
         .background {
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color(.white))
                 .stroke(Color.secondaryColor)
                 .shadow(color: Color("shadow"), radius: 13.9, y: 4)
         }
-        .padding()
     }
 }
 
 #Preview {
-    GeometryReader { proxy in
-        BookmarksCell(bookmarks: Bookmarks(id: 1, title: "1학년 학습", contents: Kanji.sampleKanjiList), proxy: proxy)
-    }
-    .environmentObject(BookmarksListViewModel(container: DIContainer()))
-    .environmentObject(Router())
+    BookmarksCell(bookmarks: Bookmarks(id: 1, title: "1학년 학습", contents: Kanji.sampleKanjiList))
+        .environmentObject(BookmarksListViewModel(container: .preview))
+        .environmentObject(DIContainer.preview.router)
 }

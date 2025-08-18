@@ -44,7 +44,7 @@ class MockURLProtocol: URLProtocol {
 // MARK: - Test Class
 class DefaultKanchuRepositoryTests: XCTestCase {
 
-    var sut: DefaultKanchuQuizRepository!
+    var sut: DefaultGeminiKanchuQuizRepository!
     var session: URLSession!
 
     override func setUpWithError() throws {
@@ -58,7 +58,7 @@ class DefaultKanchuRepositoryTests: XCTestCase {
         // The `DefaultKanchuRepository` initializer will fail if the file or key is not found.
         // This is a known dependency from the current implementation.
         do {
-            sut = try DefaultKanchuQuizRepository(session: session)
+            sut = try DefaultGeminiKanchuQuizRepository(session: session)
         } catch {
             XCTFail("Failed to initialize DefaultKanchuRepository. Ensure ApiKeyList.plist is correctly set up for the test target. Error: \(error)")
         }

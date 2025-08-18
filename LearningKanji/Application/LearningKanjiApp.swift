@@ -22,7 +22,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct LearningKanjiApp: App {
     private let container: DIContainer
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    //@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
         container = DIContainer()

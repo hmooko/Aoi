@@ -29,7 +29,7 @@ struct ContentView: View {
                 KanchuHomeView(container: viewModel.container)
                     .tabItem {
                         Image("AoiIcon")
-                        Text("칸츄")
+                        Text("AI문제")
                     }
                 
                 BookmarksListView(viewModel: .init(container: viewModel.container))

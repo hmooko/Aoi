@@ -12,11 +12,11 @@ import XCTest
 /// API 키가 필요하며, 네트워크 상태에 따라 실행 시간이 길어지거나 실패할 수 있습니다.
 final class DefaultKanchuRepositoryIntegrationTests: XCTestCase {
 
-    var repository: DefaultKanchuQuizRepository!
+    var repository: DefaultGeminiKanchuQuizRepository!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        repository = try? DefaultKanchuQuizRepository()
+        repository = try? DefaultGeminiKanchuQuizRepository()
     }
 
     override func tearDownWithError() throws {

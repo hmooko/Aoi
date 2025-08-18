@@ -14,7 +14,6 @@ struct KanchuQuizResultView: View {
         ScrollView {
             VStack(spacing: 24) {
                 if let result = viewModel.quizResult {
-                    // 점수판
                     VStack {
                         Text("최종 점수")
                             .font(.title)
@@ -54,11 +53,12 @@ struct KanchuQuizResultView: View {
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(.white)
                         .padding(10)
+                        .background {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.primaryColor)
+                        }
                 }
-                .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.primaryColor)
-                }
+                .buttonStyle(ScaleButtonStyle())
                 
                 Button(action: {
                     viewModel.goHome()
@@ -67,11 +67,12 @@ struct KanchuQuizResultView: View {
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(Color.primaryColor)
                         .padding(10)
+                        .background {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.tertiaryColor)
+                        }
                 }
-                .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.tertiaryColor)
-                }
+                .buttonStyle(ScaleButtonStyle())
             }
             .padding()
         }

@@ -8,23 +8,16 @@
 import Foundation
 import SwiftData
 
-@Model
-final class AC {
-    var a: Int
-    
-    init(a: Int) {
-        self.a = a
-    }
-}
-
 final class DIContainer: ObservableObject {
     // MARK: - Mock
+    @MainActor
     static var preview: Self {
         let container = DIContainer()
         container.setMockServices()
         return container as! Self
     }
     
+    @MainActor
     func setMockServices() {
         let mockKanchuProjectRepository = MockKanchuProjectRepository(initialProjects: createExampleProjects())
         
@@ -45,6 +38,19 @@ final class DIContainer: ObservableObject {
         self.getUserInfoService = MockGetUserInfoService()
         self.getCurrentUserService = MockGetCurrentUserService()
         self.signOutService = MockSignOutService()
+        
+        // Subscription Mocks
+        self.fetchKanchuProductsService = MockFetchKanchuProductsUseCase()
+        self.purchaseKanchuService = MockPurchaseKanchuUseCase()
+        self.restorePurchasesService = MockRestorePurchasesUseCase()
+        self.observeTransactionsService = MockObserveTransactionsUseCase()
+        self.checkSubscriptionStatusService = MockCheckSubscriptionStatusUseCase()
+        
+        // AI Model and API Key Mocks
+        self.setAIModelService = MockSetAIModelService()
+        self.getAIModelService = MockGetAIModelService()
+        self.getKanchuAPIKeyService = MockGetKanchuAPIKeyService()
+        self.setKanchuAPIKeyService = MockSetKanchuAPIKeyService()
     }
     
     // MARK: - Model
@@ -85,11 +91,25 @@ final class DIContainer: ObservableObject {
     private var signInWithAppleService: SignInWithAppleUseCase?
     private var getUserInfoService: GetUserInfoUseCase? = nil
     private var getCurrentUserService: GetCurrentUserUseCase? = nil
-    private var signOutService: SignOutUseCase? = nil // 추가
+    private var signOutService: SignOutUseCase? = nil
     
-    // MARK: - singleton
+    // Subscription Services
+    private var fetchKanchuProductsService: FetchProductsUseCase? = nil
+    private var purchaseKanchuService: PurchaseKanchuMonthlyProductUseCase? = nil
+    private var restorePurchasesService: RestorePurchasesUseCase? = nil
+    private var observeTransactionsService: ObserveTransactionsUseCase? = nil
+    private var checkSubscriptionStatusService: CheckSubscriptionStatusUseCase? = nil
+    
+    private var setAIModelService: SetAIModelUseCase? = nil
+    private var getAIModelService: GetAIModelUseCase? = nil
+    private var getKanchuAPIKeyService: GetKanchuAPIKeyUseCase? = nil
+    private var setKanchuAPIKeyService: SetKanchuAPIKeyUseCase? = nil
+
+    
+    // MARK: - Storage
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
 
+    
     // MARK: - Use Cases
     func todaysKanjiUseCase() -> TodaysKanjiUseCase {
         guard let todaysKanjiService = self.todaysKanjiService else {
@@ -152,9 +172,10 @@ final class DIContainer: ObservableObject {
     func getKanchuProblemsUsecase() throws -> GetKanchuProblemsUseCase {
         guard let getKanchuProblemsService = self.getKanchuProblemsService else {
             return DefaultGetKanchuProblemsService(
-                kanchuRepository: try makeKanchuQuizRepository(),
+                geminiKanchuRepository: try makeGeminiKanchuQuizRepository(),
                 bookmarksRepository: makeBoookmarksRepository(),
-                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
+                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
+                userDefaultsRepsoitory: makeUserDefaultsRepository()
             )
         }
         
@@ -230,12 +251,80 @@ final class DIContainer: ObservableObject {
         return getCurrentUserService
     }
 
-    // signOutUseCase 추가
     func signOutUseCase() -> SignOutUseCase {
         guard let signOutService = self.signOutService else {
             return SignOutService(authRepository: makeAuthRepository())
         }
         return signOutService
+    }
+    
+    // Subscription Use Cases
+    @MainActor
+    func fetchProductsUseCase() -> FetchProductsUseCase {
+        guard let service = self.fetchKanchuProductsService else {
+            return FetchProductsService(subscriptionRepository: makeSubscriptionRepository())
+        }
+        return service
+    }
+
+    @MainActor
+    func purchaseKanchuMonthlyProductUseCase() -> PurchaseKanchuMonthlyProductUseCase {
+        guard let service = self.purchaseKanchuService else {
+            return PurchaseKanchuMonthlyProductService(subscriptionRepository: makeSubscriptionRepository())
+        }
+        return service
+    }
+
+    @MainActor
+    func restorePurchasesUseCase() -> RestorePurchasesUseCase {
+        guard let service = self.restorePurchasesService else {
+            return RestorePurchasesService(subscriptionRepository: makeSubscriptionRepository())
+        }
+        return service
+    }
+    
+    @MainActor
+    func observeTransactionsUseCase() -> ObserveTransactionsUseCase {
+        guard let service = self.observeTransactionsService else {
+            return ObserveTransactionsService(subscriptionRepository: makeSubscriptionRepository())
+        }
+        return service
+    }
+
+    @MainActor
+    func checkSubscriptionStatusUseCase() -> CheckSubscriptionStatusUseCase {
+        guard let service = self.checkSubscriptionStatusService else {
+            return CheckSubscriptionStatusService(subscriptionRepository: makeSubscriptionRepository())
+        }
+        return service
+    }
+    
+    func setAIModelUseCase() -> SetAIModelUseCase {
+        guard let service = self.setAIModelService else {
+            return SetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        }
+        return service
+    }
+
+    func getAIModelUseCase() -> GetAIModelUseCase {
+        guard let service = self.getAIModelService else {
+            return GetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        }
+        return service
+    }
+    
+    func getKanchuAPIKeyUseCase() -> GetKanchuAPIKeyUseCase {
+        guard let service = self.getKanchuAPIKeyService else {
+            return GetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        }
+        return service
+    }
+
+    func setKanchuAPIKeyUseCase() -> SetKanchuAPIKeyUseCase {
+        guard let service = self.setKanchuAPIKeyService else {
+            return SetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        }
+        return service
     }
     
     // MARK: - Repository
@@ -255,8 +344,8 @@ final class DIContainer: ObservableObject {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
     }
     
-    private func makeKanchuQuizRepository() throws -> KanchuQuizRepository {
-        return try DefaultKanchuQuizRepository()
+    private func makeGeminiKanchuQuizRepository() throws -> GeminiKanchuQuizRepository {
+        return try DefaultGeminiKanchuQuizRepository(userDefaultsRepository: makeUserDefaultsRepository())
     }
     
     @MainActor
@@ -268,9 +357,14 @@ final class DIContainer: ObservableObject {
     private func makeUserRepository() -> UserRepository {
         DefaultUserRepository()
     }
-    
-    // 이 메서드는 DIContainer 내부 UseCase 팩토리에서만 사용되므로 private를 유지하는 것이 좋습니다.
+   
     private func makeAuthRepository() -> AuthRepository {
         DefaultAuthRepository()
+    }
+
+    // MARK: - Subscription
+    @MainActor
+    func makeSubscriptionRepository() -> SubscriptionRepository {
+        DefaultSubscriptionRepository()
     }
 }
