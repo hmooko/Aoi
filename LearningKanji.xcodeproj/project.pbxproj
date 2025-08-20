@@ -72,6 +72,7 @@
 		F40974B12E2D557C00C0F731 /* UserAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40974B02E2D557C00C0F731 /* UserAnswer.swift */; };
 		F40974B32E2D558100C0F731 /* QuizSessionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40974B22E2D558100C0F731 /* QuizSessionResult.swift */; };
 		F41682D82C6489BC00671E47 /* LearningBookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41682D72C6489BC00671E47 /* LearningBookmarks.swift */; };
+		F44F6C5C2E536180003A0EA0 /* AoiCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44F6C5B2E536180003A0EA0 /* AoiCard.swift */; };
 		F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4563D472E12C2F300677133 /* BookmarksCell.swift */; };
 		F458049A2E1D039E0023CCE5 /* GeminiKanchuQuizRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45804992E1D039E0023CCE5 /* GeminiKanchuQuizRepository.swift */; };
 		F458049D2E1D040B0023CCE5 /* GetKanchuProblemsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458049C2E1D040B0023CCE5 /* GetKanchuProblemsService.swift */; };
@@ -122,8 +123,15 @@
 		F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C762E0CEF50005B1299 /* BackupPicker.swift */; };
 		F4A13C792E0FCFB7005B1299 /* CommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */; };
 		F4A13C7B2E0FD01D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */; };
+		F4A2D6112E53362500316599 /* KanchuIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6102E53362500316599 /* KanchuIntroView.swift */; };
+		F4A2D6152E533B2A00316599 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6142E533B2700316599 /* Image.swift */; };
+		F4A2D6182E538EBD00316599 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6172E538EBD00316599 /* NoticeView.swift */; };
+		F4A2D61A2E54261700316599 /* CloudKitKanchuProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6192E54261700316599 /* CloudKitKanchuProjectRepository.swift */; };
+		F4A2D61F2E5426C700316599 /* ICloudKanchuProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D61E2E5426C700316599 /* ICloudKanchuProjectService.swift */; };
+		F4A2D6242E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6232E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift */; };
+		F4A2D6272E54B5C100316599 /* ICloudGlobalBackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6262E54B5C100316599 /* ICloudGlobalBackupService.swift */; };
 		F4AA77CA2E4B93560012494A /* SetKanchuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77C92E4B93560012494A /* SetKanchuView.swift */; };
-		F4AA77CE2E4CF4F90012494A /* SubscriptionRepository 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77CD2E4CF4F90012494A /* SubscriptionRepository 2.swift */; };
+		F4AA77CE2E4CF4F90012494A /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77CD2E4CF4F90012494A /* SubscriptionRepository.swift */; };
 		F4AA77D02E4CF5370012494A /* DefaultSubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77CF2E4CF5370012494A /* DefaultSubscriptionRepository.swift */; };
 		F4AA77D32E4E53CB0012494A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AA77D22E4E53CB0012494A /* StoreKit.framework */; };
 		F4AA77D52E4E54A80012494A /* StoreProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = F4AA77D42E4E54A80012494A /* StoreProducts.storekit */; };
@@ -256,6 +264,7 @@
 		F40974B02E2D557C00C0F731 /* UserAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnswer.swift; sourceTree = "<group>"; };
 		F40974B22E2D558100C0F731 /* QuizSessionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionResult.swift; sourceTree = "<group>"; };
 		F41682D72C6489BC00671E47 /* LearningBookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningBookmarks.swift; sourceTree = "<group>"; };
+		F44F6C5B2E536180003A0EA0 /* AoiCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoiCard.swift; sourceTree = "<group>"; };
 		F4563D472E12C2F300677133 /* BookmarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCell.swift; sourceTree = "<group>"; };
 		F45804992E1D039E0023CCE5 /* GeminiKanchuQuizRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiKanchuQuizRepository.swift; sourceTree = "<group>"; };
 		F458049C2E1D040B0023CCE5 /* GetKanchuProblemsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKanchuProblemsService.swift; sourceTree = "<group>"; };
@@ -306,8 +315,15 @@
 		F4A13C762E0CEF50005B1299 /* BackupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPicker.swift; sourceTree = "<group>"; };
 		F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
 		F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommonlyUsedKanjiRepository.swift; sourceTree = "<group>"; };
+		F4A2D6102E53362500316599 /* KanchuIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanchuIntroView.swift; sourceTree = "<group>"; };
+		F4A2D6142E533B2700316599 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		F4A2D6172E538EBD00316599 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		F4A2D6192E54261700316599 /* CloudKitKanchuProjectRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitKanchuProjectRepository.swift; sourceTree = "<group>"; };
+		F4A2D61E2E5426C700316599 /* ICloudKanchuProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudKanchuProjectService.swift; sourceTree = "<group>"; };
+		F4A2D6232E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCloudKitKanchuProjectRepository.swift; sourceTree = "<group>"; };
+		F4A2D6262E54B5C100316599 /* ICloudGlobalBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudGlobalBackupService.swift; sourceTree = "<group>"; };
 		F4AA77C92E4B93560012494A /* SetKanchuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetKanchuView.swift; sourceTree = "<group>"; };
-		F4AA77CD2E4CF4F90012494A /* SubscriptionRepository 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubscriptionRepository 2.swift"; sourceTree = "<group>"; };
+		F4AA77CD2E4CF4F90012494A /* SubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepository.swift; sourceTree = "<group>"; };
 		F4AA77CF2E4CF5370012494A /* DefaultSubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriptionRepository.swift; sourceTree = "<group>"; };
 		F4AA77D22E4E53CB0012494A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F4AA77D42E4E54A80012494A /* StoreProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreProducts.storekit; sourceTree = "<group>"; };
@@ -481,13 +497,13 @@
 		F409692A2C50C95D00AB221C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D6252E5492BC00316599 /* CloudKit */,
 				F47AF2302E48A75F002A991B /* AuthUser */,
 				F479A54C2E217ADC007C3D41 /* KanchuRepository */,
 				F4AA77CF2E4CF5370012494A /* DefaultSubscriptionRepository.swift */,
 				F4A13C7A2E0FD00D005B1299 /* DefaultCommonlyUsedKanjiRepository.swift */,
 				F40969272C50C95D00AB221C /* DefaultBookmarksRepository.swift */,
 				F40969292C50C95D00AB221C /* DefaultUserDefaultsRepository.swift */,
-				F4F60C392DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -530,6 +546,7 @@
 		F40969422C50C98E00AB221C /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D61D2E54265600316599 /* ICloud */,
 				F4AA77D62E4E5C7D0012494A /* Subscription */,
 				F4841DF12E43AC1E000589E2 /* AuthUser */,
 				F458049B2E1D03D90023CCE5 /* Kanchu */,
@@ -538,7 +555,6 @@
 				F409693D2C50C98E00AB221C /* LearningByGradeService.swift */,
 				F409693E2C50C98E00AB221C /* SearchKanjiService.swift */,
 				F40969402C50C98E00AB221C /* TodaysKanjiService.swift */,
-				F4F60C3D2DD64BAD004010B4 /* ICloudBookmarksService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -574,6 +590,7 @@
 				F40969592C50C99600AB221C /* HomeView.swift */,
 				F40969782C50C99600AB221C /* TodaysKanji */,
 				F409696D2C50C99600AB221C /* LearningByGrade */,
+				F4A2D6162E538DF000316599 /* Notice */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -682,6 +699,7 @@
 		F409699F2C50C99E00AB221C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D6142E533B2700316599 /* Image.swift */,
 				F4AA77E72E4F08B50012494A /* ButtonStyle.swift */,
 				F4F350062E2F9F1300B3A018 /* Color.swift */,
 				F40969202C50C95400AB221C /* Router.swift */,
@@ -721,6 +739,7 @@
 		F45804A02E1D0C9E0023CCE5 /* KanchuQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D60F2E5335EF00316599 /* Introduction */,
 				F4841DD02E422909000589E2 /* Component */,
 				F4F350082E2FAC6000B3A018 /* KanchuHomeView.swift */,
 				F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */,
@@ -823,16 +842,61 @@
 		F49EE13B2CF48B63002AD484 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D6202E54274000316599 /* CloudKit */,
 				F4A13C782E0FCFA5005B1299 /* CommonlyUsedKanjiRepository.swift */,
 				F40969382C50C98E00AB221C /* BookmarksRepository.swift */,
 				F40969412C50C98E00AB221C /* UserDefaultsRepository.swift */,
-				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
-				F4AA77CD2E4CF4F90012494A /* SubscriptionRepository 2.swift */,
+				F4AA77CD2E4CF4F90012494A /* SubscriptionRepository.swift */,
 				F4F350102E30EB9B00B3A018 /* Kanchu */,
 				F4841DD72E4367A4000589E2 /* AuthRepository.swift */,
 				F4841DD92E436994000589E2 /* UserRepository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		F4A2D60F2E5335EF00316599 /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				F44F6C5B2E536180003A0EA0 /* AoiCard.swift */,
+				F4A2D6102E53362500316599 /* KanchuIntroView.swift */,
+			);
+			path = Introduction;
+			sourceTree = "<group>";
+		};
+		F4A2D6162E538DF000316599 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				F4A2D6172E538EBD00316599 /* NoticeView.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		F4A2D61D2E54265600316599 /* ICloud */ = {
+			isa = PBXGroup;
+			children = (
+				F4A2D6262E54B5C100316599 /* ICloudGlobalBackupService.swift */,
+				F4A2D61E2E5426C700316599 /* ICloudKanchuProjectService.swift */,
+				F4F60C3D2DD64BAD004010B4 /* ICloudBookmarksService.swift */,
+			);
+			path = ICloud;
+			sourceTree = "<group>";
+		};
+		F4A2D6202E54274000316599 /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+				F4A2D6192E54261700316599 /* CloudKitKanchuProjectRepository.swift */,
+				F4F60C3B2DD64B48004010B4 /* CloudKitBookmarksRepository.swift */,
+			);
+			path = CloudKit;
+			sourceTree = "<group>";
+		};
+		F4A2D6252E5492BC00316599 /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+				F4A2D6232E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift */,
+				F4F60C392DD64865004010B4 /* DefaultsCloudKitBookmarksRepository.swift */,
+			);
+			path = CloudKit;
 			sourceTree = "<group>";
 		};
 		F4AA77D12E4E53CB0012494A /* Frameworks */ = {
@@ -1159,6 +1223,7 @@
 				F4D346C42E5189E700E92B7D /* SetKanchuAPIKeyService.swift in Sources */,
 				F4841DD82E4367A4000589E2 /* AuthRepository.swift in Sources */,
 				F479A5552E220A73007C3D41 /* DefaultGeminiKanchuQuizRepository.swift in Sources */,
+				F4A2D6272E54B5C100316599 /* ICloudGlobalBackupService.swift in Sources */,
 				F4DFD0C12C8D7E1000B2E450 /* SettingsPickers.swift in Sources */,
 				F49CF6532C89E78F00CBA5DE /* BackSwipe.swift in Sources */,
 				F4AA77DE2E4E5FE90012494A /* PurchaseKanchuMonthlyProductUseCase.swift in Sources */,
@@ -1174,6 +1239,7 @@
 				F40969952C50C99600AB221C /* LearningMode.swift in Sources */,
 				F4F350072E2F9F1600B3A018 /* Color.swift in Sources */,
 				F40969882C50C99600AB221C /* CoveredKanjiList.swift in Sources */,
+				F4A2D6152E533B2A00316599 /* Image.swift in Sources */,
 				F4841DDA2E436994000589E2 /* UserRepository.swift in Sources */,
 				F40969942C50C99600AB221C /* LearningKanjiView.swift in Sources */,
 				F46FFDAB2C6D9B4400C847AC /* LearningByGradeRow.swift in Sources */,
@@ -1208,11 +1274,13 @@
 				F4F60C3E2DD64BAD004010B4 /* ICloudBookmarksService.swift in Sources */,
 				F45804A42E1D110E0023CCE5 /* KanchuQuizViewModel.swift in Sources */,
 				F409698D2C50C99600AB221C /* KanjiQuizCard.swift in Sources */,
+				F4A2D6182E538EBD00316599 /* NoticeView.swift in Sources */,
 				F40969992C50C99600AB221C /* TodaysKanjiView.swift in Sources */,
 				F40969812C50C99600AB221C /* BookmarksMenu.swift in Sources */,
-				F4AA77CE2E4CF4F90012494A /* SubscriptionRepository 2.swift in Sources */,
+				F4AA77CE2E4CF4F90012494A /* SubscriptionRepository.swift in Sources */,
 				F4D346BC2E51737700E92B7D /* SetAIModelService.swift in Sources */,
 				F4AA77D82E4E5CA90012494A /* FetchProductsUseCase.swift in Sources */,
+				F4A2D61F2E5426C700316599 /* ICloudKanchuProjectService.swift in Sources */,
 				F409698A2C50C99600AB221C /* KanjiListView.swift in Sources */,
 				F4AA77E02E4E60DB0012494A /* CheckSubscriptionStatusUseCase.swift in Sources */,
 				F4D346C22E5189E000E92B7D /* GetKanchuAPIKeyService.swift in Sources */,
@@ -1221,12 +1289,15 @@
 				F40969852C50C99600AB221C /* FlipableKanjiCard.swift in Sources */,
 				F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */,
 				F40974B12E2D557C00C0F731 /* UserAnswer.swift in Sources */,
+				F4A2D6112E53362500316599 /* KanchuIntroView.swift in Sources */,
 				F4D346BA2E516B7B00E92B7D /* AIModel.swift in Sources */,
 				F40969242C50C95400AB221C /* Router.swift in Sources */,
 				F40969842C50C99600AB221C /* HomeView.swift in Sources */,
+				F4A2D61A2E54261700316599 /* CloudKitKanchuProjectRepository.swift in Sources */,
 				F40969912C50C99600AB221C /* LearningAtQuizViewModel.swift in Sources */,
 				F4D346B72E51665300E92B7D /* GeminiModels.swift in Sources */,
 				F4841DF32E43ACAD000589E2 /* UserInfoViewModel.swift in Sources */,
+				F44F6C5C2E536180003A0EA0 /* AoiCard.swift in Sources */,
 				F476062E2E3F913500703C89 /* KanchuProjectCard.swift in Sources */,
 				F4F350122E30EBEF00B3A018 /* DefaultKanchuProjectRepository.swift in Sources */,
 				F472730C2DD472A60087168D /* LoginViewModel.swift in Sources */,
@@ -1238,6 +1309,7 @@
 				F4AA77E42E4ECBFF0012494A /* ObserveTransactionsUseCase.swift in Sources */,
 				F4841DEC2E43958B000589E2 /* GetUserInfoUseCase.swift in Sources */,
 				F40969312C50C95D00AB221C /* DefaultUserDefaultsRepository.swift in Sources */,
+				F4A2D6242E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift in Sources */,
 				F40969892C50C99600AB221C /* FlipableKanjiRow.swift in Sources */,
 				F40969462C50C98E00AB221C /* Grade.swift in Sources */,
 				F40969502C50C98E00AB221C /* UserDefaultsRepository.swift in Sources */,

@@ -1,8 +1,8 @@
 # 지켜야할 부분
-## 답변은 한글로 작성
-## 코드 작성 시 최대한 현재 프로젝트의 아키텍처를 따를 것
+- 코드 작성 시 최대한 현재 프로젝트의 아키텍처를 따를 것
+- UseCase 혹은 Repository를 생성하거나 변경사항이 있다면 이를 DIContainer에 항상 적용해야 함 
 
-# Repository Guidelines
+# Guidelines
 
 ## Project Structure & Module Organization
 - `LearningKanji/` — app source

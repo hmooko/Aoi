@@ -53,5 +53,5 @@ struct ContentView: View {
     
     ContentView(viewModel: .init(container: container))
         .environmentObject(container)
-        .environmentObject(Router())
+        .environmentObject(container.router)
 }

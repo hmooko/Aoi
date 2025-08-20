@@ -63,10 +63,15 @@ extension SetKanchuView {
 
 struct SetKanchuView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @StateObject private var viewModel: ViewModel
     
     @State private var googleAisExpanded: Bool = false
     @State private var subscriptionsExpanded: Bool = false
+    @State private var guidePresented: Bool = false
+    @State private var isAPIKeyGuidePresented: Bool = false
+    
+    private let geminiAPIKeyURL = URL(string: "https://aistudio.google.com/u/0/apikey")
 
     init(container: DIContainer) {
         _viewModel = .init(wrappedValue: ViewModel(container: container))
@@ -119,12 +124,35 @@ struct SetKanchuView: View {
                     }
                 }
                 
+                Section("사용 가이드") {
+                    Button("사용 가이드") {
+                        guidePresented = true
+                    }
+                    .foregroundStyle(.black)
+                    .sheet(isPresented: $guidePresented) {
+                        KanchuIntroView()
+                    }
+                    
+                    DisclosureGroup("API 키 발급받기", isExpanded: $isAPIKeyGuidePresented) {
+                        Button {
+                            if let url = geminiAPIKeyURL {
+                                openURL(url)
+                            }
+                        } label: {
+                            HStack {
+                                Text("Gemini")
+                            }
+                            .foregroundStyle(.black)
+                        }
+                    }
+                }
+                
                 Section("구독 관리") {
                     Button("구독 관리") {
                         subscriptionsExpanded = true
                     }
+                    .foregroundStyle(.black)
                     .manageSubscriptionsSheet(isPresented: $subscriptionsExpanded)
-                    .buttonStyle(.plain)
                 }
             }
             .navigationTitle("AI 설정")

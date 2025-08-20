@@ -10,6 +10,7 @@ import SwiftUI
 struct PayWallView: View {
     
     @EnvironmentObject var viewModel: KanchuHomeView.ViewModel
+    @State private var introPresented: Bool = false
     
     var body: some View {
         VStack {
@@ -58,7 +59,7 @@ struct PayWallView: View {
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
             
             Button {
-                
+                introPresented = true
             } label: {
                 AoiText("먼저 이 정보를 확인해주세요!", font: .pretendardBold, size: 18)
                     .foregroundStyle(Color.primaryColor)
@@ -71,6 +72,9 @@ struct PayWallView: View {
                     .padding(.horizontal)
             }
             .buttonStyle(ScaleButtonStyle())
+            .sheet(isPresented: $introPresented) {
+                KanchuIntroView()
+            }
         }
         .frame(maxHeight: .infinity)
         .padding()

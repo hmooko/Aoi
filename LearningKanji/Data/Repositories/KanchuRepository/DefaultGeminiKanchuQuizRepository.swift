@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 
 // MARK: - Error
 
@@ -125,34 +126,60 @@ private struct GeminiKanchuProblem: Decodable {
 // MARK: - Main Repository Implementation
 final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
     
+    private let logger = Logger(subsystem: "com.koo.LearningKanji", category: "DefaultGeminiKanchuQuizRepository")
     private let apiKey: String
     private let session: URLSession
     
     init(userDefaultsRepository: UserDefaultsRepository, session: URLSession = .shared) throws {
         self.apiKey = userDefaultsRepository.getKanchuAPIKey()
         self.session = session
+        logger.info("DefaultGeminiKanchuQuizRepository initialized.")
     }
     
     func fetchProblems(kanjiList: [Kanji], problemType: ProblemType, count: Int, model: GeminiModel) async throws -> [KanchuProblem] {
+        logger.info("Fetching \(count) problems of type '\(problemType.rawValue)' for model '\(model.rawValue)'.")
+
         if self.apiKey.isEmpty {
+            logger.error("API key is empty.")
             throw GeminiError.apiKeyisEmpty
         }
         
         if kanjiList.count < count {
+            logger.error("Kanji list count (\(kanjiList.count)) is less than required count (\(count)).")
             throw GeminiKanchuQuizRepositoryError.kanjiListLessThanCount
         }
         
-        let request = try buildRequest(kanjiList: kanjiList.map { $0.kanji }, problemType: problemType, count: count, model: model)
+        let request: URLRequest
+        do {
+            request = try buildRequest(kanjiList: kanjiList.map { $0.kanji }, problemType: problemType, count: count, model: model)
+            logger.debug("Request built successfully.")
+        } catch {
+            logger.error("Failed to build request: \(error.localizedDescription)")
+            throw error
+        }
+        
+        logger.debug("Request URL: \(request.url?.absoluteString ?? "nil")")
+        if let httpBody = request.httpBody, let bodyString = String(data: httpBody, encoding: .utf8) {
+            logger.trace("Request Body: \(bodyString)")
+        }
         
         let (data, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             let errorText = String(data: data, encoding: .utf8) ?? "알 수 없는 에러"
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+            logger.error("API error. Status Code: \(statusCode), Response: \(errorText)")
+
             if errorText.contains("API_KEY_INVALID") {
                 throw GeminiError.invalidAPIKey
             }
             
-            throw GeminiError.apiError("Status Code: \((response as? HTTPURLResponse)?.statusCode ?? 0), \(errorText)")
+            throw GeminiError.apiError("Status Code: \(statusCode), \(errorText)")
+        }
+        
+        logger.info("Received successful response from API.")
+        if let responseString = String(data: data, encoding: .utf8) {
+            logger.trace("Response data: \(responseString)")
         }
         
         let geminiProblems: [GeminiKanchuProblem]
@@ -163,15 +190,19 @@ final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
             // 2. text 부분(JSON 문자열)을 추출하여 [GeminiKanchuProblem]으로 디코딩
             guard let jsonText = apiResponse.candidates.first?.content.parts.first?.text,
                   let jsonData = jsonText.data(using: .utf8) else {
+                logger.error("Failed to extract JSON text from API response.")
                 throw GeminiError.responseDecodingFailed(CocoaError(.fileReadCorruptFile))
             }
             geminiProblems = try JSONDecoder().decode([GeminiKanchuProblem].self, from: jsonData)
+            logger.info("Successfully decoded \(geminiProblems.count) problems.")
             
         } catch let error as DecodingError {
             // 디코딩 에러를 더 자세히 출력하기 위해 추가
+            logger.error("Decoding Error: \(error.localizedDescription)")
             print("Decoding Error: \(error)")
             throw GeminiError.responseDecodingFailed(error)
         } catch {
+            logger.error("Response decoding failed: \(error.localizedDescription)")
             throw GeminiError.responseDecodingFailed(error)
         }
         
@@ -179,12 +210,15 @@ final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
             KanchuProblem(id: UUID(), type: problemType, sentence: $0.sentence, targetKanji: $0.targetKanji, options: $0.options, answer: $0.answer, targetWord: $0.targetWord)
         }
         
+        logger.info("Successfully mapped Gemini problems to domain models.")
         return problems
     }
     
     private func buildRequest(kanjiList: [String], problemType: ProblemType, count: Int, model: GeminiModel) throws -> URLRequest {
+        logger.debug("Building request for problem type '\(problemType.rawValue)' with \(count) kanji.")
         let urlString = "https://generativelanguage.googleapis.com/v1beta/models/\(model.rawValue):generateContent?key=\(apiKey)"
         guard let url = URL(string: urlString) else {
+            logger.error("Invalid URL string: \(urlString)")
             throw GeminiError.invalidURL
         }
         
@@ -214,6 +248,7 @@ final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
         do {
             request.httpBody = try JSONEncoder().encode(requestBody)
         } catch {
+            logger.error("Failed to encode request body: \(error.localizedDescription)")
             throw GeminiError.requestEncodingFailed(error)
         }
         

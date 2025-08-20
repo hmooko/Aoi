@@ -1,3 +1,4 @@
+
 //
 //  LearningKanjiSceneDIContainer.swift
 //  LearningKanji
@@ -21,36 +22,38 @@ final class DIContainer: ObservableObject {
     func setMockServices() {
         let mockKanchuProjectRepository = MockKanchuProjectRepository(initialProjects: createExampleProjects())
         
-        self.todaysKanjiService = MockTodaysKanjiService()
-        self.learningByGradeService = MockLearningByGradeService()
-        self.learningAtQuizService = MockLearningAtQuizService()
-        self.bookmarksService = MockBookmarksService()
-        self.searchKanjiService = MockSearchKanjiService()
-        self.iCloudBookmarksService = MockICloudBookmarksService()
-        self.getKanchuProblemsService = MockGetKanchuProblemsService()
-        self.calculateKanchuProblemsResultService = MockCalculateKanchuProblemsResultService()
-        self.fetchAllKanchuProjectsService = MockFetchAllKanchuProjectsUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.insertKanchuProjectService = MockInsertKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.deleteKanchuProjectService = MockDefaultDeleteKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.renameKanchuProjectService = MockRenameKanchuProjectService(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.toggleKanchuProjectPinStateService = MockToggleKanchuProjectPinStateService(kanchuProjectRepository: mockKanchuProjectRepository)
-        self.signInWithAppleService = MockSignInWithAppleService()
-        self.getUserInfoService = MockGetUserInfoService()
-        self.getCurrentUserService = MockGetCurrentUserService()
-        self.signOutService = MockSignOutService()
+        self.todaysKanjiUseCaseCache = MockTodaysKanjiService()
+        self.learningByGradeUseCaseCache = MockLearningByGradeService()
+        self.learningAtQuizUseCaseCache = MockLearningAtQuizService()
+        self.bookmarksUseCaseCache = MockBookmarksService()
+        self.searchKanjiUseCaseCache = MockSearchKanjiService()
+        self.iCloudBookmarksUseCaseCache = MockICloudBookmarksService()
+        self.iCloudKanchuProjectUseCaseCache = MockICloudKanchuProjectService()
+        self.iCloudGlobalBackupUseCaseCache = MockICloudGlobalBackupService()
+        self.getKanchuProblemsUseCaseCache = MockGetKanchuProblemsService()
+        self.calculateKanchuProblemsResultUseCaseCache = MockCalculateKanchuProblemsResultService()
+        self.fetchAllKanchuProjectsUseCaseCache = MockFetchAllKanchuProjectsUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.insertKanchuProjectUseCaseCache = MockInsertKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.deleteKanchuProjectUseCaseCache = MockDefaultDeleteKanchuProjectUseCase(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.renameKanchuProjectUseCaseCache = MockRenameKanchuProjectService(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.toggleKanchuProjectPinStateUseCaseCache = MockToggleKanchuProjectPinStateService(kanchuProjectRepository: mockKanchuProjectRepository)
+        self.signInWithAppleUseCaseCache = MockSignInWithAppleService()
+        self.getUserInfoUseCaseCache = MockGetUserInfoService()
+        self.getCurrentUserUseCaseCache = MockGetCurrentUserService()
+        self.signOutUseCaseCache = MockSignOutService()
         
         // Subscription Mocks
-        self.fetchKanchuProductsService = MockFetchKanchuProductsUseCase()
-        self.purchaseKanchuService = MockPurchaseKanchuUseCase()
-        self.restorePurchasesService = MockRestorePurchasesUseCase()
-        self.observeTransactionsService = MockObserveTransactionsUseCase()
-        self.checkSubscriptionStatusService = MockCheckSubscriptionStatusUseCase()
+        self.fetchProductsUseCaseCache = MockFetchKanchuProductsUseCase()
+        self.purchaseKanchuMonthlyProductUseCaseCache = MockPurchaseKanchuUseCase()
+        self.restorePurchasesUseCaseCache = MockRestorePurchasesUseCase()
+        self.observeTransactionsUseCaseCache = MockObserveTransactionsUseCase()
+        self.checkSubscriptionStatusUseCaseCache = MockCheckSubscriptionStatusUseCase()
         
         // AI Model and API Key Mocks
-        self.setAIModelService = MockSetAIModelService()
-        self.getAIModelService = MockGetAIModelService()
-        self.getKanchuAPIKeyService = MockGetKanchuAPIKeyService()
-        self.setKanchuAPIKeyService = MockSetKanchuAPIKeyService()
+        self.setAIModelUseCaseCache = MockSetAIModelService()
+        self.getAIModelUseCaseCache = MockGetAIModelService()
+        self.getKanchuAPIKeyUseCaseCache = MockGetKanchuAPIKeyService()
+        self.setKanchuAPIKeyUseCaseCache = MockSetKanchuAPIKeyService()
     }
     
     // MARK: - Model
@@ -74,257 +77,330 @@ final class DIContainer: ObservableObject {
     
     var router: Router = Router()
     
-    // MARK: - Services
-    private var todaysKanjiService: TodaysKanjiUseCase? = nil
-    private var learningByGradeService: LearningByGradeUseCase? = nil
-    private var learningAtQuizService: LearningAtQuizUseCase? = nil
-    private var bookmarksService: BookmarksUseCase? = nil
-    private var searchKanjiService: SearchKanjiUseCase? = nil
-    private var iCloudBookmarksService: ICloudBookmarksUseCase? = nil
-    private var getKanchuProblemsService: GetKanchuProblemsUseCase? = nil
-    private var calculateKanchuProblemsResultService: CalculateKanchuProblemsResultUseCase? = nil
-    private var fetchAllKanchuProjectsService: FetchAllKanchuProjectsUseCase? = nil
-    private var insertKanchuProjectService: InsertKanchuProjectUseCase? = nil
-    private var deleteKanchuProjectService: DeleteKanchuProjectUseCase? = nil
-    private var renameKanchuProjectService: RenameKanchuProjectUseCase? = nil
-    private var toggleKanchuProjectPinStateService: ToggleKanchuProjectPinStateUseCase? = nil
-    private var signInWithAppleService: SignInWithAppleUseCase?
-    private var getUserInfoService: GetUserInfoUseCase? = nil
-    private var getCurrentUserService: GetCurrentUserUseCase? = nil
-    private var signOutService: SignOutUseCase? = nil
+    // MARK: - Use Case Properties
+    private var todaysKanjiUseCaseCache: TodaysKanjiUseCase? = nil
+    private var learningByGradeUseCaseCache: LearningByGradeUseCase? = nil
+    private var learningAtQuizUseCaseCache: LearningAtQuizUseCase? = nil
+    private var bookmarksUseCaseCache: BookmarksUseCase? = nil
+    private var searchKanjiUseCaseCache: SearchKanjiUseCase? = nil
+    private var iCloudBookmarksUseCaseCache: ICloudBookmarksUseCase? = nil
+    private var iCloudKanchuProjectUseCaseCache: ICloudKanchuProjectUseCase? = nil
+    private var iCloudGlobalBackupUseCaseCache: ICloudGlobalBackupUseCase? = nil
+    private var getKanchuProblemsUseCaseCache: GetKanchuProblemsUseCase? = nil
+    private var calculateKanchuProblemsResultUseCaseCache: CalculateKanchuProblemsResultUseCase? = nil
+    private var fetchAllKanchuProjectsUseCaseCache: FetchAllKanchuProjectsUseCase? = nil
+    private var insertKanchuProjectUseCaseCache: InsertKanchuProjectUseCase? = nil
+    private var deleteKanchuProjectUseCaseCache: DeleteKanchuProjectUseCase? = nil
+    private var renameKanchuProjectUseCaseCache: RenameKanchuProjectUseCase? = nil
+    private var toggleKanchuProjectPinStateUseCaseCache: ToggleKanchuProjectPinStateUseCase? = nil
+    private var signInWithAppleUseCaseCache: SignInWithAppleUseCase?
+    private var getUserInfoUseCaseCache: GetUserInfoUseCase? = nil
+    private var getCurrentUserUseCaseCache: GetCurrentUserUseCase? = nil
+    private var signOutUseCaseCache: SignOutUseCase? = nil
     
-    // Subscription Services
-    private var fetchKanchuProductsService: FetchProductsUseCase? = nil
-    private var purchaseKanchuService: PurchaseKanchuMonthlyProductUseCase? = nil
-    private var restorePurchasesService: RestorePurchasesUseCase? = nil
-    private var observeTransactionsService: ObserveTransactionsUseCase? = nil
-    private var checkSubscriptionStatusService: CheckSubscriptionStatusUseCase? = nil
+    // Subscription Use Cases
+    private var fetchProductsUseCaseCache: FetchProductsUseCase? = nil
+    private var purchaseKanchuMonthlyProductUseCaseCache: PurchaseKanchuMonthlyProductUseCase? = nil
+    private var restorePurchasesUseCaseCache: RestorePurchasesUseCase? = nil
+    private var observeTransactionsUseCaseCache: ObserveTransactionsUseCase? = nil
+    private var checkSubscriptionStatusUseCaseCache: CheckSubscriptionStatusUseCase? = nil
     
-    private var setAIModelService: SetAIModelUseCase? = nil
-    private var getAIModelService: GetAIModelUseCase? = nil
-    private var getKanchuAPIKeyService: GetKanchuAPIKeyUseCase? = nil
-    private var setKanchuAPIKeyService: SetKanchuAPIKeyUseCase? = nil
+    // AI and API Key Use Cases
+    private var setAIModelUseCaseCache: SetAIModelUseCase? = nil
+    private var getAIModelUseCaseCache: GetAIModelUseCase? = nil
+    private var getKanchuAPIKeyUseCaseCache: GetKanchuAPIKeyUseCase? = nil
+    private var setKanchuAPIKeyUseCaseCache: SetKanchuAPIKeyUseCase? = nil
 
     
     // MARK: - Storage
     private let commonlyUsedKanjiStorage = CommonlyUsedKanjiStorage.shared
 
     
-    // MARK: - Use Cases
+    // MARK: - Use Case Factory Methods
     func todaysKanjiUseCase() -> TodaysKanjiUseCase {
-        guard let todaysKanjiService = self.todaysKanjiService else {
-            return TodaysKanjiService(
-                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
-                userDefaultsRepository: makeUserDefaultsRepository()
-            )
+        if let useCase = self.todaysKanjiUseCaseCache {
+            return useCase
         }
-        
-        return todaysKanjiService
+        let newUseCase = TodaysKanjiService(
+            commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
+            userDefaultsRepository: makeUserDefaultsRepository()
+        )
+        self.todaysKanjiUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func learningByGradeUseCase() -> LearningByGradeUseCase {
-        guard let learningByGradeService = self.learningByGradeService else {
-            return LearningByGradeService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        if let useCase = self.learningByGradeUseCaseCache {
+            return useCase
         }
-        
-        return learningByGradeService
+        let newUseCase = LearningByGradeService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        self.learningByGradeUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func learningAtQuizUseCase() -> LearningAtQuizUseCase {
-        guard let learningAtQuizService = self.learningAtQuizService else {
-            return LearningAtQuizService(
-                userDefaultsRepository: makeUserDefaultsRepository(),
-                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
-            )
+        if let useCase = self.learningAtQuizUseCaseCache {
+            return useCase
         }
-        
-        return learningAtQuizService
+        let newUseCase = LearningAtQuizService(
+            userDefaultsRepository: makeUserDefaultsRepository(),
+            commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository()
+        )
+        self.learningAtQuizUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func bookmarksUseCase() -> BookmarksUseCase {
-        guard let bookmarksService = self.bookmarksService else {
-            return BookmarksService(bookmarksRepository: makeBoookmarksRepository())
+        if let useCase = self.bookmarksUseCaseCache {
+            return useCase
         }
-        
-        return bookmarksService
+        let newUseCase = BookmarksService(bookmarksRepository: makeBoookmarksRepository())
+        self.bookmarksUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func searchKanjiUseCase() -> SearchKanjiUseCase {
-        guard let searchKanjiService = self.searchKanjiService else {
-            return SearchKanjiService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        if let useCase = self.searchKanjiUseCaseCache {
+            return useCase
         }
-        
-        return searchKanjiService
+        let newUseCase = SearchKanjiService(commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository())
+        self.searchKanjiUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func iCloudBookmarksUseCase() -> ICloudBookmarksUseCase {
-        guard let icloudBookmarksService = self.iCloudBookmarksService else {
-            return ICloudBookmarksService(
-                bookmarksRepository: makeBoookmarksRepository(),
-                cloudKitBookmarksRepository: makeCloudKitBookmarksRepository(),
-                userDefaultsRepository: makeUserDefaultsRepository()
-            )
+        if let useCase = self.iCloudBookmarksUseCaseCache {
+            return useCase
         }
-        
-        return icloudBookmarksService
+        let newUseCase = ICloudBookmarksService(
+            bookmarksRepository: makeBoookmarksRepository(),
+            cloudKitBookmarksRepository: makeCloudKitBookmarksRepository()
+        )
+        self.iCloudBookmarksUseCaseCache = newUseCase
+        return newUseCase
+    }
+    
+    @MainActor
+    func iCloudKanchuProjectUseCase() -> ICloudKanchuProjectUseCase {
+        if let useCase = self.iCloudKanchuProjectUseCaseCache {
+            return useCase
+        }
+        let newUseCase = ICloudKanchuProjectService(
+            kanchuProjectRepository: makeKanchuProjectRepository(),
+            cloudKitKanchuProjectRepository: makeCloudKitKanchuProjectRepository()
+        )
+        self.iCloudKanchuProjectUseCaseCache = newUseCase
+        return newUseCase
+    }
+    
+    @MainActor
+    func iCloudGlobalBackupUseCase() -> ICloudGlobalBackupUseCase {
+        if let useCase = self.iCloudGlobalBackupUseCaseCache {
+            return useCase
+        }
+        let newUseCase = ICloudGlobalBackupService(
+            bookmarksBackupService: iCloudBookmarksUseCase(),
+            kanchuProjectBackupService: iCloudKanchuProjectUseCase(),
+            userDefaultsRepository: makeUserDefaultsRepository()
+        )
+        self.iCloudGlobalBackupUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func getKanchuProblemsUsecase() throws -> GetKanchuProblemsUseCase {
-        guard let getKanchuProblemsService = self.getKanchuProblemsService else {
-            return DefaultGetKanchuProblemsService(
-                geminiKanchuRepository: try makeGeminiKanchuQuizRepository(),
-                bookmarksRepository: makeBoookmarksRepository(),
-                commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
-                userDefaultsRepsoitory: makeUserDefaultsRepository()
-            )
+        if let useCase = self.getKanchuProblemsUseCaseCache {
+            return useCase
         }
-        
-        return getKanchuProblemsService
+        let newUseCase = try DefaultGetKanchuProblemsService(
+            geminiKanchuRepository: makeGeminiKanchuQuizRepository(),
+            bookmarksRepository: makeBoookmarksRepository(),
+            commonlyUsedKanjiRepository: makeCommonlyUsedKanjiRepository(),
+            userDefaultsRepsoitory: makeUserDefaultsRepository()
+        )
+        self.getKanchuProblemsUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func calculateKanchuProblemsResult() -> CalculateKanchuProblemsResultUseCase {
-        guard let calculateKanchuProblemsResultService = self.calculateKanchuProblemsResultService else {
-            return DefaultCalculateKanchuProblemsResultService()
+        if let useCase = self.calculateKanchuProblemsResultUseCaseCache {
+            return useCase
         }
-        
-        return calculateKanchuProblemsResultService
+        let newUseCase = DefaultCalculateKanchuProblemsResultService()
+        self.calculateKanchuProblemsResultUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func fetchAllKanchuProjectsUseCase() -> FetchAllKanchuProjectsUseCase {
-        guard let fetchAllKanchuProjectsService = self.fetchAllKanchuProjectsService else {
-            return DefaultFetchAllKanchuProjectsUseCase(kanchuRepository: makeKanchuProjectRepository())
+        if let useCase = self.fetchAllKanchuProjectsUseCaseCache {
+            return useCase
         }
-        return fetchAllKanchuProjectsService
+        let newUseCase = DefaultFetchAllKanchuProjectsUseCase(kanchuRepository: makeKanchuProjectRepository())
+        self.fetchAllKanchuProjectsUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func insertKanchuProjectUseCase() -> InsertKanchuProjectUseCase {
-        guard let insertKanchuProjectService = self.insertKanchuProjectService else {
-            return DefaultInsertKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        if let useCase = self.insertKanchuProjectUseCaseCache {
+            return useCase
         }
-        return insertKanchuProjectService
+        let newUseCase = DefaultInsertKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        self.insertKanchuProjectUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func deleteKanchuProjectUseCase() -> DeleteKanchuProjectUseCase {
-        guard let deleteKanchuProjectService = self.deleteKanchuProjectService else {
-            return DefaultDeleteKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        if let useCase = self.deleteKanchuProjectUseCaseCache {
+            return useCase
         }
-        return deleteKanchuProjectService
+        let newUseCase = DefaultDeleteKanchuProjectUseCase(kanchuRepository: makeKanchuProjectRepository())
+        self.deleteKanchuProjectUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func renameKanchuProjectUseCase() -> RenameKanchuProjectUseCase {
-        guard let renameKanchuProjectService = self.renameKanchuProjectService else {
-            return RenameKanchuProjectService(kanchuProjectRepository: makeKanchuProjectRepository())
+        if let useCase = self.renameKanchuProjectUseCaseCache {
+            return useCase
         }
-        return renameKanchuProjectService
+        let newUseCase = RenameKanchuProjectService(kanchuProjectRepository: makeKanchuProjectRepository())
+        self.renameKanchuProjectUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func toggleKanchuProjectPinStateUseCase() -> ToggleKanchuProjectPinStateUseCase {
-        guard let toggleKanchuProjectPinStateService = self.toggleKanchuProjectPinStateService else {
-            return ToggleKanchuProjectPinStateService(kanchuProjectRepository: makeKanchuProjectRepository())
+        if let useCase = self.toggleKanchuProjectPinStateUseCaseCache {
+            return useCase
         }
-        return toggleKanchuProjectPinStateService
+        let newUseCase = ToggleKanchuProjectPinStateService(kanchuProjectRepository: makeKanchuProjectRepository())
+        self.toggleKanchuProjectPinStateUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func signInWithAppleUseCase() -> SignInWithAppleUseCase {
-        guard let signInWithAppleService = self.signInWithAppleService else {
-            return SignInWithAppleService(authRepository: makeAuthRepository(), userRepository: makeUserRepository())
+        if let useCase = self.signInWithAppleUseCaseCache {
+            return useCase
         }
-        return signInWithAppleService
+        let newUseCase = SignInWithAppleService(authRepository: makeAuthRepository(), userRepository: makeUserRepository())
+        self.signInWithAppleUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func getUserInfoUseCase() -> GetUserInfoUseCase {
-        guard let getUserInfoService = self.getUserInfoService else {
-            return DefaultGetUserInfoService(userRepository: makeUserRepository())
+        if let useCase = self.getUserInfoUseCaseCache {
+            return useCase
         }
-        return getUserInfoService
+        let newUseCase = DefaultGetUserInfoService(userRepository: makeUserRepository())
+        self.getUserInfoUseCaseCache = newUseCase
+        return newUseCase
     }
 
     func getCurrentUserUseCase() -> GetCurrentUserUseCase {
-        guard let getCurrentUserService = self.getCurrentUserService else {
-            return DefaultGetCurrentUserService(authRepository: makeAuthRepository())
+        if let useCase = self.getCurrentUserUseCaseCache {
+            return useCase
         }
-        return getCurrentUserService
+        let newUseCase = DefaultGetCurrentUserService(authRepository: makeAuthRepository())
+        self.getCurrentUserUseCaseCache = newUseCase
+        return newUseCase
     }
 
     func signOutUseCase() -> SignOutUseCase {
-        guard let signOutService = self.signOutService else {
-            return SignOutService(authRepository: makeAuthRepository())
+        if let useCase = self.signOutUseCaseCache {
+            return useCase
         }
-        return signOutService
+        let newUseCase = SignOutService(authRepository: makeAuthRepository())
+        self.signOutUseCaseCache = newUseCase
+        return newUseCase
     }
     
     // Subscription Use Cases
     @MainActor
     func fetchProductsUseCase() -> FetchProductsUseCase {
-        guard let service = self.fetchKanchuProductsService else {
-            return FetchProductsService(subscriptionRepository: makeSubscriptionRepository())
+        if let useCase = self.fetchProductsUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = FetchProductsService(subscriptionRepository: makeSubscriptionRepository())
+        self.fetchProductsUseCaseCache = newUseCase
+        return newUseCase
     }
 
     @MainActor
     func purchaseKanchuMonthlyProductUseCase() -> PurchaseKanchuMonthlyProductUseCase {
-        guard let service = self.purchaseKanchuService else {
-            return PurchaseKanchuMonthlyProductService(subscriptionRepository: makeSubscriptionRepository())
+        if let useCase = self.purchaseKanchuMonthlyProductUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = PurchaseKanchuMonthlyProductService(subscriptionRepository: makeSubscriptionRepository())
+        self.purchaseKanchuMonthlyProductUseCaseCache = newUseCase
+        return newUseCase
     }
 
     @MainActor
     func restorePurchasesUseCase() -> RestorePurchasesUseCase {
-        guard let service = self.restorePurchasesService else {
-            return RestorePurchasesService(subscriptionRepository: makeSubscriptionRepository())
+        if let useCase = self.restorePurchasesUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = RestorePurchasesService(subscriptionRepository: makeSubscriptionRepository())
+        self.restorePurchasesUseCaseCache = newUseCase
+        return newUseCase
     }
     
     @MainActor
     func observeTransactionsUseCase() -> ObserveTransactionsUseCase {
-        guard let service = self.observeTransactionsService else {
-            return ObserveTransactionsService(subscriptionRepository: makeSubscriptionRepository())
+        if let useCase = self.observeTransactionsUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = ObserveTransactionsService(subscriptionRepository: makeSubscriptionRepository())
+        self.observeTransactionsUseCaseCache = newUseCase
+        return newUseCase
     }
 
     @MainActor
     func checkSubscriptionStatusUseCase() -> CheckSubscriptionStatusUseCase {
-        guard let service = self.checkSubscriptionStatusService else {
-            return CheckSubscriptionStatusService(subscriptionRepository: makeSubscriptionRepository())
+        if let useCase = self.checkSubscriptionStatusUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = CheckSubscriptionStatusService(subscriptionRepository: makeSubscriptionRepository())
+        self.checkSubscriptionStatusUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func setAIModelUseCase() -> SetAIModelUseCase {
-        guard let service = self.setAIModelService else {
-            return SetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        if let useCase = self.setAIModelUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = SetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        self.setAIModelUseCaseCache = newUseCase
+        return newUseCase
     }
 
     func getAIModelUseCase() -> GetAIModelUseCase {
-        guard let service = self.getAIModelService else {
-            return GetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        if let useCase = self.getAIModelUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = GetAIModelService(userDefaultsRepository: makeUserDefaultsRepository())
+        self.getAIModelUseCaseCache = newUseCase
+        return newUseCase
     }
     
     func getKanchuAPIKeyUseCase() -> GetKanchuAPIKeyUseCase {
-        guard let service = self.getKanchuAPIKeyService else {
-            return GetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        if let useCase = self.getKanchuAPIKeyUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = GetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        self.getKanchuAPIKeyUseCaseCache = newUseCase
+        return newUseCase
     }
 
     func setKanchuAPIKeyUseCase() -> SetKanchuAPIKeyUseCase {
-        guard let service = self.setKanchuAPIKeyService else {
-            return SetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        if let useCase = self.setKanchuAPIKeyUseCaseCache {
+            return useCase
         }
-        return service
+        let newUseCase = SetKanchuAPIKeyService(userDefaultsRepository: makeUserDefaultsRepository())
+        self.setKanchuAPIKeyUseCaseCache = newUseCase
+        return newUseCase
     }
     
     // MARK: - Repository
@@ -342,6 +418,10 @@ final class DIContainer: ObservableObject {
     
     private func makeCloudKitBookmarksRepository() -> CloudKitBookmarksRepository {
         DefaultsCloudKitBookmarksRepository(commonlyUsedKanjiStorage: commonlyUsedKanjiStorage)
+    }
+    
+    private func makeCloudKitKanchuProjectRepository() -> CloudKitKanchuProjectRepository {
+        DefaultCloudKitKanchuProjectRepository()
     }
     
     private func makeGeminiKanchuQuizRepository() throws -> GeminiKanchuQuizRepository {

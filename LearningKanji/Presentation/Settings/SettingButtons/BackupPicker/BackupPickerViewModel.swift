@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 extension BackupPicker {
+    @MainActor
     final class ViewModel: ObservableObject {
-        let container: DIContainer
+        private let iCloudGlobalBackupUseCase: ICloudGlobalBackupUseCase
         @Published var isBackingUP = false
         
         @Published var isLoadingBackup = false
@@ -20,19 +21,19 @@ extension BackupPicker {
         @Published var alertMessage = ""
         
         init(container: DIContainer) {
-            self.container = container
+            self.iCloudGlobalBackupUseCase = container.iCloudGlobalBackupUseCase()
         }
         
         func syncBackupStatus() {
-            isBackingUP = container.iCloudBookmarksUseCase().getIsBackingUp()
-            isLoadingBackup = container.iCloudBookmarksUseCase().getIsLoadingBackup()
+            isBackingUP = iCloudGlobalBackupUseCase.getIsBackingUp()
+            isLoadingBackup = iCloudGlobalBackupUseCase.getIsLoading()
         }
         
         func backup() {
             isBackingUP = true
             Task {
                 do {
-                    try await container.iCloudBookmarksUseCase().backup()
+                    try await iCloudGlobalBackupUseCase.backupAll()
                     await MainActor.run {
                         isBackingUP = false
                         isAlert = true
@@ -55,7 +56,7 @@ extension BackupPicker {
             isLoadingBackup = true
             Task {
                 do {
-                    try await container.iCloudBookmarksUseCase().load()
+                    try await iCloudGlobalBackupUseCase.loadAll()
                     await MainActor.run {
                         isLoadingBackup = false
                         isAlert = true
