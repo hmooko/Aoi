@@ -24,6 +24,7 @@ extension KanchuHomeView {
         private let restorePurchasesUseCase: RestorePurchasesUseCase
         private let checkSubscriptionStatusUseCase: CheckSubscriptionStatusUseCase
         private let observeTransactionsUseCase: ObserveTransactionsUseCase
+        private let getIsKanchuMonthlyIntroProductoryOfferUseCase: GetIsKanchuMonthlyIntroductoryOfferUseCase
         
         // MARK: - Properties
         private(set) var router: Router
@@ -36,6 +37,7 @@ extension KanchuHomeView {
         @Published var newProjectName: String = ""
         @Published var showPaywallOverlay: Bool = false
         @Published private(set) var subscriptionStatus: SubscriptionStatus = .free
+        @Published private(set) var isKanchuMonthlyIntroductoryOffer: Bool = false
         
         enum ViewState: Equatable {
             case loading
@@ -55,6 +57,7 @@ extension KanchuHomeView {
             self.restorePurchasesUseCase = container.restorePurchasesUseCase()
             self.checkSubscriptionStatusUseCase = container.checkSubscriptionStatusUseCase()
             self.observeTransactionsUseCase = container.observeTransactionsUseCase()
+            self.getIsKanchuMonthlyIntroProductoryOfferUseCase = container.getIsKanchuMonthlyIntroductoryOfferUseCase()
             
             self.router = container.router
             logger.info("KanchuHomeViewModel이 초기화되었습니다.")
@@ -62,6 +65,7 @@ extension KanchuHomeView {
             // Initial Subscription Setup
             Task {
                 await updateSubscriptionStatus()
+                await updateIsKanchuMonthlyIntroductoryOffer()
             }
             observeTransactions()
         }
@@ -201,6 +205,18 @@ extension KanchuHomeView {
                 viewState = .loaded
             }
         }
+        
+        private func updateIsKanchuMonthlyIntroductoryOffer() async {
+            viewState = .loading
+            logger.debug("월간 introductory offer 여부를 확인합니다.")
+            do {
+                self.isKanchuMonthlyIntroductoryOffer = try await getIsKanchuMonthlyIntroProductoryOfferUseCase.excute()
+            } catch {
+                viewState = .error("월간 introductory offer 여부를 확인하는 데 오류가 발생했습니다: \(error.localizedDescription)")
+            }
+            logger.info("월간 introductory offer 여부를 확인하였습니다.")
+            viewState = .loaded
+        }
 
         private func updateSubscriptionStatus() async {
             logger.debug("구독 상태를 업데이트합니다.")
@@ -219,6 +235,7 @@ extension KanchuHomeView {
                     // 사용자의 현재 상태를 다시 확인합니다.
                     logger.info("새로운 거래 변경이 감지되었습니다. 구독 상태를 갱신합니다.") // 거래 감지 로깅
                     await updateSubscriptionStatus()
+                    await updateIsKanchuMonthlyIntroductoryOffer()
                 }
                 logger.info("거래 관찰이 종료되었습니다.") // 관찰 종료 로깅 (Task가 취소될 경우)
             }

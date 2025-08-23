@@ -25,34 +25,33 @@ final class CheckSubscriptionStatusService: CheckSubscriptionStatusUseCase {
     func execute() async -> SubscriptionStatus {
         let transactions = await subscriptionRepository.fetchCurrentEntitlements()
         
-        // 유효한 트랜잭션이 하나만 있다고 가정하고, 가장 먼저 발견되는 유효한 구독 상태를 반환합니다.
+        // StoreKit은 각 구독 그룹에 대해 가장 높은 등급의 활성 구독 트랜잭션 하나만 반환합니다.
+        // 따라서 첫 번째로 발견되는 유효한 트랜잭션을 사용자의 현재 구독 상태로 간주할 수 있습니다.
         for transaction in transactions {
-            // 1. 트랜잭션의 Product ID를 기반으로 잠재적인 SubscriptionStatus를 결정합니다.
-            let potentialStatus: SubscriptionStatus? = {
-                if transaction.productID == ProductIDs.kanchuMonthly.rawValue {
-                    return .paidKanchuMonthly
-                }
-                return nil // 우리가 정의한 유료 구독 상품이 아님
-            }()
-            
-            guard let status = potentialStatus else {
-                continue // 이 트랜잭션은 우리가 관심 있는 구독 상품과 관련이 없습니다.
+            // 1. 트랜잭션이 유효한지(환불되거나 업그레이드되지 않았는지) 확인합니다.
+            guard transaction.revocationDate == nil, !transaction.isUpgraded else {
+                continue
             }
             
-            // 2. 트랜잭션이 환불되지 않았고 (revocationDate == nil), 다른 구독으로 업그레이드되지 않았는지 (isUpgraded == false) 확인합니다.
-            guard transaction.revocationDate == nil && !transaction.isUpgraded else {
-                continue // 유효하지 않은 트랜잭션 (환불 또는 업그레이드로 인한 무효화)
+            // 2. 트랜잭션의 Product ID를 기반으로 구독 상태를 결정합니다.
+            let status: SubscriptionStatus
+            switch transaction.productID {
+            case ProductIDs.kanchuMonthly.rawValue:
+                status = .paidKanchuMonthly
+            // case ProductIDs.kanchuYearly.rawValue: // 예시: 추후 연간 구독 추가 시
+            //     status = .paidKanchuYearly
+            default:
+                // 우리가 관리하는 Product ID가 아니면 건너뜁니다.
+                continue
             }
             
-            // 3. 해당 트랜잭션이 자동 갱신 구독이며, 현재 활성 상태인지 확인합니다.
-            // `productType`이 `.autoRenewable`이고, `expirationDate`가 현재 날짜보다 미래인 경우 활성 구독으로 간주합니다.
-            if transaction.productType == .autoRenewable {
-                if let expirationDate = transaction.expirationDate, expirationDate > Date() {
-                    // 유효한 구독을 찾았으므로 즉시 해당 상태를 반환합니다.
-                    return status
-                }
+            // 3. 자동 갱신 구독이며, 만료되지 않았는지 확인합니다.
+            if transaction.productType == .autoRenewable,
+               let expirationDate = transaction.expirationDate,
+               expirationDate > Date() {
+                // 유효한 활성 구독을 찾았으므로 즉시 상태를 반환합니다.
+                return status
             }
-            // 이 트랜잭션은 자동 갱신 구독이 아니거나, 이미 만료되었습니다.
         }
         
         // 모든 트랜잭션을 확인했지만 유효한 구독을 찾지 못했습니다.

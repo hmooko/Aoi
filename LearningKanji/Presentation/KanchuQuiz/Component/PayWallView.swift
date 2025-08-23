@@ -23,7 +23,13 @@ struct PayWallView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
+            
+            if viewModel.isKanchuMonthlyIntroductoryOffer {
+                Text("* 신규 회원이라면 첫 한달은 무료로 이용 가능하며 그 후에는 자동으로 결제됩니다!")
+                    .foregroundStyle(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 70, trailing: 0))
+            }
             
             HStack {
                 Button {

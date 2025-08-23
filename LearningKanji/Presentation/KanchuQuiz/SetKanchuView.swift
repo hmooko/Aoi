@@ -107,7 +107,7 @@ struct SetKanchuView: View {
                 }
                 
                 Section(header: Text("사용 가능한 AI")) {
-                    DisclosureGroup("Googole", isExpanded: $googleAisExpanded) {
+                    DisclosureGroup("Google", isExpanded: $googleAisExpanded) {
                         ForEach(GeminiModel.allCases, id: \.self) { model in
                             Button {
                                 viewModel.currentAI = model

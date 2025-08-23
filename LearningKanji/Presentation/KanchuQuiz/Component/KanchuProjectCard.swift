@@ -23,7 +23,7 @@ struct KanchuProjectCard: View {
                     Text("\(project.questions.count)문제")
                     HStack(spacing: 4) {
                         Image(systemName: "calendar")
-                        Text(project.createdAt, format: .dateTime.year().month().day())
+                        Text(project.createdAt, format: .dateTime.year().month().day().hour().minute())
                     }
                 }
                 .font(.caption)

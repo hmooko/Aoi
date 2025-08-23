@@ -6,7 +6,7 @@
 //
 
 /// 사용자의 현재 구독 상태를 나타내는 모델입니다.
-enum SubscriptionStatus {
+enum SubscriptionStatus: CaseIterable {
     /// 프리미엄 기능에 접근할 수 있는 유료 사용자
     case paidKanchuMonthly
     

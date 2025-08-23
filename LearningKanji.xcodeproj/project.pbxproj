@@ -130,6 +130,7 @@
 		F4A2D61F2E5426C700316599 /* ICloudKanchuProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D61E2E5426C700316599 /* ICloudKanchuProjectService.swift */; };
 		F4A2D6242E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6232E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift */; };
 		F4A2D6272E54B5C100316599 /* ICloudGlobalBackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6262E54B5C100316599 /* ICloudGlobalBackupService.swift */; };
+		F4A2D62A2E5A0A0800316599 /* GetIsKanchuMonthlyIntroductoryOfferUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2D6292E5A09ED00316599 /* GetIsKanchuMonthlyIntroductoryOfferUseCase.swift */; };
 		F4AA77CA2E4B93560012494A /* SetKanchuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77C92E4B93560012494A /* SetKanchuView.swift */; };
 		F4AA77CE2E4CF4F90012494A /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77CD2E4CF4F90012494A /* SubscriptionRepository.swift */; };
 		F4AA77D02E4CF5370012494A /* DefaultSubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77CF2E4CF5370012494A /* DefaultSubscriptionRepository.swift */; };
@@ -145,7 +146,6 @@
 		F4AA77E62E4F06B80012494A /* PayWallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77E52E4F06B80012494A /* PayWallView.swift */; };
 		F4AA77E82E4F08BB0012494A /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77E72E4F08B50012494A /* ButtonStyle.swift */; };
 		F4AA77EA2E4F62FE0012494A /* ProductIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77E92E4F62E40012494A /* ProductIDs.swift */; };
-		F4AA77EC2E4F678C0012494A /* SubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77EB2E4F67870012494A /* SubscriptionViewModel.swift */; };
 		F4AA9D552E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */; };
 		F4C44CBA2E3E1EED00275990 /* KanchuProblemDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */; };
 		F4D346B72E51665300E92B7D /* GeminiModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D346B62E51664E00E92B7D /* GeminiModels.swift */; };
@@ -322,6 +322,7 @@
 		F4A2D61E2E5426C700316599 /* ICloudKanchuProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudKanchuProjectService.swift; sourceTree = "<group>"; };
 		F4A2D6232E5480BE00316599 /* DefaultCloudKitKanchuProjectRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCloudKitKanchuProjectRepository.swift; sourceTree = "<group>"; };
 		F4A2D6262E54B5C100316599 /* ICloudGlobalBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudGlobalBackupService.swift; sourceTree = "<group>"; };
+		F4A2D6292E5A09ED00316599 /* GetIsKanchuMonthlyIntroductoryOfferUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIsKanchuMonthlyIntroductoryOfferUseCase.swift; sourceTree = "<group>"; };
 		F4AA77C92E4B93560012494A /* SetKanchuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetKanchuView.swift; sourceTree = "<group>"; };
 		F4AA77CD2E4CF4F90012494A /* SubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepository.swift; sourceTree = "<group>"; };
 		F4AA77CF2E4CF5370012494A /* DefaultSubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriptionRepository.swift; sourceTree = "<group>"; };
@@ -337,7 +338,6 @@
 		F4AA77E52E4F06B80012494A /* PayWallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayWallView.swift; sourceTree = "<group>"; };
 		F4AA77E72E4F08B50012494A /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		F4AA77E92E4F62E40012494A /* ProductIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductIDs.swift; sourceTree = "<group>"; };
-		F4AA77EB2E4F67870012494A /* SubscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewModel.swift; sourceTree = "<group>"; };
 		F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKanchuProblemsServiceTests.swift; sourceTree = "<group>"; };
 		F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KanchuProblemDTO+Mapping.swift"; sourceTree = "<group>"; };
 		F4D346B62E51664E00E92B7D /* GeminiModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiModels.swift; sourceTree = "<group>"; };
@@ -743,7 +743,6 @@
 				F4841DD02E422909000589E2 /* Component */,
 				F4F350082E2FAC6000B3A018 /* KanchuHomeView.swift */,
 				F4FF736B2E32277D002176A3 /* KanchuHomeViewModel.swift */,
-				F4AA77EB2E4F67870012494A /* SubscriptionViewModel.swift */,
 				F45804A12E1D0D380023CCE5 /* KanchuQuizView.swift */,
 				F45804A32E1D110E0023CCE5 /* KanchuQuizViewModel.swift */,
 				F4AA77C92E4B93560012494A /* SetKanchuView.swift */,
@@ -921,6 +920,7 @@
 		F4AA77ED2E4F69CC0012494A /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2D6292E5A09ED00316599 /* GetIsKanchuMonthlyIntroductoryOfferUseCase.swift */,
 				F4AA77DD2E4E5FDE0012494A /* PurchaseKanchuMonthlyProductUseCase.swift */,
 			);
 			path = Subscription;
@@ -1248,11 +1248,11 @@
 				F45804AA2E1D7AAE0023CCE5 /* KanchuQuizResultView.swift in Sources */,
 				F4DFD0BF2C8D7CCF00B2E450 /* TodaysKanjiGradePicker.swift in Sources */,
 				F45804A62E1D62290023CCE5 /* QuizSettingsView.swift in Sources */,
-				F4AA77EC2E4F678C0012494A /* SubscriptionViewModel.swift in Sources */,
 				F4C44CBA2E3E1EED00275990 /* KanchuProblemDTO+Mapping.swift in Sources */,
 				F45804A82E1D7A400023CCE5 /* KanchuQuizInProgressView.swift in Sources */,
 				F40969922C50C99600AB221C /* LearningByGradeListView.swift in Sources */,
 				F472730A2DD429040087168D /* LoginView.swift in Sources */,
+				F4A2D62A2E5A0A0800316599 /* GetIsKanchuMonthlyIntroductoryOfferUseCase.swift in Sources */,
 				F4841DDF2E436B19000589E2 /* NonceHelper.swift in Sources */,
 				F4841DE62E438518000589E2 /* AuthHandlerView.swift in Sources */,
 				F40969A62C62387D00AB221C /* BookmarkKanjiView.swift in Sources */,

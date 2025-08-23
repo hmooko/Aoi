@@ -47,7 +47,8 @@ final class DIContainer: ObservableObject {
         self.purchaseKanchuMonthlyProductUseCaseCache = MockPurchaseKanchuUseCase()
         self.restorePurchasesUseCaseCache = MockRestorePurchasesUseCase()
         self.observeTransactionsUseCaseCache = MockObserveTransactionsUseCase()
-        self.checkSubscriptionStatusUseCaseCache = MockCheckSubscriptionStatusUseCase()
+        self.checkSubscriptionStatusUseCaseCache = MockCheckSubscriptionStatusUseCase(mockStatus: .paidKanchuMonthly)
+        self.getIsKanchuMonthlyIntroductoryOfferUseCaseCache = MockGetIsKanchuMonthlyIntroductoryOfferUseCase()
         
         // AI Model and API Key Mocks
         self.setAIModelUseCaseCache = MockSetAIModelService()
@@ -104,6 +105,7 @@ final class DIContainer: ObservableObject {
     private var restorePurchasesUseCaseCache: RestorePurchasesUseCase? = nil
     private var observeTransactionsUseCaseCache: ObserveTransactionsUseCase? = nil
     private var checkSubscriptionStatusUseCaseCache: CheckSubscriptionStatusUseCase? = nil
+    private var getIsKanchuMonthlyIntroductoryOfferUseCaseCache: GetIsKanchuMonthlyIntroductoryOfferUseCase? = nil
     
     // AI and API Key Use Cases
     private var setAIModelUseCaseCache: SetAIModelUseCase? = nil
@@ -364,6 +366,16 @@ final class DIContainer: ObservableObject {
         }
         let newUseCase = CheckSubscriptionStatusService(subscriptionRepository: makeSubscriptionRepository())
         self.checkSubscriptionStatusUseCaseCache = newUseCase
+        return newUseCase
+    }
+    
+    @MainActor
+    func getIsKanchuMonthlyIntroductoryOfferUseCase() -> GetIsKanchuMonthlyIntroductoryOfferUseCase {
+        if let useCase = self.getIsKanchuMonthlyIntroductoryOfferUseCaseCache {
+            return useCase
+        }
+        let newUseCase = GetIsKanchuMonthlyIntroductoryOfferService(subscriptionRepository: makeSubscriptionRepository())
+        self.getIsKanchuMonthlyIntroductoryOfferUseCaseCache = newUseCase
         return newUseCase
     }
     

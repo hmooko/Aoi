@@ -29,5 +29,8 @@ protocol SubscriptionRepository {
     
     /// 현재 사용자가 보유한 모든 유효한 구독 권한을 가져옵니다.
     func fetchCurrentEntitlements() async -> [Transaction]
+    
+    /// 상품의 신규 특가 이벤트가 있는지 확인합니다.
+    func getIsIntroductoryOffer(productID: ProductIDs) async throws -> Bool 
 }
 

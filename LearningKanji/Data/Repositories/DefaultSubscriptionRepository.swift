@@ -74,6 +74,25 @@ final class DefaultSubscriptionRepository: SubscriptionRepository {
             throw error
         }
     }
+    
+    func getIsIntroductoryOffer(productID: ProductIDs) async throws -> Bool {
+        do {
+            let products = try await Product.products(for: [productID.rawValue])
+            
+            guard let product = products.first else {
+                throw SubscriptionError.productNotFound(productID.rawValue)
+            }
+            
+            guard let subscription = product.subscription else {
+                throw SubscriptionError.productNotFound(productID.rawValue)
+            }
+            return await subscription.isEligibleForIntroOffer
+        } catch {
+            // 상품 정보를 가져오는데 실패하면 에러를 던집니다.
+            print("StoreKit 제품 정보를 가져오는데 실패했습니다: \(error)")
+            throw error
+        }
+    }
 
     // MARK: - Purchase Management
 
