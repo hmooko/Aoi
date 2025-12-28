@@ -126,17 +126,26 @@ private struct GeminiKanchuProblem: Decodable {
 // MARK: - Main Repository Implementation
 final class DefaultGeminiKanchuQuizRepository: GeminiKanchuQuizRepository {
     
+    private let userDefaultsRepository: UserDefaultsRepository
     private let logger = Logger(subsystem: "com.koo.LearningKanji", category: "DefaultGeminiKanchuQuizRepository")
-    private let apiKey: String
     private let session: URLSession
+    private var apiKey: String
     
     init(userDefaultsRepository: UserDefaultsRepository, session: URLSession = .shared) throws {
+        self.userDefaultsRepository = userDefaultsRepository
         self.apiKey = userDefaultsRepository.getKanchuAPIKey()
         self.session = session
         logger.info("DefaultGeminiKanchuQuizRepository initialized.")
     }
     
-    func fetchProblems(kanjiList: [Kanji], problemType: ProblemType, count: Int, model: GeminiModel) async throws -> [KanchuProblem] {
+    func fetchProblems(
+        kanjiList: [Kanji],
+        problemType: ProblemType,
+        count: Int,
+        model: GeminiModel
+    ) async throws -> [KanchuProblem] {
+        self.apiKey = self.userDefaultsRepository.getKanchuAPIKey()
+        
         logger.info("Fetching \(count) problems of type '\(problemType.rawValue)' for model '\(model.rawValue)'.")
 
         if self.apiKey.isEmpty {

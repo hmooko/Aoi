@@ -19,7 +19,8 @@ struct KanchuIntroView: View {
                     number: 1,
                     title: "AI 설정하기",
                     imageSource: "setting",
-                    description: "사용하시는 AI 모델과 API 키를 설정하여 AI 퀴즈 기능을 활성화하세요. API 키는 사용자가 발급하여야 합니다!"
+                    description: "사용하시는 AI 모델과 API 키를 설정하여 AI 퀴즈 기능을 활성화하세요.",
+                    notice: "* API 키는 사용자가 발급하여야 합니다."
                 )
                 
                 AoiCard(

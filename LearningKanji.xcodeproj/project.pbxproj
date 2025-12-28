@@ -147,6 +147,10 @@
 		F4AA77E82E4F08BB0012494A /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77E72E4F08B50012494A /* ButtonStyle.swift */; };
 		F4AA77EA2E4F62FE0012494A /* ProductIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA77E92E4F62E40012494A /* ProductIDs.swift */; };
 		F4AA9D552E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */; };
+		F4BE37392EFE6F4800EF11E1 /* FullWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE37382EFE6F4700EF11E1 /* FullWebView.swift */; };
+		F4BE373B2EFE71E500EF11E1 /* FeedbackSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE373A2EFE71E500EF11E1 /* FeedbackSheetView.swift */; };
+		F4BE373D2F01021A00EF11E1 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE373C2F01021A00EF11E1 /* SafariView.swift */; };
+		F4BE373F2F01044000EF11E1 /* SheetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE373E2F01044000EF11E1 /* SheetData.swift */; };
 		F4C44CBA2E3E1EED00275990 /* KanchuProblemDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */; };
 		F4D346B72E51665300E92B7D /* GeminiModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D346B62E51664E00E92B7D /* GeminiModels.swift */; };
 		F4D346BA2E516B7B00E92B7D /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D346B92E516B7400E92B7D /* AIModel.swift */; };
@@ -339,6 +343,10 @@
 		F4AA77E72E4F08B50012494A /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		F4AA77E92E4F62E40012494A /* ProductIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductIDs.swift; sourceTree = "<group>"; };
 		F4AA9D512E267AEE00762ED6 /* GetKanchuProblemsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKanchuProblemsServiceTests.swift; sourceTree = "<group>"; };
+		F4BE37382EFE6F4700EF11E1 /* FullWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWebView.swift; sourceTree = "<group>"; };
+		F4BE373A2EFE71E500EF11E1 /* FeedbackSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSheetView.swift; sourceTree = "<group>"; };
+		F4BE373C2F01021A00EF11E1 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		F4BE373E2F01044000EF11E1 /* SheetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetData.swift; sourceTree = "<group>"; };
 		F4C44CB92E3E1EE500275990 /* KanchuProblemDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KanchuProblemDTO+Mapping.swift"; sourceTree = "<group>"; };
 		F4D346B62E51664E00E92B7D /* GeminiModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiModels.swift; sourceTree = "<group>"; };
 		F4D346B92E516B7400E92B7D /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
@@ -699,9 +707,13 @@
 		F409699F2C50C99E00AB221C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				F4BE373C2F01021A00EF11E1 /* SafariView.swift */,
+				F4BE373A2EFE71E500EF11E1 /* FeedbackSheetView.swift */,
+				F4BE37382EFE6F4700EF11E1 /* FullWebView.swift */,
 				F4A2D6142E533B2700316599 /* Image.swift */,
 				F4AA77E72E4F08B50012494A /* ButtonStyle.swift */,
 				F4F350062E2F9F1300B3A018 /* Color.swift */,
+				F4BE373E2F01044000EF11E1 /* SheetData.swift */,
 				F40969202C50C95400AB221C /* Router.swift */,
 				F409699E2C50C99E00AB221C /* AppPreview.swift */,
 				F46FFDBB2C6F54E900C847AC /* Fonts.swift */,
@@ -1201,8 +1213,10 @@
 				F45EC2C32C9082C80051CAB6 /* TodaysKanjiCountPicker.swift in Sources */,
 				F4F60C2E2DD4EA13004010B4 /* Model.xcdatamodeld in Sources */,
 				F409699C2C50C99600AB221C /* ContentView.swift in Sources */,
+				F4BE37392EFE6F4800EF11E1 /* FullWebView.swift in Sources */,
 				F40969862C50C99600AB221C /* KanjiCard.swift in Sources */,
 				F4AA77E82E4F08BB0012494A /* ButtonStyle.swift in Sources */,
+				F4BE373B2EFE71E500EF11E1 /* FeedbackSheetView.swift in Sources */,
 				F4A13C772E0CEF50005B1299 /* BackupPicker.swift in Sources */,
 				F458049F2E1D04370023CCE5 /* CalculateKanchuResultService.swift in Sources */,
 				F46DAD082C972BA7009E83E0 /* SwipeAction.swift in Sources */,
@@ -1289,6 +1303,7 @@
 				F40969852C50C99600AB221C /* FlipableKanjiCard.swift in Sources */,
 				F45EC2C12C907C4E0051CAB6 /* QuizCountPicker.swift in Sources */,
 				F40974B12E2D557C00C0F731 /* UserAnswer.swift in Sources */,
+				F4BE373D2F01021A00EF11E1 /* SafariView.swift in Sources */,
 				F4A2D6112E53362500316599 /* KanchuIntroView.swift in Sources */,
 				F4D346BA2E516B7B00E92B7D /* AIModel.swift in Sources */,
 				F40969242C50C95400AB221C /* Router.swift in Sources */,
@@ -1305,6 +1320,7 @@
 				F4AA77CA2E4B93560012494A /* SetKanchuView.swift in Sources */,
 				F40969872C50C99600AB221C /* KanjiCardListView.swift in Sources */,
 				F409698C2C50C99600AB221C /* KanjiQuiz.swift in Sources */,
+				F4BE373F2F01044000EF11E1 /* SheetData.swift in Sources */,
 				F4563D482E12C2F300677133 /* BookmarksCell.swift in Sources */,
 				F4AA77E42E4ECBFF0012494A /* ObserveTransactionsUseCase.swift in Sources */,
 				F4841DEC2E43958B000589E2 /* GetUserInfoUseCase.swift in Sources */,
@@ -1514,7 +1530,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = LearningKanji/LearningKanji.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"LearningKanji/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = Z85JFS7S4J;
 				ENABLE_PREVIEWS = YES;
@@ -1531,7 +1547,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koo.LearningKanji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1551,7 +1567,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = LearningKanji/LearningKanji.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"LearningKanji/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = Z85JFS7S4J;
 				ENABLE_PREVIEWS = YES;
@@ -1568,7 +1584,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koo.LearningKanji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

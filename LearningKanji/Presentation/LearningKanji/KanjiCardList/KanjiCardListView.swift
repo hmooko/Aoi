@@ -16,6 +16,12 @@ struct KanjiCardListView: View {
     @State var index = 0
     @State var sliderValue = 1.0
     @State var isBookmark = false
+    @State private var feedbackData: SheetData?
+    
+    // MARK: - Google Form Configuration
+    private let googleFormBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSdtOFxnjtQfhq67-j8yCP6AERI9xdyUNdYyOpkjETMh9zbczg/viewform"
+    private let entryIDForKanjiID = "entry.39191127"
+    private let entryIDForKanjiChar = "entry.1218406551"
     
     var body: some View {
         VStack {
@@ -41,6 +47,15 @@ struct KanjiCardListView: View {
                     Image(systemName: "chevron.forward")
                 }.disabled(index == kanjiList.count - 1)
                 Spacer()
+                
+                Menu {
+                    Button(action: openFeedbackForm) {
+                        Label("한자 오류 제보", systemImage: "exclamationmark.bubble")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+                
                 Button {
                     isBookmark = true
                 } label: {
@@ -51,6 +66,10 @@ struct KanjiCardListView: View {
         .sheet(isPresented: $isBookmark, content: {
             BookmarkKanjiView(kanjiList[index], container: container)
         })
+        .sheet(item: $feedbackData) { data in
+            SafariView(url: data.url)
+                .ignoresSafeArea()
+        }
     }
     
     @ViewBuilder
@@ -95,6 +114,21 @@ struct KanjiCardListView: View {
                 
                 Text("\(sliderValue, specifier: "%.0f") / \(kanjiList.count)")
             }
+        }
+    }
+
+    private func openFeedbackForm() {
+        let currentKanji = kanjiList[index]
+        
+        var components = URLComponents(string: googleFormBaseURL)
+        components?.queryItems = [
+            URLQueryItem(name: "usp", value: "pp_url"),
+            URLQueryItem(name: entryIDForKanjiID, value: String(currentKanji.id)),
+            URLQueryItem(name: entryIDForKanjiChar, value: currentKanji.kanji)
+        ]
+        
+        if let url = components?.url {
+            self.feedbackData = SheetData(url: url)
         }
     }
 }

@@ -15,7 +15,7 @@ struct AoiCard: View {
     private let cornerRadius: CGFloat
     private let contentPadding: CGFloat
     private let backgroundColor: Color
-    //private let content: Content
+    private let notice: String
 
     init(
         number: Int,
@@ -25,7 +25,7 @@ struct AoiCard: View {
         cornerRadius: CGFloat = 20,
         padding: CGFloat = 30,
         backgroundColor: Color = .white,
-        //@ViewBuilder content: () -> Content
+        notice: String = ""
     ) {
         self.number = number
         self.title = title
@@ -34,7 +34,7 @@ struct AoiCard: View {
         self.cornerRadius = cornerRadius
         self.contentPadding = padding
         self.backgroundColor = backgroundColor
-        //self.content = content()
+        self.notice = notice
     }
 
     var body: some View {
@@ -56,6 +56,12 @@ struct AoiCard: View {
                 
             AoiText(description)
                 .frame(maxWidth: .infinity)
+            
+            if notice.isEmpty == false {
+                AoiText(notice)
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(.red)
+            }
         }
         .padding(contentPadding)
         .frame(maxWidth: .infinity)
@@ -72,7 +78,8 @@ struct AoiCard: View {
             number: 1,
             title: "나만의 퀴즈 만들기",
             imageSource: "home0",
-            description: "홈 화면의 '+' 버튼을 눌러 학습할 대상(학년, 단어장 등)과 문제 유형, 개수를 자유롭게 선택하고 '퀴즈 시작' 버튼을 누르세요."
+            description: "홈 화면의 '+' 버튼을 눌러 학습할 대상(학년, 단어장 등)과 문제 유형, 개수를 자유롭게 선택하고 '퀴즈 시작' 버튼을 누르세요.",
+            notice: "중요 사항!!"
         )
         .padding()
     }

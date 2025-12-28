@@ -27,6 +27,7 @@ extension View {
                     }
                 }
             }
+            .toolbarBackground(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top) {
                 VStack { }
                     .frame(maxWidth: .infinity)

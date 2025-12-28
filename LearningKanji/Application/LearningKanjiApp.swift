@@ -26,6 +26,17 @@ struct LearningKanjiApp: App {
     
     init() {
         container = DIContainer()
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "background")
+        appearance.backgroundEffect = nil
+        
+        appearance.shadowColor = .clear
+        appearance.shadowImage = UIImage()
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some Scene {

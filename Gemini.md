@@ -1,41 +1,95 @@
-# 지켜야할 부분
-- 코드 작성 시 최대한 현재 프로젝트의 아키텍처를 따를 것
-- UseCase 혹은 Repository를 생성하거나 변경사항이 있다면 이를 DIContainer에 항상 적용해야 함 
-- 코드를 실제로 바꾸기 전에 먼저 어떻게 바꿀건지 전체 코드를 보여줄 것
+# Aoi (LearningKanji) - Developer Guide
 
-# Guidelines
+## Project Overview
+**Aoi** is an iOS application designed to help users learn the 2,136 Joyo Kanji designated by the Japanese Ministry of Education. The app features daily recommendations, grade-based learning, quizzes, bookmarks, and search functionality.
 
-## Project Structure & Module Organization
-- `LearningKanji/` — app source
-  - `Application/` (entry, `LearningKanjiApp`, `DIContainer`)
-  - `Domain/` (Entities, UseCase Services, Repository protocols)
-  - `Data/` (Storage, Repository implementations, SwiftData DTO mapping)
-  - `Presentation/` (SwiftUI views/view-models, Router)
-  - `Resources/` (Assets, fonts, `japanese_kanji_2136.json`, localization)
-- Tests: `LearningKanjiTests/`, `LearningKanjiUITests/`
+**Tech Stack:**
+- **Language:** Swift 5+
+- **UI Framework:** SwiftUI
+- **Persistence:** SwiftData (for user projects/Kanchu), SQLite (implied for static Kanji data), UserDefaults
+- **Cloud Sync:** CloudKit (referenced in repositories)
+- **Backend/External:** Firebase (configured in App Delegate), potentially Gemini AI integration (referenced in `GeminiModels`).
 
-## Build, Test, and Development Commands
-- Open in Xcode: `open LearningKanji.xcodeproj`
-- Build (Simulator): `xcodebuild -scheme LearningKanji -destination 'platform=iOS Simulator,name=iPhone 15' build`
-- Unit tests: `xcodebuild test -scheme LearningKanji -destination 'platform=iOS Simulator,name=iPhone 15'`
-- Run on device: select a Team and enable capabilities (iCloud, Sign in with Apple, In‑App Purchases) in the Xcode target.
+## Architecture
+The project follows a **Clean Architecture** pattern with clear separation of concerns, orchestrated via a Dependency Injection (DI) Container.
 
-## Coding Style & Naming Conventions
-- Swift 5+, 4‑space indentation, one type per file.
-- Names: `PascalCase` for types/modules; `camelCase` for vars/functions.
-- Suffixes: `...Service` (UseCase), `...Repository` (protocol/impl), `...DTO` (SwiftData model), `...View`/`ViewModel` (UI).
-- Keep DI via `DIContainer`; do not instantiate repositories directly in views.
+### Layers
+1.  **Application Layer** (`LearningKanji/Application`)
+    -   **Entry Point:** `LearningKanjiApp.swift` initializes the app and the `DIContainer`.
+    -   **Dependency Injection:** `DIContainer.swift` is the central hub for creating and providing services, repositories, and use cases. It handles both production and mock implementations.
 
-## Testing Guidelines
-- Framework: XCTest (unit/UI). Name tests `FeatureNameTests.swift` and mirror source layout.
-- Place UI tests in `LearningKanjiUITests` and prefer accessibility identifiers.
-- Run fast, deterministic tests; mock repositories via existing `Mock*` types.
+2.  **Domain Layer** (`LearningKanji/Domain`)
+    -   **Entities:** Core data models (e.g., `Kanji`, `KanchuProject`, `Bookmarks`). These are plain Swift structs/classes independent of frameworks.
+    -   **Repositories (Protocols):** Interfaces defining data access (e.g., `CommonlyUsedKanjiRepository`, `KanchuProjectRepository`).
+    -   **Use Cases (Services):** Business logic encapsulation (e.g., `TodaysKanjiService`, `LearningByGradeService`). They depend on Repository protocols.
 
-## Commit & Pull Request Guidelines
-- Prefer Conventional Commits: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`.
-- Message style: present tense, concise. Example: `feat: add SwiftData model for Kanchu projects`.
-- PRs: clear description, linked issues, screenshots for UI, and notes on testing/impact. Keep diffs focused.
+3.  **Data Layer** (`LearningKanji/Data`)
+    -   **Repositories (Implementations):** Concrete implementations of domain repositories (e.g., `DefaultCommonlyUsedKanjiRepository`). They talk to storage or APIs.
+    -   **Data Mapping:** DTOs (Data Transfer Objects) and mappers to convert between API/DB models and Domain entities.
+    -   **Storages:** Low-level data access (e.g., `CommonlyUsedKanjiStorage`).
 
-## Architecture Overview
-- Clean layering (Presentation/Domain/Data). Use Cases mediate features (e.g., Today’s Kanji, Search, Kanchu Quiz).
-- Persistence: SQLite (bookmarks), SwiftData (Kanchu projects), CloudKit sync (optional).
+4.  **Presentation Layer** (`LearningKanji/Presentation`)
+    -   **Views:** SwiftUI Views (e.g., `HomeView`, `LearningKanjiView`).
+    -   **ViewModels:** Manage state and interact with Use Cases.
+    -   **Router:** Handles navigation logic.
+
+## Directory Structure & Key Files
+
+```
+LearningKanji/
+├── Application/
+│   ├── DIContainer.swift       # Central Dependency Injection
+│   └── LearningKanjiApp.swift  # App Entry
+├── Domain/
+│   ├── Entities/               # Core Models (Kanji.swift, User.swift)
+│   ├── Repositories/           # Protocols for Data Access
+│   └── Services/               # Business Logic (Use Cases)
+├── Data/
+│   ├── Repositories/           # Implementation of Repositories
+│   └── Storages/               # Database/Network Helpers
+├── Presentation/
+│   ├── Home/                   # Home Screen & sub-features
+│   ├── Bookmarks/              # Bookmarking features
+│   └── Util/                   # Shared UI components & Router
+└── Resources/                  # Assets, Fonts, JSON data
+```
+
+## Development Workflow
+
+### Adding a New Feature
+1.  **Domain:** Define **Entities** and the **Repository Protocol**.
+2.  **Use Case:** Create a **Service/UseCase** in `Domain/Services` that implements the business logic, injecting the Repository Protocol.
+3.  **Data:** Implement the **Repository** in `Data/Repositories`.
+4.  **DI:** Register the new Service and Repository in `DIContainer.swift`.
+5.  **Presentation:** Create the **View** and **ViewModel**. Inject the Use Case into the ViewModel via the `DIContainer`.
+
+### Naming Conventions
+-   **Services/UseCases:** Suffix with `Service` (e.g., `TodaysKanjiService`).
+-   **Repositories:**
+    -   Protocol: `NameRepository` (e.g., `CommonlyUsedKanjiRepository`)
+    -   Implementation: `DefaultNameRepository` (e.g., `DefaultCommonlyUsedKanjiRepository`)
+-   **Views:** Suffix with `View` (e.g., `HomeView`).
+
+## Build & Run
+
+**Requirements:**
+-   Xcode 15+ (inferred from SwiftData usage)
+-   iOS 17+ (likely target given SwiftData)
+
+**Commands:**
+*   **Open Project:**
+    ```bash
+    open LearningKanji.xcodeproj
+    ```
+*   **Build (Simulator):**
+    ```bash
+    xcodebuild -scheme LearningKanji -destination 'platform=iOS Simulator,name=iPhone 15' build
+    ```
+*   **Test:**
+    ```bash
+    xcodebuild test -scheme LearningKanji -destination 'platform=iOS Simulator,name=iPhone 15'
+    ```
+
+## Testing Strategy
+-   **Unit Tests:** Located in `LearningKanjiTests`. Use Mocks defined in `DIContainer` (or separate mock files) to test Use Cases and ViewModels in isolation.
+-   **UI Tests:** Located in `LearningKanjiUITests`.

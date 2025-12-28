@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Aoi1x.png",
+      "filename" : "Stack Overflow.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Aoi2x.png",
+      "filename" : "Stack Overflow@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Aoi3x.png",
+      "filename" : "Stack Overflow@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

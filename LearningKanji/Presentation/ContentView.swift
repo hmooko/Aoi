@@ -11,6 +11,10 @@ struct ContentView: View {
     @EnvironmentObject private var router: Router
     @StateObject var viewModel: ViewModel
     
+    init(viewModel: ViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
             TabView {
                 HomeView(container: viewModel.container)
@@ -26,11 +30,12 @@ struct ContentView: View {
                         Text("검색")
                     }
                 
-                KanchuHomeView(container: viewModel.container)
-                    .tabItem {
-                        Image("AoiIcon")
-                        Text("AI문제")
-                    }
+//                KanchuHomeView(container: viewModel.container)
+//                    .tabItem {
+//                        Image("stack overflow")
+//                            .foregroundStyle(Color.primaryColor)
+//                        Text("AI문제")
+//                    }
                 
                 BookmarksListView(viewModel: .init(container: viewModel.container))
                     .tabItem {

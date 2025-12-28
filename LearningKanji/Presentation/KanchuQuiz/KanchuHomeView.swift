@@ -49,25 +49,35 @@ struct KanchuHomeView: View {
     }
     
     var body: some View {
-        ZStack {
-            // viewState에 따라 다른 뷰를 보여줍니다.
-            switch viewModel.viewState {
-            case .loading:
-                ProgressView("로딩 중...")
-            case .loaded, .error:
-                // 데이터가 로드되었거나 오류가 발생했을 때 메인 컨텐츠를 표시합니다.
-                // 오류는 알림창으로 사용자에게 알려줍니다.
-                mainContent
-            }
-            
-            // 구독 상태가 free일 때 PayWallView를 오버레이로 띄웁니다.
-            if viewModel.subscriptionStatus == .free {
-                PayWallView()
-                    .environmentObject(viewModel)
+        Group {
+            ZStack {
+                
+                // 1. 구독 상태를 먼저 확인합니다.
+                if viewModel.subscriptionStatus == nil {
+                    // 구독 상태 확인 중...
+                    ProgressView("구독 상태 확인 중...")
+                } else if viewModel.subscriptionStatus == .free {
+                    // 2. 무료 사용자일 경우 페이월을 표시합니다.
+                    PayWallView()
+                        .environmentObject(viewModel)
+                } else {
+                    switch viewModel.viewState {
+                    case .loading:
+                        ProgressView("프로젝트 로딩 중...")
+                    case .loaded, .error:
+                        // 데이터가 로드되었거나 오류가 발생했을 때 메인 컨텐츠를 표시합니다.
+                        // 오류는 알림창으로 사용자에게 알려줍니다.
+                        mainContent
+                    }
+                }
             }
         }
         .onAppear {
-            viewModel.fetchAllKanchuProjects()
+            // 유료 사용자일 경우에만 프로젝트를 가져옵니다.
+            // 무료 사용자는 페이월을 보게 되므로 프로젝트를 로드할 필요가 없습니다.
+            if viewModel.subscriptionStatus != nil && viewModel.subscriptionStatus != .free {
+                viewModel.fetchAllKanchuProjects()
+            }
         }
         .alert("프로젝트 이름 변경", isPresented: .init(get: { viewModel.projectToRename != nil }, set: { if !$0 { viewModel.cancelProjectRename() } }), presenting: viewModel.projectToRename) { _ in
             TextField("새로운 이름", text: $viewModel.newProjectName)
@@ -114,6 +124,10 @@ struct KanchuHomeView: View {
                         .onTapGesture {
                             viewModel.startQuiz(project: project)
                         }
+                    
+                    if viewModel.projects.isEmpty {
+                        AoiText("Plus 버튼을 눌러 문제를 생성해보세요!")
+                    }
                 }
             }
         }
@@ -130,7 +144,11 @@ struct KanchuHomeView: View {
     
     private var addProjectButton: some View {
         Button {
-            viewModel.createQuiz()
+            if viewModel.isApiKeyEmpty() {
+                showSetKanchuSheet = true
+            } else {
+                viewModel.createQuiz()
+            }
         } label: {
             Image(systemName: "plus")
                 .foregroundStyle(.white)

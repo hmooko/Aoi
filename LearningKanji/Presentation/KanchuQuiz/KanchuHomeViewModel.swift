@@ -26,6 +26,8 @@ extension KanchuHomeView {
         private let observeTransactionsUseCase: ObserveTransactionsUseCase
         private let getIsKanchuMonthlyIntroProductoryOfferUseCase: GetIsKanchuMonthlyIntroductoryOfferUseCase
         
+        private let getKanchuAPIKeyUseCase: GetKanchuAPIKeyUseCase
+        
         // MARK: - Properties
         private(set) var router: Router
         private var transactionObserver: Task<Void, Never>?
@@ -36,7 +38,7 @@ extension KanchuHomeView {
         @Published var projectToRename: KanchuProject?
         @Published var newProjectName: String = ""
         @Published var showPaywallOverlay: Bool = false
-        @Published private(set) var subscriptionStatus: SubscriptionStatus = .free
+        @Published private(set) var subscriptionStatus: SubscriptionStatus? = nil
         @Published private(set) var isKanchuMonthlyIntroductoryOffer: Bool = false
         
         enum ViewState: Equatable {
@@ -59,6 +61,8 @@ extension KanchuHomeView {
             self.observeTransactionsUseCase = container.observeTransactionsUseCase()
             self.getIsKanchuMonthlyIntroProductoryOfferUseCase = container.getIsKanchuMonthlyIntroductoryOfferUseCase()
             
+            self.getKanchuAPIKeyUseCase = container.getKanchuAPIKeyUseCase()
+            
             self.router = container.router
             logger.info("KanchuHomeViewModel이 초기화되었습니다.")
             
@@ -75,6 +79,10 @@ extension KanchuHomeView {
             logger.info("KanchuHomeViewModel이 메모리에서 해제되고, 트랜잭션 관찰을 중단합니다.")
         }
         
+        func isApiKeyEmpty() -> Bool {
+            return getKanchuAPIKeyUseCase.execute().isEmpty
+        }
+        
         // MARK: - Project Functions
         
         func fetchAllKanchuProjects() {
@@ -82,7 +90,7 @@ extension KanchuHomeView {
             viewState = .loading
             Task {
                 do {
-                    let projects = try await fetchAllKanchuProjectsUseCase.execute(sortOption: .createdAt(ascending: true))
+                    let projects = try await fetchAllKanchuProjectsUseCase.execute(sortOption: .createdAt(ascending: false))
                     self.projects = projects
                     self.viewState = .loaded
                     logger.info("\(projects.count)개의 프로젝트를 성공적으로 가져왔습니다.")
@@ -223,21 +231,27 @@ extension KanchuHomeView {
             let newStatus = await checkSubscriptionStatusUseCase.execute()
             if subscriptionStatus != newStatus {
                 subscriptionStatus = newStatus
-                logger.info("현재 구독 상태: \(self.subscriptionStatus.description())")
+                if let status = self.subscriptionStatus {
+                    logger.info("현재 구독 상태: \(status.description())")
+                }
             }
         }
 
         private func observeTransactions() {
             logger.debug("거래 관찰을 시작합니다.")
-            self.transactionObserver = Task {
-                for await _ in observeTransactionsUseCase.execute() {
-                    // 외부에서 거래 변경이 감지되면(갱신, 환불 등)
-                    // 사용자의 현재 상태를 다시 확인합니다.
-                    logger.info("새로운 거래 변경이 감지되었습니다. 구독 상태를 갱신합니다.") // 거래 감지 로깅
-                    await updateSubscriptionStatus()
-                    await updateIsKanchuMonthlyIntroductoryOffer()
+            self.transactionObserver = Task(priority: .background) {
+                do {
+                    for await _ in observeTransactionsUseCase.execute() {
+                        // 외부에서 거래 변경이 감지되면(갱신, 환불 등)
+                        // 사용자의 현재 상태를 다시 확인합니다.
+                        logger.info("새로운 거래 변경이 감지되었습니다. 구독 상태를 갱신합니다.") // 거래 감지 로깅
+                        await updateSubscriptionStatus()
+                        await updateIsKanchuMonthlyIntroductoryOffer()
+                    }
+                } catch {
+                    logger.error("거래 관찰 중 오류가 발생했습니다: \(error.localizedDescription)")
                 }
-                logger.info("거래 관찰이 종료되었습니다.") // 관찰 종료 로깅 (Task가 취소될 경우)
+                logger.info("거래 관찰이 종료되었습니다.") // 관찰 종료 로깅 (Task가 취소되거나 오류 발생 시)
             }
         }
     }

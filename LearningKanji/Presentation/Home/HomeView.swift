@@ -15,15 +15,14 @@ struct HomeView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading) {
+                    
                     TodaysKanjiView(viewModel: .init(container: container))
                     
-                    LearningByGradeListView(container: container)
+                    // NoticeView()
                     
-                    NoticeView()
+                    LearningByGradeListView(container: container)
                 }.padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
             }.scrollIndicators(.hidden)
-            
-            Divider()
         }
         .background(Color("background"))
     }

@@ -80,7 +80,7 @@ struct SetKanchuView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("현재 모델")) {
+                Section {
                     HStack {
                         Image(systemName: "message.badge.waveform.fill")
                             .foregroundStyle(Color.primaryColor)
@@ -97,13 +97,27 @@ struct SetKanchuView: View {
                         }
                         Spacer()
                     }
+                } header: {
+                    Text("현재 모델")
+                } footer: {
+                    VStack(alignment: .leading) {
+                        AoiText("* AI 모델에 따라 문제 생성 시간과 문제의 퀄리티가 달라질 수 있습니다.", size: 11)
+                    }
+                    .foregroundStyle(.gray)
                 }
 
-                Section(header: Text("API Key")) {
+                Section {
                     SecureField("API 키를 입력하세요.", text: $viewModel.apiKey)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
                         .font(.system(.body, design: .monospaced))
+                } header: {
+                    Text("API Key")
+                } footer: {
+                    VStack(alignment: .leading) {
+                        AoiText("* 문제를 생성하기 위해 유효한 API 키가 필요합니다.", size: 11)
+                    }
+                    .foregroundStyle(.gray)
                 }
                 
                 Section(header: Text("사용 가능한 AI")) {
@@ -133,7 +147,7 @@ struct SetKanchuView: View {
                         KanchuIntroView()
                     }
                     
-                    DisclosureGroup("API 키 발급받기", isExpanded: $isAPIKeyGuidePresented) {
+                    DisclosureGroup("API 키 발급 받으러 가기", isExpanded: $isAPIKeyGuidePresented) {
                         Button {
                             if let url = geminiAPIKeyURL {
                                 openURL(url)

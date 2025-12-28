@@ -31,7 +31,7 @@ struct QuizSettingsView: View {
                 } footer: {
                     VStack(alignment: .leading) {
                         AoiText("* 문제를 만들기 위해서는 북마크에 최소 10개 이상의 한자가 있어야 합니다.", size: 11)
-                        AoiText("* 북마크에 한자가 많을 수록 AI는 더 다양한 문장을 만듭니다.")
+                        AoiText("* 북마크에 한자가 많을 수록 AI는 더 다양한 문장을 만듭니다.", size: 11)
                     }
                     .foregroundStyle(.gray)
                 }
