@@ -26,6 +26,19 @@ final class LearningByGradeService: LearningByGradeUseCase {
 
 extension LearningByGradeService {
     private func filterKanjiListByGrade(_ kanjiList: [Kanji], grade: Grade) -> [Kanji] {
-        kanjiList.filter { $0.grade == grade.rawValue }
+        kanjiList.filter { $0.grade.contains(grade.rawValue) }
+    }
+}
+
+// MARK: - Mock Service for Testing/Preview
+final class MockLearningByGradeService: LearningByGradeUseCase {
+    private let sampleKanjiList: [Kanji]
+    
+    init(sampleKanjiList: [Kanji] = Kanji.sampleKanjiList) {
+        self.sampleKanjiList = sampleKanjiList
+    }
+    
+    func fetchKanjiListByGrade(grade: Grade) async throws -> [Kanji] {
+        return sampleKanjiList.filter { $0.grade == grade.rawValue }
     }
 }

@@ -17,7 +17,7 @@ struct CommonlyUsedKanji {
     func getByGrade(grade: [Grade]) -> [Kanji] {
         var result: [Kanji] = []
         for grade in grade {
-            result += kanjiList.filter { $0.grade == grade.rawValue }
+            result += kanjiList.filter { $0.grade.contains(grade.rawValue) }
         }
         return result
     }
@@ -36,5 +36,55 @@ struct CommonlyUsedKanji {
         }
         
         return result
+    }
+}
+
+struct MiddleSchoolKanjiList {
+    private(set) var kanjiList: [Kanji]
+    
+    enum MiddleSchoolKanjiListError: Error {
+        case invalidData(String)
+    }
+    
+    init (kanjiList: [Kanji]) throws {
+        if kanjiList.count != Grade.gradeCount(.middle) {
+            throw MiddleSchoolKanjiListError.invalidData("Invalid data count")
+        }
+        
+        if kanjiList.contains(where: { $0.grade != Grade.middle.rawValue}) {
+            throw MiddleSchoolKanjiListError.invalidData("Invalid grade")
+        }
+        
+        self.kanjiList = kanjiList
+    }
+    
+    func indexed(index: Int) -> [Kanji] {
+        if index == 6 {
+            return Array(kanjiList[((index - 1) * 190)...])
+        } else {
+            return Array(kanjiList[(index - 1) * 190..<index * 190])
+        }
+    }
+}
+
+struct ElementarySchoolKanjiList {
+    private(set) var kanjiList: [Kanji]
+    private(set) var grade: Grade
+    
+    enum ElementarySchoolKanjiListError: Error {
+        case invalidData(String)
+    }
+    
+    init (kanjiList: [Kanji], grade: Grade) throws {
+        if kanjiList.count != Grade.gradeCount(grade) {
+            throw ElementarySchoolKanjiListError.invalidData("Invalid data count")
+        }
+        
+        if kanjiList.contains(where: { $0.grade != grade.rawValue }) {
+            throw ElementarySchoolKanjiListError.invalidData("Invalid grade")
+        }
+        
+        self.kanjiList = kanjiList
+        self.grade = grade
     }
 }

@@ -26,6 +26,7 @@ struct KanjiCard: View {
             
             MeaningAndSound(kanji: kanji, size: 18, alignment: .center)
         }
+        .wrappedContentAsCard()
     }
 }
 

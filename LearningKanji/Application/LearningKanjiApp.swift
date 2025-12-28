@@ -7,30 +7,77 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(
-    _ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
-  ) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    func application(
+        _ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }
 
 @main
 struct LearningKanjiApp: App {
-    @StateObject private var container = DIContainer()
-    @StateObject private var router = Router()
-    @StateObject private var appState = AppState()
+    private let container: DIContainer
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    //@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    init() {
+        container = DIContainer()
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "background")
+        appearance.backgroundEffect = nil
+        
+        appearance.shadowColor = .clear
+        appearance.shadowImage = UIImage()
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
     
     var body: some Scene {
+        
         WindowGroup {
-            ContentView(viewModel: .init(container: container))
-                .environmentObject(container)
-                .environmentObject(router)
-                .environmentObject(appState)
+            AoiNavigationView(container: container)
+            //AView()
+        }
+    }
+}
+
+struct AView: View {
+    
+    var body: some View {
+        NavigationStack {
+            TabView {
+                VStack {
+                    Text("hihi")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                .tabItem {
+                    Image(systemName: "add")
+                    Text("추가")
+                }
+                
+                VStack {
+                    
+                }
+                .tabItem {
+                    Image(systemName: "minus")
+                    Text("제거")
+                }
+            }
         }
     }
 }

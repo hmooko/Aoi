@@ -44,6 +44,6 @@ struct BookmarksListView: View {
 }
 
 #Preview {
-    BookmarksListView(viewModel: BookmarksListViewModel(container: DIContainer()))
-        .environmentObject(Router())
+    BookmarksListView(viewModel: BookmarksListViewModel(container: .preview))
+        .environmentObject(DIContainer.preview.router)
 }

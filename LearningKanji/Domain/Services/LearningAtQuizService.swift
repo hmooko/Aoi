@@ -52,3 +52,34 @@ final class LearningAtQuizService: LearningAtQuizUseCase {
         userDefaultsRepository.setQuizCount(newValue)
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockLearningAtQuizService: LearningAtQuizUseCase {
+    private var quizCount: Int
+    private let mockQuiz: [KanjiQuiz]
+    
+    init(quizCount: Int = 10, quiz: [KanjiQuiz]? = nil) {
+        self.quizCount = quizCount
+        if let quiz = quiz {
+            self.mockQuiz = quiz
+        } else {
+            let k1 = Kanji.sampleKanjiList.first ?? Kanji.sampleKanji
+            let k2 = Kanji.sampleKanjiList.dropFirst().first ?? Kanji.sampleKanji
+            let quiz1 = KanjiQuiz(k1, wrongSelections: [k2, k1])
+            let quiz2 = KanjiQuiz(k2, wrongSelections: [k1, k2])
+            self.mockQuiz = [quiz1, quiz2]
+        }
+    }
+    
+    func fetchKanjiListAtQuiz(quizList: [Kanji]) async throws -> [KanjiQuiz] {
+        return Array(mockQuiz.prefix(quizCount))
+    }
+    
+    func getQuizCount() -> Int {
+        quizCount
+    }
+    
+    func setQuizCount(_ newValue: Int) {
+        quizCount = newValue
+    }
+}

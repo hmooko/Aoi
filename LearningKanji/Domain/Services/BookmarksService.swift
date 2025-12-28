@@ -68,3 +68,46 @@ final class BookmarksService: BookmarksUseCase {
         try await bookmarksRepository.removeBookmark(kanjiId, bookmarksId: bookmarksId)
     }
 }
+
+final class MockBookmarksService: BookmarksUseCase {
+    private var stubbedBookmarks: [Bookmarks]
+    
+    init(bookmarks: [Bookmarks] = [
+        Bookmarks(id: 1, title: "예시 북마크 1", contents: Array(Kanji.sampleKanjiList.prefix(2))),
+        Bookmarks(id: 2, title: "예시 북마크 2", contents: Array(Kanji.sampleKanjiList.suffix(2)))
+    ]) {
+        self.stubbedBookmarks = bookmarks
+    }
+    
+    func fetchBookmarks() async throws -> [Bookmarks] {
+        stubbedBookmarks
+    }
+    
+    func createBookmarks(_ title: String) async throws {
+        let new = Bookmarks(id: (stubbedBookmarks.last?.id ?? 0)+1, title: title, contents: [])
+        stubbedBookmarks.append(new)
+    }
+    
+    func bookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
+        guard let idx = stubbedBookmarks.firstIndex(where: { $0.id == bookmarksId }) else { return }
+        if stubbedBookmarks[idx].contents.contains(where: { $0.id == kanjiId }) {
+            throw BookmarksError.bookmarkedKanjiDuplicationError
+        }
+        var kanji = Kanji.sampleKanji
+        kanji = Kanji(id: kanjiId, kanji: kanji.kanji, grade: kanji.grade, sound: kanji.sound, meaning: kanji.meaning, korean: kanji.korean)
+        var contents = stubbedBookmarks[idx].contents
+        contents.append(kanji)
+        stubbedBookmarks[idx] = Bookmarks(id: stubbedBookmarks[idx].id, title: stubbedBookmarks[idx].title, contents: contents)
+    }
+    
+    func removeBookmarks(_ id: Int) async throws {
+        stubbedBookmarks.removeAll { $0.id == id }
+    }
+    
+    func removeBookmark(_ kanjiId: Int, bookmarksId: Int) async throws {
+        guard let idx = stubbedBookmarks.firstIndex(where: { $0.id == bookmarksId }) else { return }
+        var b = stubbedBookmarks[idx]
+        b = Bookmarks(id: b.id, title: b.title, contents: b.contents.filter { $0.id != kanjiId })
+        stubbedBookmarks[idx] = b
+    }
+}

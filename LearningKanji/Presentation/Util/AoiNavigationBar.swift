@@ -14,7 +14,7 @@ extension View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Aoi")
-                        .pretendardMedium(size: 18)
+                        .pretendardBold(size: 18)
                         .foregroundStyle(.white)
                 }
                         
@@ -27,10 +27,11 @@ extension View {
                     }
                 }
             }
+            .toolbarBackground(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top) {
                 VStack { }
                     .frame(maxWidth: .infinity)
-                    .background(Color("primary"))
+                    .background(Color.primaryColor)
             }
     }
     

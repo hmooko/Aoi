@@ -21,4 +21,12 @@ protocol UserDefaultsRepository {
     func setIsBackingUP(_ newValue: Bool)
     func getIsLoadingBackup() -> Bool
     func setIsLoadingBackup(_ newValue: Bool)
+
+    // MARK: - BYOK (Bring Your Own Key)
+    func getKanchuAPIKey() -> String
+    func setKanchuAPIKey(_ key: String)
+    func deleteGeminiAPIKey()
+
+    func getAIModel() throws -> any AIModel
+    func setAIModel(_ model: any AIModel)
 }

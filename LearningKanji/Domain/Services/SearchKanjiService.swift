@@ -23,3 +23,17 @@ final class SearchKanjiService: SearchKanjiUseCase {
         return commonlyUsedKanji.getByText(requestText)
     }
 }
+
+// MARK: - Mock Service for Testing/Preview
+final class MockSearchKanjiService: SearchKanjiUseCase {
+    private let kanjiList: [Kanji]
+    
+    init(kanjiList: [Kanji] = Kanji.sampleKanjiList) {
+        self.kanjiList = kanjiList
+    }
+    
+    func execute(_ requestText: String) async throws -> [Kanji] {
+        guard !requestText.isEmpty else { return [] }
+        return kanjiList.filter { $0.kanji.contains(requestText) || $0.korean.contains(requestText) || $0.meaning.contains(requestText) }
+    }
+}

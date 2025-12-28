@@ -15,16 +15,14 @@ struct BookmarksList: View {
     
     var body: some View {
         ScrollView {
-            GeometryReader { proxy in
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
-                    ForEach(viewModel.bookmarksList) { bookmarks in
-                        BookmarksCell(bookmarks: bookmarks, proxy: proxy)
-                            .environmentObject(viewModel)
-                    }
-                }
-            }.padding()
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
+                ForEach(viewModel.bookmarksList) { bookmarks in
+                    BookmarksCell(bookmarks: bookmarks)
+                        .environmentObject(viewModel)
+                }.padding()
+            }
         }
-        .onChange(of: router.path) {
+        .onAppear {
             viewModel.fetchBookmarksList()
         }
     }
@@ -33,6 +31,6 @@ struct BookmarksList: View {
 
 #Preview {
     BookmarksList()
-        .environmentObject(BookmarksListViewModel(container: DIContainer()))
-        .environmentObject(Router())
+        .environmentObject(BookmarksListViewModel(container: .preview))
+        .environmentObject(DIContainer.preview.router)
 }

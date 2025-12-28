@@ -13,6 +13,19 @@ final class UserDefaultsKeys {
     static let TODATS_KANJI_GRADE = "todaysKanjiGrade"
     static let IS_BACKING_UP = "isBackingUp"
     static let IS_LOADING_BACKUP = "isLoadingBackup"
+    static let GEMINI_USER_API_KEY = "geminiUserApiKey"
+    static let AI_MODEL = "aiModel"
+}
+
+enum UserDefaultsError: Error {
+    case aiModelNotFound
+    
+    var description: String {
+        switch self {
+        case .aiModelNotFound:
+            return "AI 모델을 찾을 수 없습니다."
+        }
+    }
 }
 
 final class DefaultUserDefaultsRepository: UserDefaultsRepository {
@@ -75,5 +88,48 @@ final class DefaultUserDefaultsRepository: UserDefaultsRepository {
     func setTodaysKanjiGrade(_ newValue: [Grade]) {
         let grade = newValue.map { $0.rawValue }
         UserDefaults.standard.set(grade, forKey: UserDefaultsKeys.TODATS_KANJI_GRADE)
+    }
+
+    // MARK: - BYOK (Bring Your Own Key)
+    func getKanchuAPIKey() -> String {
+        UserDefaults.standard.string(forKey: UserDefaultsKeys.GEMINI_USER_API_KEY) ?? ""
+    }
+
+    func setKanchuAPIKey(_ key: String) {
+        UserDefaults.standard.set(key, forKey: UserDefaultsKeys.GEMINI_USER_API_KEY)
+    }
+
+    func deleteGeminiAPIKey() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.GEMINI_USER_API_KEY)
+    }
+
+    func getAIModel() throws -> any AIModel {
+        guard let modelString = UserDefaults.standard.string(forKey: UserDefaultsKeys.AI_MODEL) else {
+            return GeminiModel.gemini2_5Flash // Default model
+        }
+
+        // 먼저 Gemini 모델인지 확인
+        switch modelString {
+        case GeminiModel.gemini2_5Flash.rawValue:
+            return GeminiModel.gemini2_5Flash
+        case GeminiModel.gemini2_5Pro.rawValue:
+            return GeminiModel.gemini2_5Pro
+        default:
+            break
+        }
+        
+        // 다음으로 Gpt 모델인지 확인
+        switch modelString {
+        case GptModel.gpt5.rawValue:
+            return GptModel.gpt5
+        default:
+            break
+        }
+
+        throw UserDefaultsError.aiModelNotFound
+    }
+
+    func setAIModel(_ model: any AIModel) {
+        UserDefaults.standard.set(model.rawValue, forKey: UserDefaultsKeys.AI_MODEL)
     }
 }

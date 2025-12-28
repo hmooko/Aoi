@@ -30,6 +30,7 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             ScrollView {
+                
                 settingDivider(text: "오늘의 퀴즈") {
                     todaysKanjiCountPicker
                     Divider()
